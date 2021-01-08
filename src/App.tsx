@@ -1,25 +1,8 @@
 import React from "react"
-import Body from "./components/Body"
+import MyRouter from "./components/MyRouter"
 
 function App() {
-    return (
-        <div>
-            <header className="text-center">
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-            <Body />
-        </div>
-    )
+    return <MyRouter />
 }
 
 export default App

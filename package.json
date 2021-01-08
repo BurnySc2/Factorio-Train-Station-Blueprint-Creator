@@ -11,8 +11,11 @@
     "@types/node": "^12.19.12",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
+    "@types/react-router-dom": "^5.1.7",
+    "clone-deep": "^4.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
     "tailwindcss": "^1.9.6",
     "typescript": "^3.9.7"
