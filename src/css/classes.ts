@@ -1,12 +1,15 @@
 export let CLASSES = {
     // Title
     title: "self-center underline font-bold text-3xl text-gray-300",
+
     // Background
     background: "bg-gray-800 h-screen",
     background2: "bg-gray-800 flex flex-col",
+
     // Sections
     section: "self-center border-black p-2 my-1 w-full bg-blue-700",
     gridSection: "grid grid-cols-2 gap-2",
+
     // HTML Elements
     checkboxElement: "h-full place-self-center",
     labelElement: "w-full text-white",

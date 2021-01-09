@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { chestTypes } from "../../constants/constants"
 
-export default function ChestTypeSettings(props: SectionsProps) {
+export default function ChestTypeSettings(props: iSectionsProps) {
     let chestTypesHtml = (
         <select
             id={"chestTypes"}

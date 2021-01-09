@@ -1,9 +1,9 @@
 import React from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { refillFuelTypes } from "../../constants/constants"
 
-export default function RefillSettings(props: SectionsProps) {
+export default function RefillSettings(props: iSectionsProps) {
     let fuelTypesHtml = (
         <select
             className={CLASSES.selectElement}

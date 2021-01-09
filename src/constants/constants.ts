@@ -29,7 +29,11 @@ export let defaultSettings = {
     // Station type
     stationType: stationTypes[0],
     stationName: "",
+
+    // Sequential Station
     sequentialStation: false,
+    sequentialStationsAmount: "3",
+    sequantialStationBeltsGoAllTheWay: true,
 
     // Train type
     doubleHeaded: true,

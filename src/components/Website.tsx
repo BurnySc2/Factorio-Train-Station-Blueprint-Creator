@@ -6,11 +6,13 @@ import { defaultSettings, stationTypes } from "../constants/constants"
 import { CLASSES } from "../css/classes"
 import Footer from "./Footer"
 import Stacker from "./StationTypes/Stacker"
+import copy from "copy-to-clipboard"
+import { createBlueprint, createBlueprintString } from "../BlueprintCreation/CreateBlueprint"
 const cloneDeep = require("clone-deep")
 
 export default function Website(props: any) {
     let [userSettings, setUserSettings] = useState(cloneDeep(defaultSettings))
-    let [blueprintString] = useState("")
+    let [blueprintString, setBlueprintString] = useState("")
 
     let stationTypeSelect = (
         <select
@@ -53,14 +55,32 @@ export default function Website(props: any) {
                 <div className={"grid grid-cols-1 justify-items-center m-auto bg-blue-800"}>
                     <div className={CLASSES.section}>{stationTypeSelect}</div>
                     {stationTypeHtml}
-                    <button className={CLASSES.buttonElement}>Generate Blueprint</button>
+                    <button
+                        className={CLASSES.buttonElement}
+                        onClick={(e) => {
+                            setBlueprintString(createBlueprintString(createBlueprint(userSettings)))
+                        }}
+                    >
+                        Generate Blueprint
+                    </button>
                     <input
                         className={CLASSES.inputTextElement}
                         placeholder={"Blueprint string will be generated here."}
                         value={blueprintString}
                         readOnly
                     />
-                    <button className={CLASSES.buttonElement}>Copy to Clipboard</button>
+                    <button
+                        className={CLASSES.buttonElement}
+                        onClick={(e) => {
+                            // Copy to clipboard
+                            copy(blueprintString, {
+                                debug: true,
+                                message: "asd",
+                            })
+                        }}
+                    >
+                        Copy to Clipboard
+                    </button>
                     <Footer />
                 </div>
             </div>

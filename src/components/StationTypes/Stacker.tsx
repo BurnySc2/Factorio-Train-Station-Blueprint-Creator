@@ -1,10 +1,10 @@
 import React from "react"
 import TrainTypeSettings from "../Sections/TrainTypeSettings"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import SequentialStation from "../SequentialStation/SequentialStation"
 import StackerSettings from "../Sections/StackerSettings"
 
-export default function Stacker(props: SectionsProps) {
+export default function Stacker(props: iSectionsProps) {
     return (
         <div className={"flex flex-col"}>
             <SequentialStation

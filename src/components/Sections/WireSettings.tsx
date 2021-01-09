@@ -1,8 +1,8 @@
 import React from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
-export default function WireSettings(props: SectionsProps) {
+export default function WireSettings(props: iSectionsProps) {
     let myCheckbox = (
         keyName:
             | "connectChestsWithGreenWire"

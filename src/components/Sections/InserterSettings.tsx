@@ -1,9 +1,9 @@
 import React from "react"
 import { inserterTypes } from "../../constants/constants"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
-export default function InserterSettings(props: SectionsProps) {
+export default function InserterSettings(props: iSectionsProps) {
     // All inserter types
     let inserterSelect = (
         <select

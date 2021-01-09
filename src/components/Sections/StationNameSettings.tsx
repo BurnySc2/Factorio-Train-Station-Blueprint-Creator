@@ -1,8 +1,8 @@
 import React from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
-export default function StationNameSettings(props: SectionsProps) {
+export default function StationNameSettings(props: iSectionsProps) {
     return (
         <div>
             <div className={CLASSES.section}>

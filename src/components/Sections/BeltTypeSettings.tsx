@@ -1,9 +1,9 @@
 import React from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { beltFlowDirections, beltSides, beltTypes } from "../../constants/constants"
 
-export default function BeltTypeSettings(props: SectionsProps) {
+export default function BeltTypeSettings(props: iSectionsProps) {
     let beltTypesHtml = (
         <select
             id={"beltType"}

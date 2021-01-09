@@ -1,9 +1,9 @@
 import React from "react"
-import { SectionsProps } from "../../constants/interfaces"
+import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { enabledConditionOperators } from "../../constants/constants"
 
-export default function EnabledConditionSettings(props: SectionsProps) {
+export default function EnabledConditionSettings(props: iSectionsProps) {
     let enabledConditionOperatorHtml = (
         <select
             className={CLASSES.selectElement}
