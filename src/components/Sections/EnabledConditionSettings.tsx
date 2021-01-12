@@ -51,6 +51,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
                 {/*<input type={"text"} value={props.userSettings.enabledConditionOperator} onChange={} />*/}
                 <input
                     type={"number"}
+                    className={CLASSES.selectElement}
                     placeholder={"Amount of items"}
                     value={props.userSettings.enabledConditionAmount}
                     onChange={(e) => {
