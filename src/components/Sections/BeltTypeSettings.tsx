@@ -1,7 +1,7 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
-import { beltFlowDirections, beltSides, beltTypes } from "../../constants/constants"
+import { beltFlowDirections, beltSides, beltTypes, beltTypesHuman } from "../../constants/constants"
 
 export default function BeltTypeSettings(props: iSectionsProps) {
     let beltTypesHtml = (
@@ -10,13 +10,14 @@ export default function BeltTypeSettings(props: iSectionsProps) {
             className={CLASSES.selectElement}
             value={props.userSettings.beltType}
             onChange={(e) => {
+                // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, beltType: e.target.value })
             }}
         >
             {beltTypes.map((beltType) => {
                 return (
                     <option className={CLASSES.optionElement} key={beltType} value={beltType}>
-                        {beltType}
+                        {beltTypesHuman[beltType]}
                     </option>
                 )
             })}
@@ -29,6 +30,7 @@ export default function BeltTypeSettings(props: iSectionsProps) {
             className={CLASSES.selectElement}
             value={props.userSettings.beltSidesUsed}
             onChange={(e) => {
+                // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, beltSidesUsed: e.target.value })
             }}
         >
@@ -47,6 +49,7 @@ export default function BeltTypeSettings(props: iSectionsProps) {
             className={CLASSES.selectElement}
             value={props.userSettings.beltFlowDirection}
             onChange={(e) => {
+                // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value })
             }}
         >

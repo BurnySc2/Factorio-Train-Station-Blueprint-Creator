@@ -24,6 +24,7 @@ export default function SequentialStation(props: iSectionsProps) {
                 </label>
                 <input
                     className={CLASSES.inputTextElement}
+                    hidden={!props.userSettings.sequentialStation}
                     type={"number"}
                     id={"sequentialStationsAmount"}
                     value={props.userSettings.sequentialStationsAmount}
@@ -34,11 +35,16 @@ export default function SequentialStation(props: iSectionsProps) {
                         })
                     }}
                 />
-                <label className={CLASSES.labelElement} htmlFor={"sequentialStationsAmount"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={!props.userSettings.sequentialStation}
+                    htmlFor={"sequentialStationsAmount"}
+                >
                     # sequential stations in a row
                 </label>
                 <input
                     className={CLASSES.checkboxElement}
+                    hidden={!props.userSettings.sequentialStation}
                     type={"checkbox"}
                     id={"sequantialStationBeltsGoAllTheWay"}
                     checked={props.userSettings.sequantialStationBeltsGoAllTheWay}
@@ -51,6 +57,7 @@ export default function SequentialStation(props: iSectionsProps) {
                 />
                 <label
                     className={CLASSES.labelElement}
+                    hidden={!props.userSettings.sequentialStation}
                     htmlFor={"sequantialStationBeltsGoAllTheWay"}
                 >
                     Belts go all the way

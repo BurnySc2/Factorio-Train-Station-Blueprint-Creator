@@ -18,6 +18,19 @@ export default function StationNameSettings(props: iSectionsProps) {
                         })
                     }}
                 />
+                <input
+                    className={CLASSES.inputTextElement}
+                    type={"number"}
+                    placeholder={"Train limit"}
+                    value={props.userSettings.trainLimit}
+                    min={"-1"}
+                    onChange={(e) => {
+                        props.setUserSettings({
+                            ...props.userSettings,
+                            trainLimit: e.target.value,
+                        })
+                    }}
+                />
             </div>
         </div>
     )

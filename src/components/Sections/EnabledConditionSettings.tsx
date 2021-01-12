@@ -1,7 +1,10 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
-import { enabledConditionOperators } from "../../constants/constants"
+import {
+    enabledConditionOperators,
+    enabledConditionOperatorsHuman,
+} from "../../constants/constants"
 
 export default function EnabledConditionSettings(props: iSectionsProps) {
     let enabledConditionOperatorHtml = (
@@ -11,6 +14,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
+                    // @ts-ignore
                     enabledConditionOperator: e.target.value,
                 })
             }}
@@ -18,7 +22,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
             {enabledConditionOperators.map((operator) => {
                 return (
                     <option className={CLASSES.optionElement} key={operator} value={operator}>
-                        {operator}
+                        {enabledConditionOperatorsHuman[operator]}
                     </option>
                 )
             })}
@@ -40,7 +44,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
                         })
                     }}
                 />
-                <label htmlFor={"trainStopUsesEnabledCondition"}>
+                <label className={CLASSES.labelElement} htmlFor={"trainStopUsesEnabledCondition"}>
                     Train stop uses 'enabled-condition'?
                 </label>
                 {enabledConditionOperatorHtml}

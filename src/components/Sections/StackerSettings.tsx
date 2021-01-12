@@ -36,7 +36,7 @@ export default function StackerSettings(props: iSectionsProps) {
                     }}
                 />
                 <label className={CLASSES.labelElement} htmlFor={"stackerNumberParallelLanes"}>
-                    Connect chests with green wire?
+                    # of parallel lanes
                 </label>
                 {myCheckbox("diagonalStacker")}
                 <label className={CLASSES.labelElement} htmlFor={"diagonalStacker"}>

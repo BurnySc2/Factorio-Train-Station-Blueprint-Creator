@@ -20,7 +20,7 @@ export default function WireSettings(props: iSectionsProps) {
                 onChange={(e) => {
                     props.setUserSettings({
                         ...props.userSettings,
-                        [keyName]: e.target.value,
+                        [keyName]: e.target.checked,
                     })
                 }}
             />
@@ -36,15 +36,15 @@ export default function WireSettings(props: iSectionsProps) {
                 </label>
                 {myCheckbox("connectBothSideWithGreenWire")}
                 <label className={CLASSES.labelElement} htmlFor={"connectBothSideWithGreenWire"}>
-                    Connect left and right side?
+                    Connect left and right side with green wire?
                 </label>
                 {myCheckbox("connectChestsWithRedWire")}
                 <label className={CLASSES.labelElement} htmlFor={"connectChestsWithRedWire"}>
-                    Connecet chests with red wire?
+                    Connect chests with red wire?
                 </label>
                 {myCheckbox("connectBothSideWithRedWire")}
                 <label className={CLASSES.labelElement} htmlFor={"connectBothSideWithRedWire"}>
-                    Connect left and right side?
+                    Connect left and right side with red wire?
                 </label>
             </div>
         </div>

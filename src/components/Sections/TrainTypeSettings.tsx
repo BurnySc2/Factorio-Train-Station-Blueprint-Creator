@@ -9,6 +9,7 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                 <input
                     className={CLASSES.checkboxElement}
                     type={"checkbox"}
+                    min={"0"}
                     id={"doubleHeaded"}
                     checked={props.userSettings.doubleHeaded}
                     onChange={(e) => {
@@ -24,6 +25,7 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                 <input
                     className={CLASSES.inputTextElement}
                     type={"number"}
+                    min={"0"}
                     id={"locomotivesPerEnd"}
                     value={props.userSettings.locomotivesPerEnd}
                     onChange={(e) => {
@@ -47,6 +49,21 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                 />
                 <label className={CLASSES.labelElement} htmlFor={"cargoWagon"}>
                     # cargo wagons
+                </label>
+                <input
+                    className={CLASSES.checkboxElement}
+                    type={"checkbox"}
+                    id={"includeTrainInBlueprint"}
+                    checked={props.userSettings.includeTrainInBlueprint}
+                    onChange={(e) => {
+                        props.setUserSettings({
+                            ...props.userSettings,
+                            includeTrainInBlueprint: e.target.checked,
+                        })
+                    }}
+                />
+                <label className={CLASSES.labelElement} htmlFor={"includeTrainInBlueprint"}>
+                    Include Train in Blueprint
                 </label>
             </div>
         </div>

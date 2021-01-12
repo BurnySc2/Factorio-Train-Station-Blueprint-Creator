@@ -18,7 +18,9 @@ export default function LampsSettings(props: iSectionsProps) {
                         })
                     }}
                 />
-                <label htmlFor={"placeLampsNearPoles"}>Place lamps near poles?</label>
+                <label className={CLASSES.labelElement} htmlFor={"placeLampsNearPoles"}>
+                    Place lamps near poles?
+                </label>
             </div>
         </div>
     )

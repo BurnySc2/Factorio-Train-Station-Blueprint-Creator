@@ -7,7 +7,7 @@ export let CLASSES = {
     background2: "bg-gray-800 flex flex-col",
 
     // Sections
-    section: "self-center border-black p-2 my-1 w-full bg-blue-700",
+    section: "self-center border-black p-1 my-1 w-full bg-blue-700",
     gridSection: "grid grid-cols-2 gap-2",
 
     // HTML Elements

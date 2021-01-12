@@ -1,16 +1,18 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
-import { refillFuelTypes } from "../../constants/constants"
+import { refillFuelTypes, refillFuelTypesHuman } from "../../constants/constants"
 
 export default function RefillSettings(props: iSectionsProps) {
     let fuelTypesHtml = (
         <select
             className={CLASSES.selectElement}
+            hidden={!props.userSettings.refillEnabled}
             value={props.userSettings.refillFuelType}
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
+                    // @ts-ignore
                     refillFuelType: e.target.value,
                 })
             }}
@@ -18,7 +20,7 @@ export default function RefillSettings(props: iSectionsProps) {
             {refillFuelTypes.map((fuelType) => {
                 return (
                     <option className={CLASSES.optionElement} key={fuelType} value={fuelType}>
-                        {fuelType}
+                        {refillFuelTypesHuman[fuelType]}
                     </option>
                 )
             })}
@@ -44,12 +46,17 @@ export default function RefillSettings(props: iSectionsProps) {
                     Refill at this Station?
                 </label>
                 {fuelTypesHtml}
-                <label className={CLASSES.labelElement} htmlFor={"fuelTypes"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={!props.userSettings.refillEnabled}
+                    htmlFor={"fuelTypes"}
+                >
                     Fuel Type
                 </label>
                 <input
                     type={"number"}
                     className={CLASSES.inputTextElement}
+                    hidden={!props.userSettings.refillEnabled}
                     value={props.userSettings.refillFuelAmount}
                     onChange={(e) => {
                         props.setUserSettings({
@@ -58,7 +65,11 @@ export default function RefillSettings(props: iSectionsProps) {
                         })
                     }}
                 />
-                <label className={CLASSES.labelElement} htmlFor={"fuelAmount"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={!props.userSettings.refillEnabled}
+                    htmlFor={"fuelAmount"}
+                >
                     Amount
                 </label>
             </div>

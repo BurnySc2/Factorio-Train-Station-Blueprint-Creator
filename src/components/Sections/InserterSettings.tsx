@@ -11,6 +11,7 @@ export default function InserterSettings(props: iSectionsProps) {
             className={CLASSES.selectElement}
             value={props.userSettings.inserterType}
             onChange={(e) => {
+                // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, inserterType: e.target.value })
             }}
         >
@@ -40,13 +41,18 @@ export default function InserterSettings(props: iSectionsProps) {
         })
     }
 
-    let newFilterInputField = (value: string, index: number) => {
+    let isFilterInserter = props.userSettings.enableFilterInserters
+
+    let newFilterInputField = (index: number) => {
         return (
             <input
                 key={`${index}`}
                 className={CLASSES.inputTextElement}
-                value={value}
-                placeholder={index === 0 ? "Filter 1 - e.g. 'iron-ore'" : `Filter ${index + 1}`}
+                hidden={!isFilterInserter}
+                value={props.userSettings.filterFields[index]}
+                placeholder={
+                    index === 0 ? "Filter 1 - e.g. 'iron-ore'" : `Filter ${index + 1} item type`
+                }
                 onChange={(e) => {
                     setValueAtIndex(props.userSettings.filterFields, e.target.value, index)
                 }}
@@ -54,29 +60,17 @@ export default function InserterSettings(props: iSectionsProps) {
         )
     }
 
-    let filterInserterInputFields = []
-    if (props.userSettings.enableFilterInserters) {
-        // Insert up to 5 filter input fields that are gonna be used in each filter-inserter
-        for (let index = 0; index < 5; index++) {
-            if (
-                props.userSettings.filterFields[index] !== undefined &&
-                props.userSettings.filterFields[index] !== ""
-            ) {
-                // lastFilledFieldIndex++
-                let field = props.userSettings.filterFields[index]
-                filterInserterInputFields.push(newFilterInputField(field, index))
-            } else {
-                break
-            }
+    // let filterInserterInputFields = []
+    let previousIsEmpty = -1
+    let filterInserterInputFields = new Array(5).fill(0).map((_, index) => {
+        if (previousIsEmpty !== -1 && previousIsEmpty < index) {
+            return undefined
         }
-
-        // Insert the last input field if it is less than 5
-        if (filterInserterInputFields.length < 5) {
-            filterInserterInputFields.push(
-                newFilterInputField("", filterInserterInputFields.length)
-            )
+        if (props.userSettings.filterFields[index] === "") {
+            previousIsEmpty = index
         }
-    }
+        return newFilterInputField(index)
+    })
 
     return (
         <div className={CLASSES.section}>
