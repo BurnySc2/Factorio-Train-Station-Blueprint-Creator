@@ -1,0 +1,4 @@
+select {
+    /*Fix for chrome: centering select fields*/
+    text-align-last: center;
+}

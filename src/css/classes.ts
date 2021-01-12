@@ -14,8 +14,8 @@ export let CLASSES = {
     checkboxElement: "h-full place-self-center",
     labelElement: "w-full text-white",
     inputTextElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
-    selectElement: "border-2 border-gray-600 text-center w-full bg-blue-900 text-white",
+    selectElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
     buttonElement: "border-2 border-gray-600 m-auto px-4 py-1 text-white rounded hover:bg-blue-300",
     // How to change styling for options??
-    optionElement: "",
+    optionElement: "text-center",
 }
