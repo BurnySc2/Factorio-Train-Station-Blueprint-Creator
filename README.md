@@ -52,7 +52,7 @@ npm run build
 ```
 
 ### Prettier autoformatting
-`prettier --write "**/*.{ts,tsx}"`
+`prettier --write "src/**/*.{ts,tsx}"`
 
 ### Eslint
 `npx eslint src/.`

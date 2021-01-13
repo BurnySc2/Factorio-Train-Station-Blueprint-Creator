@@ -64,7 +64,7 @@ export default function WireSettings(props: iSectionsProps): JSX.Element {
                     hidden={hiddenWhenFluidStation || hiddenWhenNotBothSides}
                     htmlFor={"connectBothSideWithGreenWire"}
                 >
-                    Connect left and right side with green wire?
+                    Connect both sides with green wire?
                 </label>
                 {myCheckbox("connectChestsWithRedWire")}
                 <label
@@ -90,7 +90,7 @@ export default function WireSettings(props: iSectionsProps): JSX.Element {
                     hidden={hiddenWhenFluidStation || hiddenWhenNotBothSides}
                     htmlFor={"connectBothSideWithRedWire"}
                 >
-                    Connect left and right side with red wire?
+                    Connect both sides with red wire?
                 </label>
             </div>
         </div>
