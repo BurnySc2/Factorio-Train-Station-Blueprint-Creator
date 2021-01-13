@@ -74,8 +74,11 @@ export let enabledConditionOperators = [">", "<"] as const
 export let enabledConditionOperatorsHuman = { ">": "> (more than)", "<": "< (less than)" } as const
 
 export let defaultSettings = {
+    // Global tooltip text
+    tooltipText: "",
+
     // Station type
-    stationType: [...stationTypes][4],
+    stationType: [...stationTypes][0],
     stationName: "",
     trainLimit: "",
 

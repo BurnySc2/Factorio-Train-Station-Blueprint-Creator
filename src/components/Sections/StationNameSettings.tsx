@@ -1,6 +1,7 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function StationNameSettings(props: iSectionsProps) {
     return (
@@ -22,6 +23,7 @@ export default function StationNameSettings(props: iSectionsProps) {
                     className={CLASSES.inputTextElement}
                     type={"number"}
                     placeholder={"Train limit"}
+                    data-tip={TOOLTIPS.trainLimit}
                     value={props.userSettings.trainLimit}
                     min={"-1"}
                     onChange={(e) => {

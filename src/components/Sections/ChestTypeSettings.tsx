@@ -2,6 +2,7 @@ import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { chestTypes, chestTypesHuman } from "../../constants/constants"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function ChestTypeSettings(props: iSectionsProps) {
     let chestTypesHtml = (
@@ -9,6 +10,7 @@ export default function ChestTypeSettings(props: iSectionsProps) {
             id={"chestTypes"}
             className={CLASSES.selectElement}
             value={props.userSettings.chestType}
+            data-tip={TOOLTIPS.chestType}
             onChange={(e) => {
                 // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, chestType: e.target.value })
@@ -43,6 +45,7 @@ export default function ChestTypeSettings(props: iSectionsProps) {
                 <input
                     className={CLASSES.inputTextElement}
                     hidden={!isRequesterChest}
+                    list={"itemlist"}
                     key={`${index} chestRequestItemsType`}
                     type={"text"}
                     value={props.userSettings.chestRequestItemsType[index]}
@@ -95,6 +98,7 @@ export default function ChestTypeSettings(props: iSectionsProps) {
                     className={CLASSES.inputTextElement}
                     type={"number"}
                     value={props.userSettings.chestLimit}
+                    data-tip={TOOLTIPS.chestLimit}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,

@@ -1,4 +1,4 @@
-import { defaultSettings } from "../constants/constants"
+import { botChestTypes, defaultSettings } from "../constants/constants"
 import { iBlueprintItem } from "../constants/interfaces"
 import {
     getTrainArray,
@@ -62,11 +62,18 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
 
         // Mirrorable items
         let rightSideItems: iBlueprintItem[] = []
-        if (bpSettings.stationType === "Loading Station") {
-            rightSideItems = [...rightSideItems, ...placeLoadingBelts(bpSettings)]
-        } else {
-            // Unloading station
-            rightSideItems = [...rightSideItems, ...placeUnloadingBelts(bpSettings)]
+        // Exclude belts and splitters (and without splitters: no vertical belts) if chest type uses bots
+        // @ts-ignore
+        if (!botChestTypes.includes(bpSettings.chestType)) {
+            let newSplitters = placeSplitters(bpSettings)
+            changeItemsCoordinates(newSplitters, 0, stationYOffset)
+            rightSplitters = [...rightSplitters, ...newSplitters]
+            if (bpSettings.stationType === "Loading Station") {
+                rightSideItems = [...rightSideItems, ...placeLoadingBelts(bpSettings)]
+            } else {
+                // Unloading station
+                rightSideItems = [...rightSideItems, ...placeUnloadingBelts(bpSettings)]
+            }
         }
         rightSideItems = [...rightSideItems, ...placeInserters(bpSettings)]
 
@@ -118,10 +125,6 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
         liquid load/unload
         stacker
          */
-
-        let newSplitters = placeSplitters(bpSettings)
-        changeItemsCoordinates(newSplitters, 0, stationYOffset)
-        rightSplitters = [...rightSplitters, ...newSplitters]
 
         // Combine left and right side items
         stationItems = [

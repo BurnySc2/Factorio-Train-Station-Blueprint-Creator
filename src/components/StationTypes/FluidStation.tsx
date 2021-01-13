@@ -25,12 +25,12 @@ export default function FluidStation(props: iSectionsProps) {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
+                </div>
+                <div>
                     <RefillSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                </div>
-                <div>
                     <WireSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}

@@ -8,20 +8,11 @@ const zlib = require("zlib")
 export const createBlueprint = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     /*
     TODO
-    liquid:
-    create pumps
-    create storage tanks
-    connect tanks with pipe
+    Add template for github:
+    new feature or issue description
+    in what circumstances the feature would be used (explain why your feature is useful)
+    issue: which setting creates the bug and what is the bug (explain your bug)
 
-    stacker:
-    create stacker
-
-    warnings / errors:
-    invalid number (not able to parseint, entry missing)
-    sequential should be used together with "train enabled condition"
-    "train enabled condition" should be used with at least "connect chests with green wire
-
-    tooltips
      */
 
     if (["Loading Station", "Unloading Station"].includes(bpSettings.stationType)) {

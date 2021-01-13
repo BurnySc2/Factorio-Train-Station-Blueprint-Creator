@@ -1,9 +1,19 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
-import { beltFlowDirections, beltSides, beltTypes, beltTypesHuman } from "../../constants/constants"
+import {
+    beltFlowDirections,
+    beltSides,
+    beltTypes,
+    beltTypesHuman,
+    botChestTypes,
+} from "../../constants/constants"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function BeltTypeSettings(props: iSectionsProps) {
+    // @ts-ignore
+    let hideIfBotChests = botChestTypes.includes(props.userSettings.chestType)
+
     let beltTypesHtml = (
         <select
             id={"beltType"}
@@ -48,6 +58,7 @@ export default function BeltTypeSettings(props: iSectionsProps) {
             id={"beltFlow"}
             className={CLASSES.selectElement}
             value={props.userSettings.beltFlowDirection}
+            data-tip={TOOLTIPS.beltFlow}
             onChange={(e) => {
                 // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value })
@@ -64,23 +75,8 @@ export default function BeltTypeSettings(props: iSectionsProps) {
     )
 
     return (
-        <div className={CLASSES.section}>
+        <div className={CLASSES.section} hidden={hideIfBotChests}>
             <div className={CLASSES.gridSection}>
-                <input
-                    className={CLASSES.checkboxElement}
-                    type={"checkbox"}
-                    id={"enableBelts"}
-                    checked={props.userSettings.beltsEnabled}
-                    onChange={(e) => {
-                        props.setUserSettings({
-                            ...props.userSettings,
-                            beltsEnabled: e.target.checked,
-                        })
-                    }}
-                />
-                <label className={CLASSES.labelElement} htmlFor={"enableBelts"}>
-                    Enable Belts
-                </label>
                 {beltTypesHtml}
                 <label className={CLASSES.labelElement} htmlFor={"beltType"}>
                     Belt Type

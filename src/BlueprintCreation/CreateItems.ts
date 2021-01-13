@@ -1,5 +1,6 @@
 import { iBlueprintItem, iBlueprintItemWithoutNumber, iWireColor } from "../constants/interfaces"
 import {
+    botChestTypes,
     defaultSettings,
     DIRECTION,
     filterInserters,
@@ -33,7 +34,7 @@ export const newItem = (
         }>
         request_from_buffers?: boolean
         station?: string
-        manual_trains_limit?: string
+        manual_trains_limit?: number
         control_behavior?: {
             decider_conditions?: {
                 first_signal: {
@@ -258,7 +259,9 @@ export const placeTrainStop = (bpSettings: typeof defaultSettings) => {
     let options = {
         station: bpSettings.stationName !== "" ? bpSettings.stationName : undefined,
         manual_trains_limit:
-            parseInt(bpSettings.trainLimit) >= 0 ? bpSettings.trainLimit : undefined,
+            bpSettings.trainLimit !== "" && parseInt(bpSettings.trainLimit) >= 0
+                ? parseInt(bpSettings.trainLimit)
+                : undefined,
         control_behavior: controlBehavior,
     }
     returnArray.push(newItem("train-stop", 0.5, -2, options))
@@ -309,7 +312,7 @@ export const placeInserters = (bpSettings: typeof defaultSettings) => {
     if (bpSettings.enableFilterInserters) {
         filterArray = []
         for (let i = 0; i < 5; i++) {
-            if (!bpSettings.filterFields[i] || bpSettings.filterFields[i] === "") break
+            if (bpSettings.filterFields[i] === "") break
             filterArray.push({
                 index: i + 1,
                 name: bpSettings.filterFields[i],
@@ -324,12 +327,16 @@ export const placeInserters = (bpSettings: typeof defaultSettings) => {
                 filters: filterArray,
             })
         )
-        returnArray.push(
-            newItem(inserterType, 2, y + 0.5, {
-                direction: inserterDirection,
-                filters: filterArray,
-            })
-        )
+
+        // @ts-ignore
+        if (!botChestTypes.includes(bpSettings.chestType)) {
+            returnArray.push(
+                newItem(inserterType, 2, y + 0.5, {
+                    direction: inserterDirection,
+                    filters: filterArray,
+                })
+            )
+        }
     })
     return returnArray
 }
@@ -347,14 +354,16 @@ export const placeChests = (bpSettings: typeof defaultSettings) => {
         count: number
     }> = []
     if (isRequesterChest) {
-        bpSettings.chestRequestItemsType.forEach((itemType, index) => {
-            let itemAmount = bpSettings.chestRequestItemsAmount[index]
+        for (let i = 0; i < 12; i++) {
+            let itemType = bpSettings.chestRequestItemsType[i]
+            if (itemType === "") break
+            let itemAmount = bpSettings.chestRequestItemsAmount[i]
             requests.push({
-                index: index + 1,
+                index: i + 1,
                 name: itemType,
-                count: itemAmount,
+                count: parseInt(itemAmount),
             })
-        })
+        }
     }
 
     let requestFromBuffers =
@@ -366,7 +375,7 @@ export const placeChests = (bpSettings: typeof defaultSettings) => {
         returnArray.push(
             newItem(bpSettings.chestType, 1, y + 0.5, {
                 bar: parseInt(bpSettings.chestLimit),
-                request_filters: requests,
+                request_filters: requests.length === 0 ? undefined : requests,
                 request_from_buffers: requestFromBuffers,
             })
         )
@@ -623,7 +632,7 @@ export const placeLamps = (bpSettings: typeof defaultSettings) => {
 export const placeDecider = (bpSettings: typeof defaultSettings) => {
     let returnArray: iBlueprintItem[] = []
     returnArray.push(
-        newItem("decider-combinator", 0, 0, {
+        newItem("decider-combinator", 0, 1, {
             control_behavior: {
                 decider_conditions: {
                     first_signal: {
@@ -713,7 +722,7 @@ export const connectTwoEntitiesWithWire = (
         if (!entity.connections[conNumber]) {
             entity.connections[conNumber] = {}
         }
-        // @ts-ignore - no clue why this is still giving me a warning that it could be undefined
+        // @ts-ignore
         if (!entity.connections[conNumber][color]) {
             // @ts-ignore
             entity.connections[conNumber][color] = []

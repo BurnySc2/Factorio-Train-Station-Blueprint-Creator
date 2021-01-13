@@ -18,4 +18,11 @@ export let CLASSES = {
     buttonElement: "border-2 border-gray-600 m-auto px-4 py-1 text-white rounded hover:bg-blue-300",
     // Styling doesnt apply for firefox, but works in chrome
     optionElement: "text-center text-white bg-blue-900",
+
+    footerElements: "text-center text-gray-500",
+
+    // Error message field
+    errorMessageElement:
+        "text-center text-red-500 text-2xl m-1 p-2 border-2 border-red-500 bg-blue-800",
+    warningMessageElement: "text-center text-yellow-500 text-xl m-1 px-2 bg-blue-800",
 }

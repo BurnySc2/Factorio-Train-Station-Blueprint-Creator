@@ -84,5 +84,5 @@ export interface iBlueprintItem {
     // station name
     station?: string
     // Train limit at this station - how many trains may go to this station
-    manual_trains_limit?: string
+    manual_trains_limit?: number
 }

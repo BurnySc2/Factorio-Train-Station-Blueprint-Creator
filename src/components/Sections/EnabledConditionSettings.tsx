@@ -5,11 +5,15 @@ import {
     enabledConditionOperators,
     enabledConditionOperatorsHuman,
 } from "../../constants/constants"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function EnabledConditionSettings(props: iSectionsProps) {
+    let hideIfCheckboxDisabled = !props.userSettings.trainStopUsesEnabledCondition
+
     let enabledConditionOperatorHtml = (
         <select
             className={CLASSES.selectElement}
+            hidden={hideIfCheckboxDisabled}
             value={props.userSettings.enabledConditionOperator}
             onChange={(e) => {
                 props.setUserSettings({
@@ -37,6 +41,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
                     type={"checkbox"}
                     id={"trainStopUsesEnabledCondition"}
                     checked={props.userSettings.trainStopUsesEnabledCondition}
+                    data-tip={TOOLTIPS.trainStopUsesEnabledCondition}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,
@@ -48,10 +53,10 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
                     Train stop uses 'enabled-condition'?
                 </label>
                 {enabledConditionOperatorHtml}
-                {/*<input type={"text"} value={props.userSettings.enabledConditionOperator} onChange={} />*/}
                 <input
                     type={"number"}
                     className={CLASSES.selectElement}
+                    hidden={hideIfCheckboxDisabled}
                     placeholder={"Amount of items"}
                     value={props.userSettings.enabledConditionAmount}
                     onChange={(e) => {

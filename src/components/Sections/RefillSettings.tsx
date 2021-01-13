@@ -2,6 +2,7 @@ import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { refillFuelTypes, refillFuelTypesHuman } from "../../constants/constants"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function RefillSettings(props: iSectionsProps) {
     let fuelTypesHtml = (
@@ -35,6 +36,7 @@ export default function RefillSettings(props: iSectionsProps) {
                     type={"checkbox"}
                     id={"refillEnabled"}
                     checked={props.userSettings.refillEnabled}
+                    data-tip={TOOLTIPS.refillEnabled}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,

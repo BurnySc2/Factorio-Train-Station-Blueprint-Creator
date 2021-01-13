@@ -1,48 +1,55 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Factorio - Train Station Blueprint Creator
 
-## Available Scripts
+[Live version here](https://burnysc2.github.io/Factorio-Train-Station-Blueprint-Creator/)
 
-In the project directory, you can run:
+This website used to be a [mod](https://mods.factorio.com/mod/BurnysTSBC) which turned into a [website](https://burnysc2.github.io/Factorio/Tools/BurnysTSBC/) (so one could use it in a multiplayer server without having to install the mod on the server).
 
-### `npm start`
+This website makes it easier to create large train stations for the game [Factorio](https://factorio.com/). 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
+- Load/unload for normal (inserter+chests) and fluid (pumps+storage tanks) stations
+- Supports single and [double headed](https://forums.factorio.com/viewtopic.php?t=53937) trains
+- Variable inserter types, belt types, chest types (use logistic chests for bot loading / unloading)
+- Optional filter inserters (up to 5 resource types)
+- Connect all chests / storage tanks with green / red wire
+- Choice which side of the train stations should be used (left, right, both)
+- Beltflow towards the front or back of the station
+- [Chest limiting](https://wiki.factorio.com/Stack#Stack_limitation)
+- Automatic locomotive refuel (with requester chests for fuel near locomotives)
+- Automatic lamps, poles, and signal placement
+- [Sequential stations](https://www.reddit.com/r/factorio/comments/67xuyq/apologies_if_im_late_the_new_train_stop_interface/): multiple stations in a row (disable station if next station is free)
+- [Stackers](https://www.youtube.com/watch?v=x6-P74xYvYg) (vertical and diagonal): let trains wait in queue before using the station
+- [Train limit per station](https://factorio.com/blog/post/fff-361)
+- [Include train in the blueprint](https://www.factorio.com/blog/post/fff-263)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+![A normal train station](screenshots/station2-8-2.png "A normal train station")
+![A fluid station](screenshots/station-fluid.png "A fluid station")
+![Sequential with lights](screenshots/sequential-with-lights.png "Sequential with lights")
+![Left-left vertical stacker](screenshots/stacker-left-left-1-4-1.png "Left-left vertical stacker")
+![Diagonal stacker](screenshots/stacker-diagonal.png "Diagonal stacker")
+![A huge station](screenshots/station2-100-2.png "A huge station")
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Development
+### Requirements
 
-### `npm run build`
+- Node (npm)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Updating the item list
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Go to [this website](https://github.com/kevinta893/factorio-recipes-json) and download the `recipes.json` file. Place it in `src/constants/` as file `itemlist.json`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Start development mode
+```
+npm install
+npm run start
+```
 
-### `npm run eject`
+### Build the project
+```
+npm run build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Prettier autoformatting
-
-`prettier --write "**/*.ts"`
+### Prettier autoformatting
+`prettier --write "**/*.{ts,tsx}"`

@@ -1,6 +1,7 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function TrainTypeSettings(props: iSectionsProps) {
     let hideIfDiagonalStacker =
@@ -13,6 +14,7 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                     type={"checkbox"}
                     min={"0"}
                     id={"doubleHeaded"}
+                    data-tip={TOOLTIPS.doubleHeaded}
                     checked={props.userSettings.doubleHeaded}
                     onChange={(e) => {
                         props.setUserSettings({
@@ -57,6 +59,7 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                     hidden={hideIfDiagonalStacker}
                     type={"checkbox"}
                     id={"includeTrainInBlueprint"}
+                    data-tip={TOOLTIPS.includeTrainInBlueprint}
                     checked={props.userSettings.includeTrainInBlueprint}
                     onChange={(e) => {
                         props.setUserSettings({

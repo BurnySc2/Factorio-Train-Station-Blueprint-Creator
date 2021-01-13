@@ -1,6 +1,7 @@
 import React from "react"
 import { CLASSES } from "../../css/classes"
 import { iSectionsProps } from "../../constants/interfaces"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function SequentialStationSettings(props: iSectionsProps) {
     return (
@@ -10,6 +11,7 @@ export default function SequentialStationSettings(props: iSectionsProps) {
                     className={CLASSES.checkboxElement}
                     type={"checkbox"}
                     id={"sequentialStation"}
+                    data-tip={TOOLTIPS.sequentialStation}
                     checked={props.userSettings.sequentialStation}
                     onChange={(e) => {
                         props.setUserSettings({
@@ -47,6 +49,7 @@ export default function SequentialStationSettings(props: iSectionsProps) {
                     hidden={!props.userSettings.sequentialStation}
                     type={"checkbox"}
                     id={"sequantialStationBeltsGoAllTheWay"}
+                    data-tip={TOOLTIPS.sequantialStationBeltsGoAllTheWay}
                     checked={props.userSettings.sequantialStationBeltsGoAllTheWay}
                     onChange={(e) => {
                         props.setUserSettings({

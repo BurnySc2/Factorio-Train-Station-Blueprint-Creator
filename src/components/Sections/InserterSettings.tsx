@@ -2,6 +2,7 @@ import React from "react"
 import { inserterTypes } from "../../constants/constants"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function InserterSettings(props: iSectionsProps) {
     // All inserter types
@@ -49,6 +50,7 @@ export default function InserterSettings(props: iSectionsProps) {
                 key={`${index}`}
                 className={CLASSES.inputTextElement}
                 hidden={!isFilterInserter}
+                list={"itemlist"}
                 value={props.userSettings.filterFields[index]}
                 placeholder={
                     index === 0 ? "Filter 1 - e.g. 'iron-ore'" : `Filter ${index + 1} item type`
@@ -83,6 +85,7 @@ export default function InserterSettings(props: iSectionsProps) {
                     className={CLASSES.checkboxElement}
                     id={"filterInserterEnabled"}
                     type={"checkbox"}
+                    data-tip={TOOLTIPS.enableFilterInserters}
                     checked={props.userSettings.enableFilterInserters}
                     onChange={(e) => {
                         props.setUserSettings({

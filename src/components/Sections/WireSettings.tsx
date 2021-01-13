@@ -1,6 +1,7 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
+import TOOLTIPS from "../../constants/tooltips"
 
 export default function WireSettings(props: iSectionsProps) {
     let normalTypes = ["Loading Station", "Unloading Station"]
@@ -25,6 +26,7 @@ export default function WireSettings(props: iSectionsProps) {
                 type={"checkbox"}
                 id={keyName}
                 checked={props.userSettings[keyName]}
+                data-tip={TOOLTIPS[keyName]}
                 onChange={(e) => {
                     props.setUserSettings({
                         ...props.userSettings,
