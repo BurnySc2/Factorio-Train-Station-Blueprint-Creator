@@ -5,7 +5,7 @@ module.exports = {
     },
     purge: {
         enabled: true,
-        content: ["./src/**/*.{html,tsx}"]
+        content: ["./src/**/*.{tsx,ts}"]
     },
     theme: {
         extend: {},
