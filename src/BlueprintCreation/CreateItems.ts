@@ -284,7 +284,6 @@ export const placeTrain = (bpSettings: typeof defaultSettings): iBlueprintItem[]
     const locoCount = parseInt(bpSettings.locomotivesPerEnd)
     const cargoCount = parseInt(bpSettings.cargoWagon)
     parseInt(bpSettings.cargoWagon)
-    // TODO Check if user wants train to be placed
     getTrainArray(bpSettings).forEach((y, i) => {
         if (i % 7 !== 0) return
         if (count < locoCount) {

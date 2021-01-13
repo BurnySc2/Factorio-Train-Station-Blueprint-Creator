@@ -119,12 +119,6 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
             stationItems = [...stationItems, ...placeTrain(bpSettings)]
         }
 
-        /*
-        TODO
-        liquid load/unload
-        stacker
-         */
-
         // Combine left and right side items
         stationItems = [
             ...stationItems,

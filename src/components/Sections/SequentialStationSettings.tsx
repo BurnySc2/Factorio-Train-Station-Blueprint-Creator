@@ -20,7 +20,6 @@ export default function SequentialStationSettings(props: iSectionsProps): JSX.El
                         })
                     }}
                 />
-                {/*TODO Add tooltips explaining the option*/}
                 <label className={CLASSES.labelElement} htmlFor={"sequentialStation"}>
                     Sequential Station?
                 </label>

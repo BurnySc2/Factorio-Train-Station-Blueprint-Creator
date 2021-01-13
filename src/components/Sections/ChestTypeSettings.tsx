@@ -111,7 +111,6 @@ export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
                 <label className={CLASSES.labelElement} htmlFor={"chestTypes"}>
                     Chest limit
                 </label>
-                {/*TODO hide if request or buffer chest is NOT selected*/}
                 <input
                     className={CLASSES.checkboxElement}
                     hidden={!canRequestFromBufferChests}

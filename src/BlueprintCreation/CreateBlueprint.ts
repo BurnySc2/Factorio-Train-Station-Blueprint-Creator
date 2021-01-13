@@ -7,15 +7,6 @@ import { createStacker } from "./CreateStacker"
 const zlib = require("zlib")
 
 export const createBlueprint = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
-    /*
-    TODO
-    Add template for github:
-    new feature or issue description
-    in what circumstances the feature would be used (explain why your feature is useful)
-    issue: which setting creates the bug and what is the bug (explain your bug)
-
-     */
-
     if (["Loading Station", "Unloading Station"].includes(bpSettings.stationType)) {
         return createNormalStation(bpSettings)
     }

@@ -34,7 +34,6 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         const stationYOffset = (getTrainArray(bpSettings).length + 2) * stationNumber
 
         let stationItems: iBlueprintItem[] = []
-        // TODO place storage tanks and connect them with wire
         // Sorting not required?
         const rightStorageTanks: iBlueprintItem[] = placeStorageTanks(bpSettings)
         const leftStorageTanks: iBlueprintItem[] = mirrorItemsHorizontal(rightStorageTanks)
@@ -62,7 +61,6 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         const leftPipes = mirrorItemsHorizontal(rightPipes)
 
         // Combine remaining items which were already mirrored and offset-ed
-        // TODO Add storage tanks here
         if (bpSettings.placeLampsNearPoles) {
             const rightLamps = placeLamps(bpSettings)
             const leftLamps = mirrorItemsHorizontal(rightLamps)
@@ -88,7 +86,6 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
                 // Combine decider and trainstop with green wire
                 connectTwoEntitiesWithWire(decider, trainStop, "green", "2", "1")
                 // Combine decider and poles with green wire
-                // TODO Connect storage tank with pole
                 const storageTanks = mixSides(
                     bpSettings.pumpSidesToBeUsed,
                     leftStorageTanks,
@@ -105,12 +102,6 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         if (bpSettings.includeTrainInBlueprint) {
             stationItems = [...stationItems, ...placeTrain(bpSettings)]
         }
-
-        /*
-        TODO
-        liquid load/unload
-        stacker
-         */
 
         // Combine left and right side items
         stationItems = [
