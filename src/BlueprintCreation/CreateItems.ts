@@ -1,4 +1,9 @@
-import { iBlueprintItem, iBlueprintItemWithoutNumber, iWireColor } from "../constants/interfaces"
+import {
+    iBlueprintItem,
+    iBlueprintItemWithoutNumber,
+    iEntityId,
+    iWireColor,
+} from "../constants/interfaces"
 import {
     botChestTypes,
     defaultSettings,
@@ -696,17 +701,23 @@ export const connectTwoEntitiesWithWire = (
         if (!entity.connections[conNumber]) {
             entity.connections[conNumber] = {}
         }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        if (!entity.connections[conNumber][color]) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            entity.connections[conNumber][color] = []
+        const entityColor = entity.connections[conNumber] as {
+            red?: iEntityId[]
+            green?: iEntityId[]
         }
+        if (!entityColor[color]) {
+            entityColor[color] = []
+        }
+        // Or in short but typescript doesnt let me:
+        // if (!entity.connections[conNumber][color]) {
+        //     entity.connections[conNumber][color] = []
+        // }
     }
 
     createWirePath(entity1, entity1ConNumber)
     createWirePath(entity2, entity2ConNumber)
+
+    // Let me know if you come up with a readable solution for this:
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     entity1.connections[entity1ConNumber][color].push({ entity_id: entity2Number })

@@ -55,4 +55,4 @@ npm run build
 `prettier --write "**/*.{ts,tsx}"`
 
 ### Eslint
-`npx eslint .`
+`npx eslint src/.`

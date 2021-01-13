@@ -8,7 +8,7 @@ export interface iSectionsProps {
 export type iBlueprint = iBlueprintItem[]
 export type iWireColor = "green" | "red"
 
-type iEntityId = { entity_id: number }
+export type iEntityId = { entity_id: number }
 
 export interface iBlueprintItemWithoutNumber {
     name: string
