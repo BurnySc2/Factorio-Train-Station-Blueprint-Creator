@@ -57,15 +57,20 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): s
             }
         }
     }
+    if (parseInt(bpSettings.locomotivesPerEnd) < 0) {
+        return "The given locomotives amount is invalid."
+    }
+    if (parseInt(bpSettings.cargoWagon) < 0) {
+        return "The given cargo wagon amount is invalid."
+    }
+    if (bpSettings.stationType === "Stacker") {
+        if (parseInt(bpSettings.stackerNumberParallelLanes) < 0) {
+            return "Invalid number of parallel stacker lanes."
+        }
+    }
     if (bpSettings.stationType !== "Stacker") {
         if (bpSettings.sequentialStation && parseInt(bpSettings.sequentialStationsAmount) < 0) {
             return "The given sequential stations amount is invalid."
-        }
-        if (parseInt(bpSettings.locomotivesPerEnd) < 0) {
-            return "The given locomotives amount is invalid."
-        }
-        if (parseInt(bpSettings.cargoWagon) < 0) {
-            return "The given cargo wagon amount is invalid."
         }
         if (parseInt(bpSettings.chestLimit) < 0) {
             return "The given chest limit is invalid."
