@@ -122,7 +122,7 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     for (let i = 0; i < parseInt(bpSettings.stackerNumberParallelLanes); i++) {
         if (bpSettings.stackerType === "Left-Right") {
-            allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, i * 4)]
+            allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, i * 4, 0)]
         } else {
             allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, 0, i * 4)]
         }

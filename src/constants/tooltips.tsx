@@ -1,5 +1,5 @@
 const TOOLTIPS = {
-    trainLimit: "Limits the amount of trains that will be at most going to this station.",
+    trainLimit: "Limits the amount of trains that will be at going to this station.",
     sequentialStation:
         "Puts multiple stations with these settings in a row.<br>Stations will be disabled if the next station is free.<br>This makes it so trains go to the first station first, then to the second station and so on.",
     sequantialStationBeltsGoAllTheWay:

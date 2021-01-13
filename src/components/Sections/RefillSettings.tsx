@@ -59,6 +59,7 @@ export default function RefillSettings(props: iSectionsProps): JSX.Element {
                     className={CLASSES.inputTextElement}
                     hidden={!props.userSettings.refillEnabled}
                     value={props.userSettings.refillFuelAmount}
+                    min={"0"}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,

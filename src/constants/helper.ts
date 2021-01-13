@@ -5,7 +5,7 @@ const verifyNumberInput = (myInput: string) => {
 }
 
 export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSettings): string => {
-    if (parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon) > 1000) {
+    if (parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon) > 200) {
         return "Your amount of locomotives and cargo wagons is extremely high and might crash your browser!"
     }
     if (
@@ -14,7 +14,12 @@ export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSetting
         bpSettings.sequentialStation &&
         parseInt(bpSettings.sequentialStationsAmount) > 20
     ) {
-        return "Your amount of sequential stations is extremely high and might crash your browser!"
+        return "Your amount of sequential stations is extremely high and may crash your browser!"
+    }
+    if (bpSettings.stationType === "Stacker") {
+        if (parseInt(bpSettings.stackerNumberParallelLanes) > 100) {
+            return "Your amount of parallel stacker lanes is extremely high and may crash your browser!"
+        }
     }
     if (bpSettings.stationType !== "Stacker") {
         if (bpSettings.trainStopUsesEnabledCondition && !bpSettings.connectChestsWithGreenWire) {
@@ -53,10 +58,25 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): s
         }
     }
     if (bpSettings.stationType !== "Stacker") {
+        if (bpSettings.sequentialStation && parseInt(bpSettings.sequentialStationsAmount) < 0) {
+            return "The given sequential stations amount is invalid."
+        }
+        if (parseInt(bpSettings.locomotivesPerEnd) < 0) {
+            return "The given locomotives amount is invalid."
+        }
+        if (parseInt(bpSettings.cargoWagon) < 0) {
+            return "The given cargo wagon amount is invalid."
+        }
+        if (parseInt(bpSettings.chestLimit) < 0) {
+            return "The given chest limit is invalid."
+        }
+        if (bpSettings.refillEnabled && parseInt(bpSettings.refillFuelAmount) < 0) {
+            return "The given fuel amount is invalid."
+        }
         if (bpSettings.trainLimit !== "" && !verifyNumberInput(bpSettings.trainLimit)) {
             return "The given 'Train limit' is not a number."
         }
-        if (!verifyNumberInput(bpSettings.chestLimit)) {
+        if (bpSettings.chestLimit != "" && !verifyNumberInput(bpSettings.chestLimit)) {
             return "The given chest limit is not a number."
         }
         if (bpSettings.refillEnabled && !verifyNumberInput(bpSettings.refillFuelAmount)) {

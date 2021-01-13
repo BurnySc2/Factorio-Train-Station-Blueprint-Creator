@@ -97,7 +97,13 @@ export default function Website(): JSX.Element {
                         Generate Blueprint
                     </button>
                     <input
-                        className={`${CLASSES.inputTextElement} my-2`}
+                        className={`${CLASSES.inputTextElement} my-1`}
+                        hidden={blueprintString.length === 0}
+                        value={`Blueprint length: ${blueprintString.length}`}
+                        readOnly
+                    />
+                    <input
+                        className={`${CLASSES.inputTextElement} my-1`}
                         placeholder={"Blueprint string will be generated here."}
                         value={blueprintString}
                         readOnly
