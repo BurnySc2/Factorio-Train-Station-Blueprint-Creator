@@ -13,22 +13,23 @@ import ErrorMessage from "./ErrorMessage"
 import { checkForHintsBlueprintSettings, validateBlueprintSettings } from "../constants/helper"
 import ReactTooltip from "react-tooltip"
 import itemlist from "../constants/itemlist.json"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloneDeep = require("clone-deep")
 
-export default function Website(props: any) {
-    let [userSettings, setUserSettings] = useState(cloneDeep(defaultSettings))
-    let [blueprintString, setBlueprintString] = useState("")
-    let [warningMessage, setWarningMessage] = useState("")
-    let [errorMessage, setErrorMessage] = useState("")
+export default function Website(): JSX.Element {
+    const [userSettings, setUserSettings] = useState(cloneDeep(defaultSettings))
+    const [blueprintString, setBlueprintString] = useState("")
+    const [warningMessage, setWarningMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
-        let newWarningMessage = checkForHintsBlueprintSettings(userSettings)
+        const newWarningMessage = checkForHintsBlueprintSettings(userSettings)
         setWarningMessage(newWarningMessage)
-        let newErrorMessage = validateBlueprintSettings(userSettings)
+        const newErrorMessage = validateBlueprintSettings(userSettings)
         setErrorMessage(newErrorMessage)
     }, [userSettings])
 
-    let stationTypeSelect = (
+    const stationTypeSelect = (
         <select
             className={CLASSES.selectElement}
             value={userSettings.stationType}
@@ -64,7 +65,7 @@ export default function Website(props: any) {
 
     // Creates the datalist item names to make it easier for autocomplete
     // Source: https://github.com/kevinta893/factorio-recipes-json recipes.json
-    let itemdatalist = (
+    const itemdatalist = (
         <datalist id={"itemlist"}>
             {itemlist.map((itemInfo) => {
                 return <option key={itemInfo.id} value={itemInfo.id} />
@@ -85,7 +86,7 @@ export default function Website(props: any) {
                     <WarningMessage warningMessage={warningMessage} userSettings={userSettings} />
                     <button
                         className={CLASSES.buttonElement}
-                        onClick={(e) => {
+                        onClick={() => {
                             if (errorMessage === "") {
                                 setBlueprintString(
                                     createBlueprintString(createBlueprint(userSettings))
@@ -103,7 +104,7 @@ export default function Website(props: any) {
                     />
                     <button
                         className={CLASSES.buttonElement}
-                        onClick={(e) => {
+                        onClick={() => {
                             // Copy to clipboard
                             copy(blueprintString, {
                                 debug: true,

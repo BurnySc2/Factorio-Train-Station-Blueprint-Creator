@@ -3,7 +3,7 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function StationNameSettings(props: iSectionsProps) {
+export default function StationNameSettings(props: iSectionsProps): JSX.Element {
     return (
         <div>
             <div className={CLASSES.section}>

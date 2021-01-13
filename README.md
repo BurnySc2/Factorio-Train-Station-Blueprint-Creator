@@ -53,3 +53,6 @@ npm run build
 
 ### Prettier autoformatting
 `prettier --write "**/*.{ts,tsx}"`
+
+### Eslint
+`npx eslint .`

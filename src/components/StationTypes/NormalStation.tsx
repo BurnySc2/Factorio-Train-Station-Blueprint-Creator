@@ -11,7 +11,7 @@ import EnabledConditionSettings from "../Sections/EnabledConditionSettings"
 import LampsSettings from "../Sections/LampsSettings"
 import StationNameSettings from "../Sections/StationNameSettings"
 
-export default function NormalStation(props: iSectionsProps) {
+export default function NormalStation(props: iSectionsProps): JSX.Element {
     return (
         <div className={"flex flex-col"}>
             <div className={"grid gap-x-4 grid-cols-1 lg:grid-cols-2"}>

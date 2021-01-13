@@ -8,10 +8,11 @@ import {
     splitterTypes,
 } from "../constants/constants"
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloneDeep = require("clone-deep")
 
 export let entityNumber = 1
-export const resetEntityNumber = () => {
+export const resetEntityNumber = (): void => {
     entityNumber = 1
 }
 
@@ -61,7 +62,7 @@ export const newItem = (
         }
     } = {}
 ): iBlueprintItem => {
-    let item: iBlueprintItem = {
+    const item: iBlueprintItem = {
         entity_number: entityNumber,
         name: itemName,
         position: {
@@ -101,8 +102,8 @@ export const newItem = (
 }
 export const assignEntityNumberToItems = (
     items: iBlueprintItemWithoutNumber[],
-    xOffset: number = 0,
-    yOffset: number = 0
+    xOffset = 0,
+    yOffset = 0
 ): iBlueprintItem[] => {
     return items.map((item) => {
         return newItem(item.name, item.position.x + xOffset, item.position.y + yOffset, {
@@ -115,9 +116,9 @@ export const getTrainArray = (
     bpSettings: typeof defaultSettings,
     startOffset = 0,
     bottomOffset = 0
-) => {
-    let returnArray: number[] = []
-    let doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
+): number[] => {
+    const returnArray: number[] = []
+    const doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
     for (
         let i = startOffset;
         i <
@@ -135,8 +136,8 @@ export const getFrontLocomotivesArray = (
     bpSettings: typeof defaultSettings,
     startOffset = -3,
     bottomOffset = -3
-) => {
-    let returnArray: number[] = []
+): number[] => {
+    const returnArray: number[] = []
     for (let i = startOffset; i < parseInt(bpSettings.locomotivesPerEnd) * 7 + bottomOffset; i++) {
         returnArray.push(i)
     }
@@ -147,9 +148,9 @@ export const getBackLocomotivesArray = (
     bpSettings: typeof defaultSettings,
     startOffset = -3,
     bottomOffset = -3
-) => {
+): number[] => {
     if (!bpSettings.doubleHeaded) return []
-    let returnArray: number[] = []
+    const returnArray: number[] = []
     for (
         let i =
             (parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon)) * 7 +
@@ -164,9 +165,9 @@ export const getBackLocomotivesArray = (
     return returnArray
 }
 // Returns an array of y-offsets where the cargo is
-export const getCargoArray = (bpSettings: typeof defaultSettings, startOffset = -3) => {
-    let returnArray: number[] = []
-    let bottomOffset = 1
+export const getCargoArray = (bpSettings: typeof defaultSettings, startOffset = -3): number[] => {
+    const returnArray: number[] = []
+    const bottomOffset = 1
     for (
         let i = parseInt(bpSettings.locomotivesPerEnd) * 7 + startOffset;
         i <
@@ -180,8 +181,8 @@ export const getCargoArray = (bpSettings: typeof defaultSettings, startOffset = 
     return returnArray
 }
 
-export const placeTrainTracks = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
+export const placeTrainTracks = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
     getTrainArray(bpSettings, -4).forEach((i) => {
         if (i % 2 === 1) return
         returnArray.push(newItem("straight-rail", -1.5, i))
@@ -189,13 +190,16 @@ export const placeTrainTracks = (bpSettings: typeof defaultSettings) => {
     return returnArray
 }
 
-export const placeSignals = (bpSettings: typeof defaultSettings, stationNumber: number) => {
+export const placeSignals = (
+    bpSettings: typeof defaultSettings,
+    stationNumber: number
+): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
-    let start = 0
-    let doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
-    let singleHeadedOffset = bpSettings.doubleHeaded ? 0 : 1
-    let end =
+    const returnArray: iBlueprintItem[] = []
+    const start = 0
+    const doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
+    const singleHeadedOffset = bpSettings.doubleHeaded ? 0 : 1
+    const end =
         (doubleHeaded * parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon)) *
             7 +
         singleHeadedOffset
@@ -240,10 +244,10 @@ export const placeSignals = (bpSettings: typeof defaultSettings, stationNumber: 
     return returnArray
 }
 
-export const placeTrainStop = (bpSettings: typeof defaultSettings) => {
+export const placeTrainStop = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 2x2, so coordinate ends in .0
-    let returnArray: iBlueprintItem[] = []
-    let controlBehavior = bpSettings.trainStopUsesEnabledCondition
+    const returnArray: iBlueprintItem[] = []
+    const controlBehavior = bpSettings.trainStopUsesEnabledCondition
         ? {
               circuit_condition: {
                   first_signal: {
@@ -256,7 +260,7 @@ export const placeTrainStop = (bpSettings: typeof defaultSettings) => {
               circuit_enable_disable: true,
           }
         : undefined
-    let options = {
+    const options = {
         station: bpSettings.stationName !== "" ? bpSettings.stationName : undefined,
         manual_trains_limit:
             bpSettings.trainLimit !== "" && parseInt(bpSettings.trainLimit) >= 0
@@ -268,12 +272,12 @@ export const placeTrainStop = (bpSettings: typeof defaultSettings) => {
     return returnArray
 }
 
-export const placeTrain = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
+export const placeTrain = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
     let count = 0
-    let doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
-    let locoCount = parseInt(bpSettings.locomotivesPerEnd)
-    let cargoCount = parseInt(bpSettings.cargoWagon)
+    const doubleHeaded = bpSettings.doubleHeaded ? 2 : 1
+    const locoCount = parseInt(bpSettings.locomotivesPerEnd)
+    const cargoCount = parseInt(bpSettings.cargoWagon)
     parseInt(bpSettings.cargoWagon)
     // TODO Check if user wants train to be placed
     getTrainArray(bpSettings).forEach((y, i) => {
@@ -294,14 +298,14 @@ export const placeTrain = (bpSettings: typeof defaultSettings) => {
     return returnArray
 }
 
-export const placeInserters = (bpSettings: typeof defaultSettings) => {
+export const placeInserters = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
     // Inserter direction = direction it grabs from
-    let returnArray: iBlueprintItem[] = []
-    let inserterType = bpSettings.enableFilterInserters
+    const returnArray: iBlueprintItem[] = []
+    const inserterType = bpSettings.enableFilterInserters
         ? filterInserters[bpSettings.inserterType]
         : bpSettings.inserterType
-    let inserterDirection =
+    const inserterDirection =
         bpSettings.stationType === "Loading Station" ? DIRECTION.RIGHT : DIRECTION.LEFT
     let filterArray:
         | undefined
@@ -328,7 +332,6 @@ export const placeInserters = (bpSettings: typeof defaultSettings) => {
             })
         )
 
-        // @ts-ignore
         if (!botChestTypes.includes(bpSettings.chestType)) {
             returnArray.push(
                 newItem(inserterType, 2, y + 0.5, {
@@ -340,24 +343,24 @@ export const placeInserters = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placeChests = (bpSettings: typeof defaultSettings) => {
+export const placeChests = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
 
     // For requester and buffer chests, add the requests
-    let isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
+    const isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
         bpSettings.chestType
     )
-    let requests: Array<{
+    const requests: Array<{
         index: number
         name: string
         count: number
     }> = []
     if (isRequesterChest) {
         for (let i = 0; i < 12; i++) {
-            let itemType = bpSettings.chestRequestItemsType[i]
+            const itemType = bpSettings.chestRequestItemsType[i]
             if (itemType === "") break
-            let itemAmount = bpSettings.chestRequestItemsAmount[i]
+            const itemAmount = bpSettings.chestRequestItemsAmount[i]
             requests.push({
                 index: i + 1,
                 name: itemType,
@@ -366,7 +369,7 @@ export const placeChests = (bpSettings: typeof defaultSettings) => {
         }
     }
 
-    let requestFromBuffers =
+    const requestFromBuffers =
         bpSettings.chestRequestFromBuffers && bpSettings.chestType === "logistic-chest-requester"
             ? true
             : undefined
@@ -383,9 +386,9 @@ export const placeChests = (bpSettings: typeof defaultSettings) => {
     return returnArray
 }
 // Belts between inserter and splitter
-export const placeLoadingBelts = (bpSettings: typeof defaultSettings) => {
+export const placeLoadingBelts = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 1) {
             returnArray.push(
@@ -411,9 +414,9 @@ export const placeLoadingBelts = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placeUnloadingBelts = (bpSettings: typeof defaultSettings) => {
+export const placeUnloadingBelts = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 1) {
             returnArray.push(
@@ -439,9 +442,9 @@ export const placeUnloadingBelts = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placePumps = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
-    let pumpDirection =
+export const placePumps = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
+    const pumpDirection =
         bpSettings.stationType === "Fluid Loading Station" ? DIRECTION.LEFT : DIRECTION.RIGHT
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 1) {
@@ -457,9 +460,9 @@ export const placePumps = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placeStorageTanks = (bpSettings: typeof defaultSettings) => {
+export const placeStorageTanks = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 3x3, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 2) {
             // Storage tank facing UP has connection topleft and bottomright
@@ -472,9 +475,9 @@ export const placeStorageTanks = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placePipes = (bpSettings: typeof defaultSettings) => {
+export const placePipes = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i, array) => {
         if (i !== 0 && i !== array.length - 1 && i % 7 === 0) {
             // Storage tank facing UP has connection topleft and bottomright
@@ -487,10 +490,10 @@ export const placePipes = (bpSettings: typeof defaultSettings) => {
 export const placeVerticalBelts = (
     bpSettings: typeof defaultSettings,
     splitters: Array<iBlueprintItem>
-) => {
-    let returnArray: iBlueprintItem[] = []
-    let mode = bpSettings.stationType === "Loading Station" ? "load" : "unload"
-    let beltEnd = bpSettings.beltFlowDirection
+): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
+    const mode = bpSettings.stationType === "Loading Station" ? "load" : "unload"
+    const beltEnd = bpSettings.beltFlowDirection
     sortByYPosition(splitters)
     let x = 5
     // Unloading to front, splitters[0] is the front splitter
@@ -569,10 +572,10 @@ export const placeVerticalBelts = (
     }
     return returnArray
 }
-export const placeCurvedRail = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
-    let splitterType = splitterTypes[bpSettings.beltType]
-    let splitterDirection =
+export const placeSplitters = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
+    const splitterType = splitterTypes[bpSettings.beltType]
+    const splitterDirection =
         bpSettings.stationType === "Loading Station" ? DIRECTION.LEFT : DIRECTION.RIGHT
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 !== 4) return
@@ -580,57 +583,26 @@ export const placeCurvedRail = (bpSettings: typeof defaultSettings) => {
     })
     return returnArray
 }
-export const placeStraightRail = (
-    bpSettings: typeof defaultSettings,
-    xOffset = 0,
-    yOffset = 0,
-    direction: DIRECTION = DIRECTION.UP
-) => {
-    /*
-    Vertical rails: DIRECTION.UP
-    Horizontal rails: DIRECTION.RIGHT
-     */
-    let returnArray: iBlueprintItem[] = []
-    let splitterType = splitterTypes[bpSettings.beltType]
-    let splitterDirection =
-        bpSettings.stationType === "Loading Station" ? DIRECTION.LEFT : DIRECTION.RIGHT
-    getCargoArray(bpSettings).forEach((y, i) => {
-        if (i % 7 !== 4) return
-        returnArray.push(newItem(splitterType, 4, y, { direction: splitterDirection }))
-    })
-    return returnArray
-}
-export const placeSplitters = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
-    let splitterType = splitterTypes[bpSettings.beltType]
-    let splitterDirection =
-        bpSettings.stationType === "Loading Station" ? DIRECTION.LEFT : DIRECTION.RIGHT
-    getCargoArray(bpSettings).forEach((y, i) => {
-        if (i % 7 !== 4) return
-        returnArray.push(newItem(splitterType, 4, y, { direction: splitterDirection }))
-    })
-    return returnArray
-}
-export const placePoles = (bpSettings: typeof defaultSettings) => {
+export const placePoles = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 !== 0) return
         returnArray.push(newItem("medium-electric-pole", 0, y + 0.5))
     })
     return returnArray
 }
-export const placeLamps = (bpSettings: typeof defaultSettings) => {
+export const placeLamps = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 !== 0) return
         returnArray.push(newItem("small-lamp", 1, y + 0.5))
     })
     return returnArray
 }
-export const placeDecider = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
+export const placeDecider = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
     returnArray.push(
         newItem("decider-combinator", 0, 1, {
             control_behavior: {
@@ -653,25 +625,27 @@ export const placeDecider = (bpSettings: typeof defaultSettings) => {
     return returnArray
 }
 // Refuel
-export const placeTopRefuelPoles = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
+export const placeTopRefuelPoles = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
     getFrontLocomotivesArray(bpSettings).forEach((y, i, array) => {
         if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
         returnArray.push(newItem("medium-electric-pole", 0, y + 0.5))
     })
     return returnArray
 }
-export const placeBottomRefuelPoles = (bpSettings: typeof defaultSettings) => {
-    let returnArray: iBlueprintItem[] = []
+export const placeBottomRefuelPoles = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+    const returnArray: iBlueprintItem[] = []
     getBackLocomotivesArray(bpSettings).forEach((y, i, array) => {
         if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
         returnArray.push(newItem("medium-electric-pole", 0, y + 0.5))
     })
     return returnArray
 }
-export const placeRefuelChestsAndInserters = (bpSettings: typeof defaultSettings) => {
+export const placeRefuelChestsAndInserters = (
+    bpSettings: typeof defaultSettings
+): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
-    let returnArray: iBlueprintItem[] = []
+    const returnArray: iBlueprintItem[] = []
     getFrontLocomotivesArray(bpSettings).forEach((y, i) => {
         if (i % 7 !== 6) return
         returnArray.push(newItem("inserter", 0, y + 0.5, { direction: DIRECTION.RIGHT }))
@@ -711,19 +685,21 @@ export const connectTwoEntitiesWithWire = (
     color: iWireColor,
     entity1ConNumber: "1" | "2" = "1",
     entity2ConNumber: "1" | "2" = "1"
-) => {
-    let entity1Number = entity1.entity_number
-    let entity2Number = entity2.entity_number
+): void => {
+    const entity1Number = entity1.entity_number
+    const entity2Number = entity2.entity_number
 
-    let createWirePath = (entity: iBlueprintItem, conNumber: "1" | "2") => {
+    const createWirePath = (entity: iBlueprintItem, conNumber: "1" | "2") => {
         if (!entity.connections) {
             entity.connections = {}
         }
         if (!entity.connections[conNumber]) {
             entity.connections[conNumber] = {}
         }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (!entity.connections[conNumber][color]) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             entity.connections[conNumber][color] = []
         }
@@ -731,23 +707,25 @@ export const connectTwoEntitiesWithWire = (
 
     createWirePath(entity1, entity1ConNumber)
     createWirePath(entity2, entity2ConNumber)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     entity1.connections[entity1ConNumber][color].push({ entity_id: entity2Number })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     entity2.connections[entity2ConNumber][color].push({ entity_id: entity1Number })
 }
-export const connectItemsWithWire = (items: iBlueprintItem[], color: iWireColor) => {
+export const connectItemsWithWire = (items: iBlueprintItem[], color: iWireColor): void => {
     items.forEach((item1, index) => {
         if (index === 0) return
-        let item2 = items[index - 1]
+        const item2 = items[index - 1]
         connectTwoEntitiesWithWire(item1, item2, color)
     })
 }
 // Helper functions
-export const mirrorItemsHorizontal = (items: iBlueprintItem[]) => {
+export const mirrorItemsHorizontal = (items: iBlueprintItem[]): iBlueprintItem[] => {
     // Returns a new array with clones of items
     return items.map((item) => {
-        let copy = cloneDeep(item) as iBlueprintItem
+        const copy = cloneDeep(item) as iBlueprintItem
         copy.entity_number = entityNumber
         entityNumber += 1
         copy.position.x = -copy.position.x + mirrorXOffset
@@ -761,7 +739,7 @@ export const mirrorItemsHorizontal = (items: iBlueprintItem[]) => {
         return copy
     })
 }
-export const changeItemsCoordinates = (items: iBlueprintItem[], x = 0, y = 0) => {
+export const changeItemsCoordinates = (items: iBlueprintItem[], x = 0, y = 0): void => {
     // Changes the items directly
     items.forEach((item) => {
         item.position = {
@@ -770,10 +748,10 @@ export const changeItemsCoordinates = (items: iBlueprintItem[], x = 0, y = 0) =>
         }
     })
 }
-export const copyPasteItems = (items: iBlueprintItem[], x = 0, y = 0) => {
+export const copyPasteItems = (items: iBlueprintItem[], x = 0, y = 0): iBlueprintItem[] => {
     // Changes the items directly
     return items.map((item) => {
-        let clone: iBlueprintItem = cloneDeep(item)
+        const clone: iBlueprintItem = cloneDeep(item)
         clone.entity_number = entityNumber
         entityNumber += 1
         clone.position = {
@@ -787,7 +765,7 @@ export const mixSides = (
     sidesUsed: "Both" | "Right" | "Left",
     leftArray: iBlueprintItem[],
     rightArray: iBlueprintItem[]
-) => {
+): iBlueprintItem[] => {
     if (sidesUsed === "Both") {
         return [...leftArray, ...rightArray]
     } else if (sidesUsed === "Left") {
@@ -798,7 +776,7 @@ export const mixSides = (
     console.assert("Error returning empty array")
     return []
 }
-export const sortByYPosition = (items: iBlueprintItem[]) => {
+export const sortByYPosition = (items: iBlueprintItem[]): void => {
     items.sort((a, b) => {
         // Smaller y first
         if (a.position.y < b.position.y) {

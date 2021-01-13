@@ -1,7 +1,7 @@
 import React from "react"
 import { CLASSES } from "../css/classes"
 
-export default function Footer(props: any) {
+export default function Footer(): JSX.Element {
     return (
         <div className={`${CLASSES.footerElements} flex flex-col`}>
             <a

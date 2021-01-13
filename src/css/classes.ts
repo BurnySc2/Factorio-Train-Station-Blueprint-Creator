@@ -1,4 +1,4 @@
-export let CLASSES = {
+export const CLASSES = {
     // Title
     title: "self-center underline font-bold text-3xl text-gray-300",
 

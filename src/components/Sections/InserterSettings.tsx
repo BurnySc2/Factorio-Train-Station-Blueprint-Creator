@@ -1,19 +1,21 @@
 import React from "react"
 import { inserterTypes } from "../../constants/constants"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iInserterTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function InserterSettings(props: iSectionsProps) {
+export default function InserterSettings(props: iSectionsProps): JSX.Element {
     // All inserter types
-    let inserterSelect = (
+    const inserterSelect = (
         <select
             id={"inserterType"}
             className={CLASSES.selectElement}
             value={props.userSettings.inserterType}
             onChange={(e) => {
-                // @ts-ignore
-                props.setUserSettings({ ...props.userSettings, inserterType: e.target.value })
+                props.setUserSettings({
+                    ...props.userSettings,
+                    inserterType: e.target.value as iInserterTypes,
+                })
             }}
         >
             {inserterTypes.map((inserterType) => {
@@ -30,7 +32,7 @@ export default function InserterSettings(props: iSectionsProps) {
         </select>
     )
 
-    let setValueAtIndex = (oldArray: string[], newValue: string, index: number) => {
+    const setValueAtIndex = (oldArray: string[], newValue: string, index: number) => {
         props.setUserSettings({
             ...props.userSettings,
             // Replace the value at the fieldIndex using spread operator
@@ -42,9 +44,9 @@ export default function InserterSettings(props: iSectionsProps) {
         })
     }
 
-    let isFilterInserter = props.userSettings.enableFilterInserters
+    const isFilterInserter = props.userSettings.enableFilterInserters
 
-    let newFilterInputField = (index: number) => {
+    const newFilterInputField = (index: number) => {
         return (
             <input
                 key={`${index}`}
@@ -64,7 +66,7 @@ export default function InserterSettings(props: iSectionsProps) {
 
     // let filterInserterInputFields = []
     let previousIsEmpty = -1
-    let filterInserterInputFields = new Array(5).fill(0).map((_, index) => {
+    const filterInserterInputFields = new Array(5).fill(0).map((_, index) => {
         if (previousIsEmpty !== -1 && previousIsEmpty < index) {
             return undefined
         }

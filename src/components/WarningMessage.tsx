@@ -6,7 +6,7 @@ interface MyProps {
     warningMessage: string
     userSettings: typeof defaultSettings
 }
-export default function WarningMessage(props: MyProps) {
+export default function WarningMessage(props: MyProps): JSX.Element | null {
     if (props.warningMessage === "") {
         return null
     }

@@ -33,7 +33,7 @@ export const createStacker = (bpSettings: typeof defaultSettings): iBlueprintIte
 }
 
 export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
-    let trainLength = Math.floor(getTrainArray(bpSettings).length / 2) * 2
+    const trainLength = Math.floor(getTrainArray(bpSettings).length / 2) * 2
 
     let frontCurve: iBlueprintItem[]
     let backCurve: iBlueprintItem[]
@@ -68,8 +68,8 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 }
 
 export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
-    let doubleHeadedFactor = bpSettings.doubleHeaded ? 2 : 1
-    let diagonalLength =
+    const doubleHeadedFactor = bpSettings.doubleHeaded ? 2 : 1
+    const diagonalLength =
         Math.round(
             (2.5 *
                 (doubleHeadedFactor * parseInt(bpSettings.locomotivesPerEnd) +
@@ -98,7 +98,7 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
     }
     // TODO Support 'include train in blueprint' for diagonal stackers?
 
-    let diagonals: iBlueprintItemWithoutNumber[] = [
+    const diagonals: iBlueprintItemWithoutNumber[] = [
         {
             name: "straight-rail",
             position: { x: 3, y: 3 },
@@ -113,7 +113,7 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     let copyPasteBlueprint: iBlueprintItem[] = []
     for (let i = 0; i < diagonalLength; i++) {
-        let newDiagonals = assignEntityNumberToItems(diagonals, -i * 2, i * 2)
+        const newDiagonals = assignEntityNumberToItems(diagonals, -i * 2, i * 2)
         copyPasteBlueprint = [...copyPasteBlueprint, ...newDiagonals]
     }
     copyPasteBlueprint = [...copyPasteBlueprint, ...frontCurve, ...backCurve]

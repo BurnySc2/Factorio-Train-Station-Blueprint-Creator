@@ -1,5 +1,5 @@
 import React from "react"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iBeltSides, iBeltTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import {
     beltFlowDirections,
@@ -10,18 +10,19 @@ import {
 } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function BeltTypeSettings(props: iSectionsProps) {
-    // @ts-ignore
-    let hideIfBotChests = botChestTypes.includes(props.userSettings.chestType)
+export default function BeltTypeSettings(props: iSectionsProps): JSX.Element {
+    const hideIfBotChests = botChestTypes.includes(props.userSettings.chestType)
 
-    let beltTypesHtml = (
+    const beltTypesHtml = (
         <select
             id={"beltType"}
             className={CLASSES.selectElement}
             value={props.userSettings.beltType}
             onChange={(e) => {
-                // @ts-ignore
-                props.setUserSettings({ ...props.userSettings, beltType: e.target.value })
+                props.setUserSettings({
+                    ...props.userSettings,
+                    beltType: e.target.value as iBeltTypes,
+                })
             }}
         >
             {beltTypes.map((beltType) => {
@@ -34,14 +35,16 @@ export default function BeltTypeSettings(props: iSectionsProps) {
         </select>
     )
 
-    let beltSideHtml = (
+    const beltSideHtml = (
         <select
             id={"sidesUsed"}
             className={CLASSES.selectElement}
             value={props.userSettings.beltSidesUsed}
             onChange={(e) => {
-                // @ts-ignore
-                props.setUserSettings({ ...props.userSettings, beltSidesUsed: e.target.value })
+                props.setUserSettings({
+                    ...props.userSettings,
+                    beltSidesUsed: e.target.value as iBeltSides,
+                })
             }}
         >
             {beltSides.map((beltSide) => {
@@ -53,14 +56,13 @@ export default function BeltTypeSettings(props: iSectionsProps) {
             })}
         </select>
     )
-    let beltFlowHtml = (
+    const beltFlowHtml = (
         <select
             id={"beltFlow"}
             className={CLASSES.selectElement}
             value={props.userSettings.beltFlowDirection}
             data-tip={TOOLTIPS.beltFlow}
             onChange={(e) => {
-                // @ts-ignore
                 props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value })
             }}
         >

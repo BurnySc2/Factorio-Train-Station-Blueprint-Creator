@@ -5,7 +5,7 @@ interface MyProps {
     errorMessage: string
 }
 
-export default function ErrorMessage(props: MyProps) {
+export default function ErrorMessage(props: MyProps): JSX.Element | null {
     if (props.errorMessage === "") {
         return null
     }

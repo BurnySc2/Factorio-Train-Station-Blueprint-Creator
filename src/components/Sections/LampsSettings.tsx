@@ -2,7 +2,7 @@ import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
-export default function LampsSettings(props: iSectionsProps) {
+export default function LampsSettings(props: iSectionsProps): JSX.Element {
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>

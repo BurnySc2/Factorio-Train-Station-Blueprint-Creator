@@ -1,11 +1,11 @@
 import React from "react"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iRefillFuelTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { refillFuelTypes, refillFuelTypesHuman } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function RefillSettings(props: iSectionsProps) {
-    let fuelTypesHtml = (
+export default function RefillSettings(props: iSectionsProps): JSX.Element {
+    const fuelTypesHtml = (
         <select
             className={CLASSES.selectElement}
             hidden={!props.userSettings.refillEnabled}
@@ -13,8 +13,7 @@ export default function RefillSettings(props: iSectionsProps) {
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
-                    // @ts-ignore
-                    refillFuelType: e.target.value,
+                    refillFuelType: e.target.value as iRefillFuelTypes,
                 })
             }}
         >

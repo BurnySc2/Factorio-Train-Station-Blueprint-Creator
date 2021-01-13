@@ -3,6 +3,7 @@ import { iBlueprint, iBlueprintItem } from "../constants/interfaces"
 import { createNormalStation } from "./CreateNormalStation"
 import { createFluidStation } from "./CreateFluidStation"
 import { createStacker } from "./CreateStacker"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const zlib = require("zlib")
 
 export const createBlueprint = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
@@ -34,8 +35,8 @@ const decode = (blueprintString: string) => {
     )
 }
 
-const encode = (items: any[]) => {
-    let blueprint = {
+const encode = (items: iBlueprintItem[]) => {
+    const blueprint = {
         blueprint: {
             icons: [
                 {

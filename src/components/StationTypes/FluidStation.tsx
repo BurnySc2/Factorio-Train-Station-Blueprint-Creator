@@ -8,7 +8,7 @@ import LampsSettings from "../Sections/LampsSettings"
 import StationNameSettings from "../Sections/StationNameSettings"
 import FluidSettings from "../Sections/FluidSettings"
 
-export default function FluidStation(props: iSectionsProps) {
+export default function FluidStation(props: iSectionsProps): JSX.Element {
     return (
         <div className={"flex flex-col"}>
             <div className={"grid gap-x-4 grid-cols-1 lg:grid-cols-2"}>

@@ -1,19 +1,21 @@
 import React from "react"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iChestTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { chestTypes, chestTypesHuman } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function ChestTypeSettings(props: iSectionsProps) {
-    let chestTypesHtml = (
+export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
+    const chestTypesHtml = (
         <select
             id={"chestTypes"}
             className={CLASSES.selectElement}
             value={props.userSettings.chestType}
             data-tip={TOOLTIPS.chestType}
             onChange={(e) => {
-                // @ts-ignore
-                props.setUserSettings({ ...props.userSettings, chestType: e.target.value })
+                props.setUserSettings({
+                    ...props.userSettings,
+                    chestType: e.target.value as iChestTypes,
+                })
             }}
         >
             {chestTypes.map((chestType) => {
@@ -26,14 +28,14 @@ export default function ChestTypeSettings(props: iSectionsProps) {
         </select>
     )
 
-    let isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
+    const isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
         props.userSettings.chestType
     )
-    let canRequestFromBufferChests = props.userSettings.chestType === "logistic-chest-requester"
+    const canRequestFromBufferChests = props.userSettings.chestType === "logistic-chest-requester"
 
     let previousIsEmpty = -1
-    let chestRequests = new Array(24).fill(0).map((_, i) => {
-        let index = Math.floor(i / 2)
+    const chestRequests = new Array(24).fill(0).map((_, i) => {
+        const index = Math.floor(i / 2)
         if (previousIsEmpty !== -1 && previousIsEmpty < index) {
             return undefined
         }

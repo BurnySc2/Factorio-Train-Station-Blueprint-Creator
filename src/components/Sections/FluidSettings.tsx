@@ -1,17 +1,19 @@
 import React from "react"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iPumpSides, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { pumpSides } from "../../constants/constants"
 
-export default function FluidSettings(props: iSectionsProps) {
-    let pumpSideHtml = (
+export default function FluidSettings(props: iSectionsProps): JSX.Element {
+    const pumpSideHtml = (
         <select
             id={"sidesUsed"}
             className={CLASSES.selectElement}
             value={props.userSettings.pumpSidesToBeUsed}
             onChange={(e) => {
-                // @ts-ignore
-                props.setUserSettings({ ...props.userSettings, pumpSidesToBeUsed: e.target.value })
+                props.setUserSettings({
+                    ...props.userSettings,
+                    pumpSidesToBeUsed: e.target.value as iPumpSides,
+                })
             }}
         >
             {pumpSides.map((pumpSide) => {

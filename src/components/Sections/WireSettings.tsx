@@ -3,20 +3,20 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function WireSettings(props: iSectionsProps) {
-    let normalTypes = ["Loading Station", "Unloading Station"]
-    let fluidTypes = ["Fluid Loading Station", "Fluid Unloading Station"]
-    let hiddenWhenNormalStation = normalTypes.includes(props.userSettings.stationType)
-    let hiddenWhenFluidStation = fluidTypes.includes(props.userSettings.stationType)
-    let hiddenWhenNotBothSides = props.userSettings.beltSidesUsed !== "Both"
+export default function WireSettings(props: iSectionsProps): JSX.Element {
+    const normalTypes = ["Loading Station", "Unloading Station"]
+    const fluidTypes = ["Fluid Loading Station", "Fluid Unloading Station"]
+    const hiddenWhenNormalStation = normalTypes.includes(props.userSettings.stationType)
+    const hiddenWhenFluidStation = fluidTypes.includes(props.userSettings.stationType)
+    const hiddenWhenNotBothSides = props.userSettings.beltSidesUsed !== "Both"
 
-    let myCheckbox = (
+    const myCheckbox = (
         keyName:
             | "connectChestsWithGreenWire"
             | "connectBothSideWithGreenWire"
             | "connectChestsWithRedWire"
             | "connectBothSideWithRedWire",
-        hidden: boolean = false
+        hidden = false
     ) => {
         return (
             <input

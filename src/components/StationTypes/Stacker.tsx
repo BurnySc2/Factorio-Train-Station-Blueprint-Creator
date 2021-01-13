@@ -3,7 +3,7 @@ import TrainTypeSettings from "../Sections/TrainTypeSettings"
 import { iSectionsProps } from "../../constants/interfaces"
 import StackerSettings from "../Sections/StackerSettings"
 
-export default function Stacker(props: iSectionsProps) {
+export default function Stacker(props: iSectionsProps): JSX.Element {
     return (
         <div className={"flex flex-col"}>
             <TrainTypeSettings

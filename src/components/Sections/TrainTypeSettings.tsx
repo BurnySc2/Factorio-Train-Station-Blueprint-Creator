@@ -3,8 +3,8 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function TrainTypeSettings(props: iSectionsProps) {
-    let hideIfDiagonalStacker =
+export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
+    const hideIfDiagonalStacker =
         props.userSettings.stationType === "Stacker" && props.userSettings.diagonalStacker
     return (
         <div className={CLASSES.section}>

@@ -4,7 +4,7 @@ const verifyNumberInput = (myInput: string) => {
     return !isNaN(parseInt(myInput))
 }
 
-export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSettings) => {
+export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSettings): string => {
     if (parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon) > 1000) {
         return "Your amount of locomotives and cargo wagons is extremely high and might crash your browser!"
     }
@@ -32,7 +32,7 @@ export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSetting
     return ""
 }
 
-export const validateBlueprintSettings = (bpSettings: typeof defaultSettings) => {
+export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): string => {
     if (!verifyNumberInput(bpSettings.locomotivesPerEnd)) {
         return "The given locomotive count is not a number."
     }
@@ -44,8 +44,8 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings) =>
         bpSettings.stationType === "Unloading Station"
     ) {
         for (let i = 0; i < 12; i++) {
-            let itemType = bpSettings.chestRequestItemsType[i]
-            let numberAsString = bpSettings.chestRequestItemsAmount[i]
+            const itemType = bpSettings.chestRequestItemsType[i]
+            const numberAsString = bpSettings.chestRequestItemsAmount[i]
 
             if (itemType !== "" && !verifyNumberInput(numberAsString)) {
                 return `Chest request at position ${i + 1} is not a number.`

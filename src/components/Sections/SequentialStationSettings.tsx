@@ -3,7 +3,7 @@ import { CLASSES } from "../../css/classes"
 import { iSectionsProps } from "../../constants/interfaces"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function SequentialStationSettings(props: iSectionsProps) {
+export default function SequentialStationSettings(props: iSectionsProps): JSX.Element {
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>

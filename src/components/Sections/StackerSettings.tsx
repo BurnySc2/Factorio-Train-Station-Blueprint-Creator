@@ -3,8 +3,8 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { stackerDiagonalTypes, stackerTypes } from "../../constants/constants"
 
-export default function StackerSettings(props: iSectionsProps) {
-    let myCheckbox = (keyName: "diagonalStacker") => {
+export default function StackerSettings(props: iSectionsProps): JSX.Element {
+    const myCheckbox = (keyName: "diagonalStacker") => {
         return (
             <input
                 className={CLASSES.checkboxElement}
@@ -22,14 +22,13 @@ export default function StackerSettings(props: iSectionsProps) {
         )
     }
 
-    let stackerTypesHtml = (
+    const stackerTypesHtml = (
         <select
             className={CLASSES.selectElement}
             value={props.userSettings.stackerType}
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
-                    // @ts-ignore
                     stackerType: e.target.value,
                 })
             }}

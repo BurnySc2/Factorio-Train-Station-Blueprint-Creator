@@ -86,3 +86,19 @@ export interface iBlueprintItem {
     // Train limit at this station - how many trains may go to this station
     manual_trains_limit?: number
 }
+
+export type iBeltTypes = "transport-belt" | "fast-transport-belt" | "express-transport-belt"
+export type iInserterTypes = "inserter" | "fast-inserter" | "stack-inserter"
+export type iRefillFuelTypes = "wood" | "coal" | "solid-fuel" | "rocket-fuel" | "nuclear-fuel"
+export type iChestTypes =
+    | "wooden-chest"
+    | "iron-chest"
+    | "steel-chest"
+    | "logistic-chest-requester"
+    | "logistic-chest-buffer"
+    | "logistic-chest-passive-provider"
+    | "logistic-chest-active-provider"
+    | "logistic-chest-storage"
+export type iBeltSides = "Right" | "Left" | "Both"
+export type iPumpSides = "Right" | "Left"
+export type iEnabledConditionOperators = "<" | ">"

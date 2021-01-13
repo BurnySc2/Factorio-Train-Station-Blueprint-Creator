@@ -1,5 +1,5 @@
 import React from "react"
-import { iSectionsProps } from "../../constants/interfaces"
+import { iEnabledConditionOperators, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import {
     enabledConditionOperators,
@@ -7,10 +7,10 @@ import {
 } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
 
-export default function EnabledConditionSettings(props: iSectionsProps) {
-    let hideIfCheckboxDisabled = !props.userSettings.trainStopUsesEnabledCondition
+export default function EnabledConditionSettings(props: iSectionsProps): JSX.Element {
+    const hideIfCheckboxDisabled = !props.userSettings.trainStopUsesEnabledCondition
 
-    let enabledConditionOperatorHtml = (
+    const enabledConditionOperatorHtml = (
         <select
             className={CLASSES.selectElement}
             hidden={hideIfCheckboxDisabled}
@@ -18,8 +18,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
-                    // @ts-ignore
-                    enabledConditionOperator: e.target.value,
+                    enabledConditionOperator: e.target.value as iEnabledConditionOperators,
                 })
             }}
         >
@@ -50,7 +49,7 @@ export default function EnabledConditionSettings(props: iSectionsProps) {
                     }}
                 />
                 <label className={CLASSES.labelElement} htmlFor={"trainStopUsesEnabledCondition"}>
-                    Train stop uses 'enabled-condition'?
+                    {"Train stop uses 'enabled-condition'?"}
                 </label>
                 {enabledConditionOperatorHtml}
                 <input

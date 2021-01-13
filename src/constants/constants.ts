@@ -1,29 +1,39 @@
+import {
+    iBeltSides,
+    iBeltTypes,
+    iChestTypes,
+    iEnabledConditionOperators,
+    iInserterTypes,
+    iPumpSides,
+    iRefillFuelTypes,
+} from "./interfaces"
+
 export const mirrorXOffset = -3
 
-export let stationTypes = [
+export const stationTypes = [
     "Loading Station",
     "Unloading Station",
     "Fluid Loading Station",
     "Fluid Unloading Station",
     "Stacker",
-] as const
+]
 
-export let inserterTypes = ["inserter", "fast-inserter", "stack-inserter"] as const
-export let filterInserters = {
+export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "stack-inserter"]
+export const filterInserters = {
     inserter: "filter-inserter",
     "fast-inserter": "filter-inserter",
     "stack-inserter": "filter-inserter",
-} as const
-export let basicChestTypes = ["wooden-chest", "iron-chest", "steel-chest"] as const
-export let botChestTypes = [
+}
+export const basicChestTypes: iChestTypes[] = ["wooden-chest", "iron-chest", "steel-chest"]
+export const botChestTypes: iChestTypes[] = [
     "logistic-chest-requester",
     "logistic-chest-buffer",
     "logistic-chest-passive-provider",
     "logistic-chest-active-provider",
     "logistic-chest-storage",
-] as const
-export let chestTypes = [...basicChestTypes, ...botChestTypes] as const
-export let chestTypesHuman = {
+]
+export const chestTypes: iChestTypes[] = [...basicChestTypes, ...botChestTypes]
+export const chestTypesHuman = {
     "wooden-chest": "Wooden Chest",
     "iron-chest": "Iron Chest",
     "steel-chest": "Steel Chest",
@@ -32,36 +42,42 @@ export let chestTypesHuman = {
     "logistic-chest-passive-provider": "Passive Provider Chest",
     "logistic-chest-active-provider": "Active Provider Chest",
     "logistic-chest-storage": "Storage Chest",
-} as const
-export const beltTypes = [
+}
+export const beltTypes: iBeltTypes[] = [
     "transport-belt",
     "fast-transport-belt",
     "express-transport-belt",
-] as const
-export let beltTypesHuman = {
+]
+export const beltTypesHuman = {
     "transport-belt": "Yellow Belt",
     "fast-transport-belt": "Red Belt",
     "express-transport-belt": "Blue Belt",
-} as const
-export let splitterTypes = {
+}
+export const splitterTypes = {
     "transport-belt": "splitter",
     "fast-transport-belt": "fast-splitter",
     "express-transport-belt": "express-splitter",
-} as const
-export let beltSides = ["Both", "Right", "Left"] as const
-export let pumpSides = ["Right", "Left"] as const
-export let beltFlowDirections = ["Front", "Back", "None"] as const
-export let refillFuelTypes = ["wood", "coal", "solid-fuel", "rocket-fuel", "nuclear-fuel"] as const
-export let refillFuelTypesHuman = {
+}
+export const beltSides: iBeltSides[] = ["Both", "Right", "Left"]
+export const pumpSides: iPumpSides[] = ["Right", "Left"]
+export const beltFlowDirections = ["Front", "Back", "None"]
+export const refillFuelTypes: iRefillFuelTypes[] = [
+    "wood",
+    "coal",
+    "solid-fuel",
+    "rocket-fuel",
+    "nuclear-fuel",
+]
+export const refillFuelTypesHuman = {
     wood: "Wood",
     coal: "Coal",
     "solid-fuel": "Solid Fuel",
     "rocket-fuel": "Rocket Fuel",
     "nuclear-fuel": "Nuclear Fuel",
-} as const
+}
 
-export let stackerDiagonalTypes = ["Left-Right", "Right-Left"] as const
-export let stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes] as const
+export const stackerDiagonalTypes = ["Left-Right", "Right-Left"]
+export const stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes]
 
 export enum DIRECTION {
     UP = 0,
@@ -70,10 +86,10 @@ export enum DIRECTION {
     LEFT = 6,
 }
 
-export let enabledConditionOperators = [">", "<"] as const
-export let enabledConditionOperatorsHuman = { ">": "> (more than)", "<": "< (less than)" } as const
+export const enabledConditionOperators: iEnabledConditionOperators[] = [">", "<"]
+export const enabledConditionOperatorsHuman = { ">": "> (more than)", "<": "< (less than)" }
 
-export let defaultSettings = {
+export const defaultSettings = {
     // Global tooltip text
     tooltipText: "",
 
@@ -113,7 +129,6 @@ export let defaultSettings = {
     chestRequestItemsAmount: Array(12).fill(""),
 
     // Belt settings
-    beltsEnabled: true,
     beltType: [...beltTypes][1],
     beltSidesUsed: [...beltSides][0],
     beltFlowDirection: [...beltFlowDirections][0],

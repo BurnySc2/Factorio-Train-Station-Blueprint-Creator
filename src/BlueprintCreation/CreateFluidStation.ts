@@ -28,7 +28,7 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
     resetEntityNumber()
     let allItems: iBlueprintItem[] = []
 
-    let stationsTarget = bpSettings.sequentialStation ? bpSettings.sequentialStationsAmount : 1
+    const stationsTarget = bpSettings.sequentialStation ? bpSettings.sequentialStationsAmount : 1
     // For each station, create all items, then shift them down
     for (let stationNumber = 0; stationNumber < stationsTarget; stationNumber++) {
         const stationYOffset = (getTrainArray(bpSettings).length + 2) * stationNumber
@@ -36,8 +36,8 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         let stationItems: iBlueprintItem[] = []
         // TODO place storage tanks and connect them with wire
         // Sorting not required?
-        let rightStorageTanks: iBlueprintItem[] = placeStorageTanks(bpSettings)
-        let leftStorageTanks: iBlueprintItem[] = mirrorItemsHorizontal(rightStorageTanks)
+        const rightStorageTanks: iBlueprintItem[] = placeStorageTanks(bpSettings)
+        const leftStorageTanks: iBlueprintItem[] = mirrorItemsHorizontal(rightStorageTanks)
         sortByYPosition(rightStorageTanks)
         sortByYPosition(leftStorageTanks)
         if (bpSettings.connectChestsWithGreenWire) {
@@ -52,20 +52,20 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         // Mirrorable items
         let rightSideItems: iBlueprintItem[] = []
 
-        let rightPoles = placePoles(bpSettings)
-        let leftPoles = mirrorItemsHorizontal(rightPoles)
-        let poles = mixSides(bpSettings.pumpSidesToBeUsed, leftPoles, rightPoles)
+        const rightPoles = placePoles(bpSettings)
+        const leftPoles = mirrorItemsHorizontal(rightPoles)
+        const poles = mixSides(bpSettings.pumpSidesToBeUsed, leftPoles, rightPoles)
         let leftSideItems: iBlueprintItem[] = mirrorItemsHorizontal(rightSideItems)
-        let rightPumps = placePumps(bpSettings)
-        let leftPumps = mirrorItemsHorizontal(rightPumps)
-        let rightPipes = placePipes(bpSettings)
-        let leftPipes = mirrorItemsHorizontal(rightPipes)
+        const rightPumps = placePumps(bpSettings)
+        const leftPumps = mirrorItemsHorizontal(rightPumps)
+        const rightPipes = placePipes(bpSettings)
+        const leftPipes = mirrorItemsHorizontal(rightPipes)
 
         // Combine remaining items which were already mirrored and offset-ed
         // TODO Add storage tanks here
         if (bpSettings.placeLampsNearPoles) {
-            let rightLamps = placeLamps(bpSettings)
-            let leftLamps = mirrorItemsHorizontal(rightLamps)
+            const rightLamps = placeLamps(bpSettings)
+            const leftLamps = mirrorItemsHorizontal(rightLamps)
             rightSideItems = [...rightSideItems, ...rightLamps]
             leftSideItems = [...leftSideItems, ...leftLamps]
         }
@@ -75,28 +75,28 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         // All items that need no mirroring (tracks, signals, train stops, refuel chests and inserter, poles for those, decider combinator)
         stationItems = [...stationItems, ...placeTrainTracks(bpSettings)]
         stationItems = [...stationItems, ...placeSignals(bpSettings, stationNumber)]
-        let trainStop = placeTrainStop(bpSettings)[0]
+        const trainStop = placeTrainStop(bpSettings)[0]
         stationItems = [...stationItems, trainStop]
         if (bpSettings.refillEnabled)
             stationItems = [...stationItems, ...placeRefuelChestsAndInserters(bpSettings)]
         if (bpSettings.refillEnabled || bpSettings.trainStopUsesEnabledCondition) {
-            let topPoles = placeTopRefuelPoles(bpSettings)
-            let bottomPoles = placeBottomRefuelPoles(bpSettings)
+            const topPoles = placeTopRefuelPoles(bpSettings)
+            const bottomPoles = placeBottomRefuelPoles(bpSettings)
             stationItems = [...stationItems, ...topPoles, ...bottomPoles]
             if (bpSettings.trainStopUsesEnabledCondition) {
-                let decider = placeDecider(bpSettings)[0]
+                const decider = placeDecider(bpSettings)[0]
                 // Combine decider and trainstop with green wire
                 connectTwoEntitiesWithWire(decider, trainStop, "green", "2", "1")
                 // Combine decider and poles with green wire
                 // TODO Connect storage tank with pole
-                let storageTanks = mixSides(
+                const storageTanks = mixSides(
                     bpSettings.pumpSidesToBeUsed,
                     leftStorageTanks,
                     rightStorageTanks
                 )
                 sortByYPosition(storageTanks)
                 sortByYPosition(poles)
-                let combineArray = [decider, storageTanks[0], poles[0], ...topPoles]
+                const combineArray = [decider, storageTanks[0], poles[0], ...topPoles]
                 sortByYPosition(combineArray)
                 connectItemsWithWire(combineArray, "green")
                 stationItems = [...stationItems, decider]
@@ -125,16 +125,16 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
     }
 
     // If sequential: connect train stop with next rail signal (green wire)
-    let trainStops = allItems.filter((item) => {
+    const trainStops = allItems.filter((item) => {
         return item.name === "train-stop"
     })
-    let railSignals = allItems.filter((item) => {
+    const railSignals = allItems.filter((item) => {
         return item.name === "rail-signal"
     })
     sortByYPosition(trainStops)
     sortByYPosition(railSignals)
     trainStops.slice(1).forEach((stop, i) => {
-        let signal = railSignals[i]
+        const signal = railSignals[i]
         connectTwoEntitiesWithWire(stop, signal, "green")
     })
 
