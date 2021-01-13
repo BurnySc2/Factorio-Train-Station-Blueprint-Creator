@@ -16,6 +16,6 @@ export let CLASSES = {
     inputTextElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
     selectElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
     buttonElement: "border-2 border-gray-600 m-auto px-4 py-1 text-white rounded hover:bg-blue-300",
-    // How to change styling for options??
-    optionElement: "text-center",
+    // Styling doesnt apply for firefox, but works in chrome
+    optionElement: "text-center text-white bg-blue-900",
 }

@@ -3,6 +3,8 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
 export default function TrainTypeSettings(props: iSectionsProps) {
+    let hideIfDiagonalStacker =
+        props.userSettings.stationType === "Stacker" && props.userSettings.diagonalStacker
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>
@@ -52,6 +54,7 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                 </label>
                 <input
                     className={CLASSES.checkboxElement}
+                    hidden={hideIfDiagonalStacker}
                     type={"checkbox"}
                     id={"includeTrainInBlueprint"}
                     checked={props.userSettings.includeTrainInBlueprint}
@@ -62,7 +65,11 @@ export default function TrainTypeSettings(props: iSectionsProps) {
                         })
                     }}
                 />
-                <label className={CLASSES.labelElement} htmlFor={"includeTrainInBlueprint"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hideIfDiagonalStacker}
+                    htmlFor={"includeTrainInBlueprint"}
+                >
                     Include Train in Blueprint
                 </label>
             </div>

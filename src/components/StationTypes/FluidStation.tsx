@@ -1,7 +1,6 @@
 import React from "react"
 import TrainTypeSettings from "../Sections/TrainTypeSettings"
 import { iSectionsProps } from "../../constants/interfaces"
-import SequentialStation from "../SequentialStation/SequentialStation"
 import RefillSettings from "../Sections/RefillSettings"
 import WireSettings from "../Sections/WireSettings"
 import EnabledConditionSettings from "../Sections/EnabledConditionSettings"
@@ -15,10 +14,6 @@ export default function FluidStation(props: iSectionsProps) {
             <div className={"grid gap-x-4 grid-cols-1 lg:grid-cols-2"}>
                 <div>
                     <StationNameSettings
-                        userSettings={props.userSettings}
-                        setUserSettings={props.setUserSettings}
-                    />
-                    <SequentialStation
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />

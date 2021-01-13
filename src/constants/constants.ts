@@ -60,6 +60,9 @@ export let refillFuelTypesHuman = {
     "nuclear-fuel": "Nuclear Fuel",
 } as const
 
+export let stackerDiagonalTypes = ["Left-Right", "Right-Left"] as const
+export let stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes] as const
+
 export enum DIRECTION {
     UP = 0,
     RIGHT = 2,
@@ -72,7 +75,7 @@ export let enabledConditionOperatorsHuman = { ">": "> (more than)", "<": "< (les
 
 export let defaultSettings = {
     // Station type
-    stationType: [...stationTypes][0],
+    stationType: [...stationTypes][4],
     stationName: "",
     trainLimit: "",
 
@@ -134,5 +137,5 @@ export let defaultSettings = {
     // Stacker settings
     stackerNumberParallelLanes: "3",
     diagonalStacker: true,
-    leftRightStacker: false,
+    stackerType: [...stackerTypes][0],
 }

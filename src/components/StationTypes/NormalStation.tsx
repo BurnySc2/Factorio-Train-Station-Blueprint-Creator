@@ -2,7 +2,7 @@ import React from "react"
 import TrainTypeSettings from "../Sections/TrainTypeSettings"
 import { iSectionsProps } from "../../constants/interfaces"
 import InserterSettings from "../Sections/InserterSettings"
-import SequentialStation from "../SequentialStation/SequentialStation"
+import SequentialStationSettings from "../Sections/SequentialStationSettings"
 import ChestTypeSettings from "../Sections/ChestTypeSettings"
 import BeltTypeSettings from "../Sections/BeltTypeSettings"
 import RefillSettings from "../Sections/RefillSettings"
@@ -20,7 +20,7 @@ export default function NormalStation(props: iSectionsProps) {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                    <SequentialStation
+                    <SequentialStationSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />

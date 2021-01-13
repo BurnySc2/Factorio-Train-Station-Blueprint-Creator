@@ -2,7 +2,7 @@ import React from "react"
 import { CLASSES } from "../../css/classes"
 import { iSectionsProps } from "../../constants/interfaces"
 
-export default function SequentialStation(props: iSectionsProps) {
+export default function SequentialStationSettings(props: iSectionsProps) {
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>

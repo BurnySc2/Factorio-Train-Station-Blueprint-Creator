@@ -3,16 +3,24 @@ import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 
 export default function WireSettings(props: iSectionsProps) {
+    let normalTypes = ["Loading Station", "Unloading Station"]
+    let fluidTypes = ["Fluid Loading Station", "Fluid Unloading Station"]
+    let hiddenWhenNormalStation = normalTypes.includes(props.userSettings.stationType)
+    let hiddenWhenFluidStation = fluidTypes.includes(props.userSettings.stationType)
+    let hiddenWhenNotBothSides = props.userSettings.beltSidesUsed !== "Both"
+
     let myCheckbox = (
         keyName:
             | "connectChestsWithGreenWire"
             | "connectBothSideWithGreenWire"
             | "connectChestsWithRedWire"
-            | "connectBothSideWithRedWire"
+            | "connectBothSideWithRedWire",
+        hidden: boolean = false
     ) => {
         return (
             <input
                 className={CLASSES.checkboxElement}
+                hidden={hidden}
                 key={keyName}
                 type={"checkbox"}
                 id={keyName}
@@ -31,19 +39,55 @@ export default function WireSettings(props: iSectionsProps) {
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>
                 {myCheckbox("connectChestsWithGreenWire")}
-                <label className={CLASSES.labelElement} htmlFor={"connectChestsWithGreenWire"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenFluidStation}
+                    htmlFor={"connectChestsWithGreenWire"}
+                >
                     Connect chests with green wire?
                 </label>
-                {myCheckbox("connectBothSideWithGreenWire")}
-                <label className={CLASSES.labelElement} htmlFor={"connectBothSideWithGreenWire"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenNormalStation}
+                    htmlFor={"connectChestsWithGreenWire"}
+                >
+                    Connect storage tanks with green wire?
+                </label>
+                {myCheckbox(
+                    "connectBothSideWithGreenWire",
+                    hiddenWhenFluidStation || hiddenWhenNotBothSides
+                )}
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenFluidStation || hiddenWhenNotBothSides}
+                    htmlFor={"connectBothSideWithGreenWire"}
+                >
                     Connect left and right side with green wire?
                 </label>
                 {myCheckbox("connectChestsWithRedWire")}
-                <label className={CLASSES.labelElement} htmlFor={"connectChestsWithRedWire"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenFluidStation}
+                    htmlFor={"connectChestsWithRedWire"}
+                >
                     Connect chests with red wire?
                 </label>
-                {myCheckbox("connectBothSideWithRedWire")}
-                <label className={CLASSES.labelElement} htmlFor={"connectBothSideWithRedWire"}>
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenNormalStation}
+                    htmlFor={"connectChestsWithGreenWire"}
+                >
+                    Connect storage tanks with red wire?
+                </label>
+                {myCheckbox(
+                    "connectBothSideWithRedWire",
+                    hiddenWhenFluidStation || hiddenWhenNotBothSides
+                )}
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenFluidStation || hiddenWhenNotBothSides}
+                    htmlFor={"connectBothSideWithRedWire"}
+                >
                     Connect left and right side with red wire?
                 </label>
             </div>

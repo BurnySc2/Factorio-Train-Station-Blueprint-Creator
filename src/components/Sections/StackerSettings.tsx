@@ -1,9 +1,10 @@
 import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
+import { stackerDiagonalTypes, stackerTypes } from "../../constants/constants"
 
 export default function StackerSettings(props: iSectionsProps) {
-    let myCheckbox = (keyName: "diagonalStacker" | "leftRightStacker") => {
+    let myCheckbox = (keyName: "diagonalStacker") => {
         return (
             <input
                 className={CLASSES.checkboxElement}
@@ -14,12 +15,43 @@ export default function StackerSettings(props: iSectionsProps) {
                 onChange={(e) => {
                     props.setUserSettings({
                         ...props.userSettings,
-                        [keyName]: e.target.value,
+                        [keyName]: e.target.checked,
                     })
                 }}
             />
         )
     }
+
+    let stackerTypesHtml = (
+        <select
+            className={CLASSES.selectElement}
+            value={props.userSettings.stackerType}
+            onChange={(e) => {
+                props.setUserSettings({
+                    ...props.userSettings,
+                    // @ts-ignore
+                    stackerType: e.target.value,
+                })
+            }}
+        >
+            {stackerTypes.map((type) => {
+                if (props.userSettings.diagonalStacker) return undefined
+                return (
+                    <option key={type} value={type}>
+                        {type}
+                    </option>
+                )
+            })}
+            {stackerDiagonalTypes.map((type) => {
+                if (!props.userSettings.diagonalStacker) return undefined
+                return (
+                    <option key={type} value={type}>
+                        {type}
+                    </option>
+                )
+            })}
+        </select>
+    )
 
     return (
         <div className={CLASSES.section}>
@@ -42,9 +74,9 @@ export default function StackerSettings(props: iSectionsProps) {
                 <label className={CLASSES.labelElement} htmlFor={"diagonalStacker"}>
                     Diagonal Stacker?
                 </label>
-                {myCheckbox("leftRightStacker")}
+                {stackerTypesHtml}
                 <label className={CLASSES.labelElement} htmlFor={"leftRightStacker"}>
-                    Left-Right Stacker?
+                    Stacker Type
                 </label>
             </div>
         </div>

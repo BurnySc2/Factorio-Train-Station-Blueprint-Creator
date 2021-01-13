@@ -10,6 +10,15 @@ export type iWireColor = "green" | "red"
 
 type iEntityId = { entity_id: number }
 
+export interface iBlueprintItemWithoutNumber {
+    name: string
+    position: {
+        x: number
+        y: number
+    }
+    direction?: number
+}
+
 export interface iBlueprintItem {
     entity_number: number
     name: string
