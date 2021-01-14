@@ -97,6 +97,7 @@ export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
                 <input
                     className={CLASSES.inputTextElement}
                     type={"number"}
+                    min={"0"}
                     value={props.userSettings.chestLimit}
                     data-tip={TOOLTIPS.chestLimit}
                     onChange={(e) => {

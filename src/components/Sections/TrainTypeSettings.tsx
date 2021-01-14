@@ -45,6 +45,7 @@ export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
                 <input
                     className={CLASSES.inputTextElement}
                     type={"number"}
+                    min={"0"}
                     id={"cargoWagon"}
                     value={props.userSettings.cargoWagon}
                     onChange={(e) => {

@@ -115,7 +115,7 @@ export const calcCombinatorSettings = (
     const cargoCount = parseInt(bpSettings.cargoWagon)
 
     // Calculate how many items the green-wire connected chests can contain
-    const chestLimit = parseInt(bpSettings.chestLimit)
+    const chestLimit = bpSettings.chestLimit === "" ? 999999 : parseInt(bpSettings.chestLimit)
     let connectedChestCount = 1
     let cargoWagonsConnectedToChest = 1 / 6
     if (bpSettings.connectChestsWithGreenWire) {
