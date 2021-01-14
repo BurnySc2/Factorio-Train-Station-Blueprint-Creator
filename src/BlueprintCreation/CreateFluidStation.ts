@@ -21,6 +21,8 @@ import {
     placeStorageTanks,
     placePumps,
     placePipes,
+    placeDynamicTrainLimitCombinators,
+    sortStorageTanks,
 } from "./CreateItems"
 
 export const createFluidStation = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
@@ -30,10 +32,10 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
     // For each station, create all items, then shift them down
     let stationItems: iBlueprintItem[] = []
     // Sorting not required?
-    const rightStorageTanks: iBlueprintItem[] = placeStorageTanks(bpSettings)
-    const leftStorageTanks: iBlueprintItem[] = mirrorItemsHorizontal(rightStorageTanks)
-    sortByYPosition(rightStorageTanks)
-    sortByYPosition(leftStorageTanks)
+    let rightStorageTanks: iBlueprintItem[] = placeStorageTanks(bpSettings)
+    let leftStorageTanks: iBlueprintItem[] = mirrorItemsHorizontal(rightStorageTanks)
+    rightStorageTanks = sortStorageTanks(rightStorageTanks)
+    leftStorageTanks = sortStorageTanks(leftStorageTanks, 1)
     if (bpSettings.connectChestsWithGreenWire) {
         connectItemsWithWire(leftStorageTanks, "green")
         connectItemsWithWire(rightStorageTanks, "green")
@@ -75,21 +77,37 @@ export const createFluidStation = (bpSettings: typeof defaultSettings): iBluepri
         const bottomPoles = placeBottomRefuelPoles(bpSettings)
         stationItems = [...stationItems, ...bottomPoles]
     }
-    if (bpSettings.refillEnabled || bpSettings.trainStopUsesEnabledCondition) {
+    if (
+        bpSettings.refillEnabled ||
+        bpSettings.trainStopUsesEnabledCondition ||
+        bpSettings.trainLimit === "Dynamic"
+    ) {
         const topPoles = placeTopRefuelPoles(bpSettings)
         stationItems = [...stationItems, ...topPoles]
+        sortByYPosition(poles)
+
+        // In enabled-condition: place decider
         if (bpSettings.trainStopUsesEnabledCondition) {
+            stationItems = [
+                ...stationItems,
+                ...placeEnabledConditionDecider(bpSettings, poles[0], trainStop),
+            ]
+        }
+
+        // If dynamic train limit: place decider and arithmetic (2 arithmetic for unloading)
+        if (bpSettings.trainLimit === "Dynamic") {
+            const combinators = placeDynamicTrainLimitCombinators(bpSettings, poles[0], trainStop)
+            stationItems = [...stationItems, ...combinators]
+        }
+
+        // Connect top refill poles if enabled-condition or trainLimit=dynamic
+        if (bpSettings.trainStopUsesEnabledCondition || bpSettings.trainLimit === "Dynamic") {
+            // Connect top chest with top pole, and top pole with the top-refill-poles
             const storageTanks = mixSides(
                 bpSettings.pumpSidesToBeUsed,
                 leftStorageTanks,
                 rightStorageTanks
             )
-            sortByYPosition(poles)
-            stationItems = [
-                ...stationItems,
-                placeEnabledConditionDecider(bpSettings, poles[0], trainStop)[0],
-            ]
-            sortByYPosition(storageTanks)
             const combineArray = [storageTanks[0], poles[0], ...topPoles]
             sortByYPosition(combineArray)
             connectItemsWithWire(combineArray, "green")

@@ -34,6 +34,22 @@ export default function FluidSettings(props: iSectionsProps): JSX.Element {
                     Sides to be used
                 </label>
                 <input
+                    className={CLASSES.inputTextElement}
+                    type={"number"}
+                    min={"1"}
+                    id={"storageTanksColumn"}
+                    value={props.userSettings.pumpStorageTankColumns}
+                    onChange={(e) => {
+                        props.setUserSettings({
+                            ...props.userSettings,
+                            pumpStorageTankColumns: e.target.value,
+                        })
+                    }}
+                />
+                <label className={CLASSES.labelElement} htmlFor={"storageTanksColumn"}>
+                    Amount of storage tank columns
+                </label>
+                <input
                     className={CLASSES.checkboxElement}
                     type={"checkbox"}
                     id={"connectTanks"}
@@ -46,7 +62,7 @@ export default function FluidSettings(props: iSectionsProps): JSX.Element {
                     }}
                 />
                 <label className={CLASSES.labelElement} htmlFor={"connectTanks"}>
-                    Connect tank with pipe?
+                    Connect tanks with pipe?
                 </label>
             </div>
         </div>

@@ -15,7 +15,6 @@ import {
     filterInserters,
     fluidStation,
     mirrorXOffset,
-    normalStation,
     requestChestTypes,
     splitterTypes,
 } from "../constants/constants"
@@ -222,18 +221,14 @@ export const placeTrainStop = (bpSettings: typeof defaultSettings): iBlueprintIt
             comparator: ">",
         }
     }
-    if (bpSettings.trainLimit === "Dynamic" && normalStation.includes(bpSettings.stationType)) {
+    if (bpSettings.trainLimit === "Dynamic") {
         controlBehavior.set_trains_limit = bpSettings.trainLimit === "Dynamic"
         controlBehavior.trains_limit_signal = {
             type: "virtual",
             name: "signal-L",
         }
     } else {
-        if (bpSettings.trainLimit === "Dynamic" && fluidStation.includes(bpSettings.stationType)) {
-            options.manual_trains_limit = 2
-        } else {
-            options.manual_trains_limit = parseInt(bpSettings.trainLimit)
-        }
+        options.manual_trains_limit = parseInt(bpSettings.trainLimit)
     }
     options.control_behavior = controlBehavior
     returnArray.push(newItem("train-stop", 0.5, -2, options))
@@ -411,13 +406,9 @@ export const placePumps = (bpSettings: typeof defaultSettings): iBlueprintItem[]
         bpSettings.stationType === "Fluid Loading Station" ? DIRECTION.LEFT : DIRECTION.RIGHT
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 1) {
-            returnArray.push(
-                // Storage tank facing UP has connection topleft and bottomright
-                newItem("pump", 0.5, y + 0.5, { direction: pumpDirection })
-            )
+            returnArray.push(newItem("pump", 0.5, y + 0.5, { direction: pumpDirection }))
         }
         if (i % 7 === 6) {
-            // Storage tank facing RIGHT has connection topright and bottomleft
             returnArray.push(newItem("pump", 0.5, y + 0.5, { direction: pumpDirection }))
         }
     })
@@ -425,15 +416,37 @@ export const placePumps = (bpSettings: typeof defaultSettings): iBlueprintItem[]
 }
 export const placeStorageTanks = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 3x3, so coordinate ends in 0.5
+    // Storage tank facing UP has connection topleft and bottomright
+    // Storage tank facing RIGHT has connection topright and bottomleft
     const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 2) {
-            // Storage tank facing UP has connection topleft and bottomright
-            returnArray.push(newItem("storage-tank", 3, y + 0.5))
+            for (
+                let xOffset = 0;
+                xOffset < parseInt(bpSettings.pumpStorageTankColumns);
+                xOffset++
+            ) {
+                const tankDirection = xOffset % 2 === 0 ? DIRECTION.UP : DIRECTION.RIGHT
+                returnArray.push(
+                    newItem("storage-tank", (1 + xOffset) * 3, y + 0.5, {
+                        direction: tankDirection,
+                    })
+                )
+            }
         }
         if (i % 7 === 5) {
-            // Storage tank facing RIGHT has connection topright and bottomleft
-            returnArray.push(newItem("storage-tank", 3, y + 0.5, { direction: DIRECTION.RIGHT }))
+            for (
+                let xOffset = 0;
+                xOffset < parseInt(bpSettings.pumpStorageTankColumns);
+                xOffset++
+            ) {
+                const tankDirection = xOffset % 2 === 0 ? DIRECTION.RIGHT : DIRECTION.UP
+                returnArray.push(
+                    newItem("storage-tank", (1 + xOffset) * 3, y + 0.5, {
+                        direction: tankDirection,
+                    })
+                )
+            }
         }
     })
     return returnArray
@@ -443,8 +456,10 @@ export const placePipes = (bpSettings: typeof defaultSettings): iBlueprintItem[]
     const returnArray: iBlueprintItem[] = []
     getCargoArray(bpSettings).forEach((y, i, array) => {
         if (i !== 0 && i !== array.length - 1 && i % 7 === 0) {
-            // Storage tank facing UP has connection topleft and bottomright
-            returnArray.push(newItem("pipe", 2, y + 0.5))
+            for (let j = 0; j < parseInt(bpSettings.pumpStorageTankColumns); j++) {
+                const xOffset = j % 2 === 0 ? Math.floor(j / 2) * 6 : Math.floor(j / 2) * 6 + 5
+                returnArray.push(newItem("pipe", 2 + xOffset, y + 0.5))
+            }
         }
     })
     return returnArray
@@ -616,31 +631,13 @@ export const placeDynamicTrainLimitCombinators = (
     topPole: iBlueprintItem,
     trainStop: iBlueprintItem
 ): iBlueprintItem[] => {
-    const deciderXOffset = bpSettings.trainStopUsesEnabledCondition ? 1 : 0
     const arithmeticXOffset = bpSettings.placeLampsNearPoles ? 1 : 0
-    const decider = newItem("decider-combinator", deciderXOffset, 1, {
-        control_behavior: {
-            decider_conditions: {
-                first_signal: {
-                    type: "virtual",
-                    name: "signal-each",
-                },
-                constant: 0,
-                comparator: ">",
-                output_signal: {
-                    type: "virtual",
-                    name: "signal-L",
-                },
-                copy_count_from_input: true,
-            },
-        },
-    })
     // Set settings of the first arithmetic combinator
     const arithmetic1Condition: iArithmeticCondition = {
         operation: bpSettings.trainLimitArithmetic1Operator,
         output_signal: {
             type: "virtual",
-            name: "signal-A",
+            name: "signal-L",
         },
     }
     if (
@@ -676,12 +673,13 @@ export const placeDynamicTrainLimitCombinators = (
             arithmetic_conditions: arithmetic1Condition,
         },
     })
+    ////////////////////////////////////////////////////////
     // Set settings of the second arithmetic combinator
     const arithmetic2Condition: iArithmeticCondition = {
         operation: bpSettings.trainLimitArithmetic2Operator,
         output_signal: {
             type: "virtual",
-            name: "signal-A",
+            name: "signal-L",
         },
     }
     if (
@@ -717,14 +715,12 @@ export const placeDynamicTrainLimitCombinators = (
             arithmetic_conditions: arithmetic2Condition,
         },
     })
-    // Combine decider output with trainstop with green wire
-    connectTwoEntitiesWithWire(decider, trainStop, "green", "2", "1")
     // arithmentic gets: "2"(output) green connection with circuit number 1 to decider which gets "1"(input) green connection with circuit number 2
-    connectTwoEntitiesWithWire(arithmetic2, decider, "green", "2", "1", 1, 2)
+    connectTwoEntitiesWithWire(arithmetic2, trainStop, "green", "2", "1", 1, 2)
     connectTwoEntitiesWithWire(arithmetic1, arithmetic2, "green", "2", "1", 1, 2)
     // Combine decider input with pole with green wire
     connectTwoEntitiesWithWire(arithmetic1, topPole, "green")
-    return [decider, arithmetic1, arithmetic2]
+    return [arithmetic1, arithmetic2]
 }
 // Refuel
 export const placeTopRefuelPoles = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
@@ -915,4 +911,29 @@ export const sortByYPosition = (items: iBlueprintItem[]): void => {
         }
         return 0
     })
+}
+export const sortStorageTanks = (items: iBlueprintItem[], rowCount = 0): iBlueprintItem[] => {
+    if (items.length === 0) {
+        return []
+    }
+    sortByYPosition(items)
+    let returnArray: iBlueprintItem[] = []
+    let y = items[0].position.y
+    let rowItems: iBlueprintItem[] = []
+    items.forEach((item, i) => {
+        if (item.position.y !== y) {
+            y = item.position.y
+            if (rowCount % 2 == 0) {
+                rowItems.reverse()
+            }
+            rowCount += 1
+            returnArray = [...returnArray, ...rowItems]
+            rowItems = []
+        }
+        rowItems.push(item)
+    })
+    rowItems.reverse()
+    returnArray = [...returnArray, ...rowItems]
+
+    return returnArray
 }

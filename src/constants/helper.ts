@@ -1,4 +1,10 @@
-import { allowedCharacters, defaultSettings, iOperator, normalStation } from "./constants"
+import {
+    allowedCharacters,
+    defaultSettings,
+    fluidStation,
+    iOperator,
+    normalStation,
+} from "./constants"
 
 const verifyNumberInput = (myInput: string) => {
     // Return true if it is a parseable number
@@ -84,6 +90,14 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): s
             return "Last input in the second arithmetic combinator is invalid."
         }
     }
+    if (fluidStation.includes(bpSettings.stationType)) {
+        if (!verifyNumberInput(bpSettings.pumpStorageTankColumns)) {
+            return "Input for amount of storage tank columns is invalid."
+        }
+        if (parseInt(bpSettings.pumpStorageTankColumns) < 1) {
+            return "Amount of storage tank columns has to be at least 1."
+        }
+    }
     if (bpSettings.stationType !== "Stacker") {
         if (parseInt(bpSettings.chestLimit) < 0) {
             return "The given chest limit is invalid."
@@ -114,39 +128,73 @@ export const calcCombinatorSettings = (
 ): [string, iOperator, string, string, iOperator, string] => {
     const cargoCount = parseInt(bpSettings.cargoWagon)
 
+    // Calculate total number of chests
+    const sidesFactor = bpSettings.beltSidesUsed === "Both" ? 2 : 1
+    let totalChestCount = 0
+    if (normalStation.includes(bpSettings.stationType)) {
+        totalChestCount = sidesFactor * 6 * cargoCount
+    } else {
+        // Fluid stations only use one side, and there is 2 tanks per cargo wagon
+        totalChestCount = 2 * cargoCount
+    }
+
     // Calculate how many items the green-wire connected chests can contain
     const chestLimit = bpSettings.chestLimit === "" ? 999999 : parseInt(bpSettings.chestLimit)
     let connectedChestCount = 1
-    let cargoWagonsConnectedToChest = 1 / 6
     if (bpSettings.connectChestsWithGreenWire) {
-        connectedChestCount *= 6 * cargoCount
-        cargoWagonsConnectedToChest *= 6 * cargoCount
+        if (normalStation.includes(bpSettings.stationType)) {
+            // For normal stations, there is 6 chests per cargo wagon per side
+            connectedChestCount *= 6 * cargoCount
+        } else {
+            // For fluid stations, there is 2 storage tanks per cargo wagon
+            connectedChestCount *= 2 * cargoCount
+        }
     }
-    if (bpSettings.connectBothSideWithGreenWire && bpSettings.beltSidesUsed === "Both") {
+    if (
+        bpSettings.connectBothSideWithGreenWire &&
+        bpSettings.beltSidesUsed === "Both" &&
+        normalStation.includes(bpSettings.stationType)
+    ) {
+        // If both sides are used, double the amount of chests (only one side is used for fluid stations
         connectedChestCount *= 2
-        cargoWagonsConnectedToChest *= 2
     }
     const chestType = bpSettings.chestType
     let chestSlotsCount = chestType === "wooden-chest" ? 16 : chestType === "iron-chest" ? 32 : 48
     chestSlotsCount = Math.min(chestLimit, chestSlotsCount)
-    const chestTotalItemCount = stackSize * chestSlotsCount * connectedChestCount
-
+    let chestTotalItemCount = 0
     // Calculate how many items the cargo wagons can contain
     const trainSlotsCount = 40
-    const trainTotalItemCount = cargoWagonsConnectedToChest * trainSlotsCount * stackSize
-
-    if (bpSettings.stationType === "Loading Station") {
-        return ["each", "/", Math.round(trainTotalItemCount).toString(), "each", "+", "0"]
+    let trainTotalItemCount = 0
+    if (normalStation.includes(bpSettings.stationType)) {
+        chestTotalItemCount = stackSize * chestSlotsCount * connectedChestCount
+        trainTotalItemCount =
+            cargoCount * trainSlotsCount * stackSize * (connectedChestCount / totalChestCount)
+    } else {
+        // All fluid wagons have room for 25k fluids
+        stackSize = 25000
+        chestTotalItemCount =
+            stackSize * connectedChestCount * parseInt(bpSettings.pumpStorageTankColumns)
+        trainTotalItemCount = cargoCount * stackSize * (connectedChestCount / totalChestCount)
     }
 
-    if (bpSettings.stationType === "Unloading Station") {
+    if (
+        bpSettings.stationType === "Loading Station" ||
+        bpSettings.stationType === "Fluid Loading Station"
+    ) {
+        return ["each", "/", Math.round(trainTotalItemCount).toString(), "L", "+", "0"]
+    }
+
+    if (
+        bpSettings.stationType === "Unloading Station" ||
+        bpSettings.stationType === "Fluid Unloading Station"
+    ) {
         return [
             "each",
             "/",
             Math.round(trainTotalItemCount).toString(),
             Math.floor(chestTotalItemCount / trainTotalItemCount).toString(),
             "-",
-            "A",
+            "L",
         ]
     }
 

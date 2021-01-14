@@ -1,5 +1,5 @@
 import React from "react"
-import { inserterTypes } from "../../constants/constants"
+import { inserterTypes, inserterTypesHuman } from "../../constants/constants"
 import { iInserterTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
@@ -25,7 +25,7 @@ export default function InserterSettings(props: iSectionsProps): JSX.Element {
                         key={inserterType}
                         value={inserterType}
                     >
-                        {inserterType}
+                        {inserterTypesHuman[inserterType]}
                     </option>
                 )
             })}

@@ -44,16 +44,16 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
     if (bpSettings.connectChestsWithGreenWire) {
         connectItemsWithWire(leftChests, "green")
         connectItemsWithWire(rightChests, "green")
-        if (bpSettings.connectBothSideWithGreenWire && bpSettings.beltSidesUsed === "Both") {
-            connectTwoEntitiesWithWire(rightChests[0], leftChests[0], "green")
-        }
+    }
+    if (bpSettings.connectBothSideWithGreenWire && bpSettings.beltSidesUsed === "Both") {
+        connectTwoEntitiesWithWire(rightChests[0], leftChests[0], "green")
     }
     if (bpSettings.connectChestsWithRedWire) {
         connectItemsWithWire(leftChests, "red")
         connectItemsWithWire(rightChests, "red")
-        if (bpSettings.connectBothSideWithRedWire && bpSettings.beltSidesUsed === "Both") {
-            connectTwoEntitiesWithWire(rightChests[0], leftChests[0], "red")
-        }
+    }
+    if (bpSettings.connectBothSideWithRedWire && bpSettings.beltSidesUsed === "Both") {
+        connectTwoEntitiesWithWire(rightChests[0], leftChests[0], "red")
     }
 
     // Mirrorable items
@@ -104,14 +104,13 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
         // Place top poles if refil enabled
         const topPoles = placeTopRefuelPoles(bpSettings)
         stationItems = [...stationItems, ...topPoles]
-
-        // Connect top chest with top pole, and top pole with the top-refill-poles
         sortByYPosition(poles)
+
         // In enabled-condition: place decider
         if (bpSettings.trainStopUsesEnabledCondition) {
             stationItems = [
                 ...stationItems,
-                placeEnabledConditionDecider(bpSettings, poles[0], trainStop)[0],
+                ...placeEnabledConditionDecider(bpSettings, poles[0], trainStop),
             ]
         }
         // If dynamic train limit: place decider and arithmetic (2 arithmetic for unloading)
@@ -121,6 +120,7 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
         }
         // Connect top refill poles if enabled-condition or trainLimit=dynamic
         if (bpSettings.trainStopUsesEnabledCondition || bpSettings.trainLimit === "Dynamic") {
+            // Connect top chest with top pole, and top pole with the top-refill-poles
             sortByYPosition(chests)
             const combineArray = [chests[0], poles[0], ...topPoles]
             sortByYPosition(combineArray)

@@ -2,13 +2,19 @@ import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
-import { fluidStation, iOperator, operatorTypes, trainLimit } from "../../constants/constants"
+import {
+    fluidStation,
+    iOperator,
+    normalStation,
+    operatorTypes,
+    trainLimit,
+} from "../../constants/constants"
 import { calcCombinatorSettings } from "../../constants/helper"
 
 export default function StationSettings(props: iSectionsProps): JSX.Element {
-    const hideWhenTrainLimitIsNotDynamic =
-        props.userSettings.trainLimit !== "Dynamic" ||
-        fluidStation.includes(props.userSettings.stationType)
+    const hideWhenTrainLimitIsNotDynamic = props.userSettings.trainLimit !== "Dynamic"
+    const hideWhenNormalStation = normalStation.includes(props.userSettings.stationType)
+    const hideWhenFluidStation = fluidStation.includes(props.userSettings.stationType)
 
     const myInput = (
         key:
@@ -122,7 +128,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     </label>
                     <button
                         className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
-                        hidden={hideWhenTrainLimitIsNotDynamic}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         onClick={() => {
                             applyArray(calcCombinatorSettings(props.userSettings, 50))
                         }}
@@ -131,7 +137,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     </button>
                     <button
                         className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
-                        hidden={hideWhenTrainLimitIsNotDynamic}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         onClick={() => {
                             applyArray(calcCombinatorSettings(props.userSettings, 100))
                         }}
@@ -140,12 +146,21 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     </button>
                     <button
                         className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
-                        hidden={hideWhenTrainLimitIsNotDynamic}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         onClick={() => {
                             applyArray(calcCombinatorSettings(props.userSettings, 200))
                         }}
                     >
                         Calculate for item stack size 200
+                    </button>
+                    <button
+                        className={`${CLASSES.buttonElement} w-full my-1 col-span-12`}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenNormalStation}
+                        onClick={() => {
+                            applyArray(calcCombinatorSettings(props.userSettings, 200))
+                        }}
+                    >
+                        Calculate combinator settings
                     </button>
                 </div>
             </div>

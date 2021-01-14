@@ -28,6 +28,11 @@ export const fluidStation: iStationType[] = ["Fluid Loading Station", "Fluid Unl
 export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
 export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "stack-inserter"]
+export const inserterTypesHuman = {
+    inserter: "Inserter",
+    "fast-inserter": "Fast Inserter",
+    "stack-inserter": "Stack Inserter",
+}
 export const filterInserters = {
     inserter: "filter-inserter",
     "fast-inserter": "filter-inserter",
@@ -155,13 +160,14 @@ export const defaultSettings = {
     stationType: [...stationTypes][0],
     stationName: "",
 
+    // Train limit and combinator settings
     trainLimit: trainLimit[0],
 
     trainLimitArithmetic1Constant1: "each",
     trainLimitArithmetic1Constant2: "333",
     trainLimitArithmetic1Operator: "/",
 
-    trainLimitArithmetic2Constant1: "each",
+    trainLimitArithmetic2Constant1: "L",
     trainLimitArithmetic2Constant2: "0",
     trainLimitArithmetic2Operator: "+",
 
@@ -174,6 +180,7 @@ export const defaultSettings = {
     // Pump Settings
     pumpSidesToBeUsed: [...pumpSides][0],
     pumpConnectWithPipe: true,
+    pumpStorageTankColumns: "1",
 
     // Inserter types
     inserterType: [...inserterTypes][0],
