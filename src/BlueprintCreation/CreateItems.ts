@@ -562,22 +562,23 @@ export const placeLamps = (bpSettings: typeof defaultSettings): iBlueprintItem[]
         if (i % 7 !== 0) return
         returnArray.push(newItem("small-lamp", 1, y + 0.5))
     })
-    if (
-        bpSettings.refillEnabled ||
-        bpSettings.trainStopUsesEnabledCondition ||
-        (bpSettings.trainLimit === "Dynamic" && normalStation.includes(bpSettings.stationType))
-    ) {
-        getFrontLocomotivesArray(bpSettings).forEach((y, i, array) => {
-            if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
-            returnArray.push(newItem("small-lamp", 1, y + 0.5))
-        })
-    }
-    if (bpSettings.refillEnabled) {
-        getBackLocomotivesArray(bpSettings).forEach((y, i, array) => {
-            if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
-            returnArray.push(newItem("small-lamp", 1, y + 0.5))
-        })
-    }
+    // TODO Fix lamps for refill inserters/chests?
+    // if (
+    //     bpSettings.refillEnabled ||
+    //     bpSettings.trainStopUsesEnabledCondition ||
+    //     (bpSettings.trainLimit === "Dynamic" && normalStation.includes(bpSettings.stationType))
+    // ) {
+    //     getFrontLocomotivesArray(bpSettings).forEach((y, i, array) => {
+    //         if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
+    //         returnArray.push(newItem("small-lamp", 1, y + 0.5))
+    //     })
+    // }
+    // if (bpSettings.refillEnabled) {
+    //     getBackLocomotivesArray(bpSettings).forEach((y, i, array) => {
+    //         if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
+    //         returnArray.push(newItem("small-lamp", 1, y + 0.5))
+    //     })
+    // }
     return returnArray
 }
 // Decider for enabled-condition
