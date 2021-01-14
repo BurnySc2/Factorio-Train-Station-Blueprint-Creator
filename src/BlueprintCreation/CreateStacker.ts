@@ -51,7 +51,7 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     let copyPasteBlueprint = [
         ...placeTrainTracks(bpSettings),
-        ...placeSignals(bpSettings, 0),
+        ...placeSignals(bpSettings),
         ...frontCurve,
         ...backCurve,
     ]

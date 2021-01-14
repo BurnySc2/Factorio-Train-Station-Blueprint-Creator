@@ -2,7 +2,6 @@ import React from "react"
 import TrainTypeSettings from "../Sections/TrainTypeSettings"
 import { iSectionsProps } from "../../constants/interfaces"
 import InserterSettings from "../Sections/InserterSettings"
-import SequentialStationSettings from "../Sections/SequentialStationSettings"
 import ChestTypeSettings from "../Sections/ChestTypeSettings"
 import BeltTypeSettings from "../Sections/BeltTypeSettings"
 import RefillSettings from "../Sections/RefillSettings"
@@ -10,6 +9,7 @@ import WireSettings from "../Sections/WireSettings"
 import EnabledConditionSettings from "../Sections/EnabledConditionSettings"
 import LampsSettings from "../Sections/LampsSettings"
 import StationNameSettings from "../Sections/StationNameSettings"
+import StationSettings from "../Sections/StationSettings"
 
 export default function NormalStation(props: iSectionsProps): JSX.Element {
     return (
@@ -20,7 +20,7 @@ export default function NormalStation(props: iSectionsProps): JSX.Element {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                    <SequentialStationSettings
+                    <StationSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
@@ -32,7 +32,6 @@ export default function NormalStation(props: iSectionsProps): JSX.Element {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-
                     <ChestTypeSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}

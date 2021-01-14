@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import NormalStation from "./StationTypes/NormalStation"
 import FluidStation from "./StationTypes/FluidStation"
 import Title from "./Title"
-import { defaultSettings, stationTypes } from "../constants/constants"
+import { defaultSettings, normalStation, stationTypes, fluidStation } from "../constants/constants"
 import { CLASSES } from "../css/classes"
 import Footer from "./Footer"
 import Stacker from "./StationTypes/Stacker"
@@ -49,13 +49,11 @@ export default function Website(): JSX.Element {
 
     // Select which sub-station settings are available
     let stationTypeHtml: JSX.Element = <div>ERROR LOADING CORRECT STATION TYPE</div>
-    if (["Loading Station", "Unloading Station"].includes(userSettings.stationType)) {
+    if (normalStation.includes(userSettings.stationType)) {
         stationTypeHtml = (
             <NormalStation userSettings={userSettings} setUserSettings={setUserSettings} />
         )
-    } else if (
-        ["Fluid Loading Station", "Fluid Unloading Station"].includes(userSettings.stationType)
-    ) {
+    } else if (fluidStation.includes(userSettings.stationType)) {
         stationTypeHtml = (
             <FluidStation userSettings={userSettings} setUserSettings={setUserSettings} />
         )

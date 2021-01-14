@@ -1,4 +1,4 @@
-import { defaultSettings } from "../constants/constants"
+import { defaultSettings, normalStation, fluidStation } from "../constants/constants"
 import { iBlueprint, iBlueprintItem } from "../constants/interfaces"
 import { createNormalStation } from "./CreateNormalStation"
 import { createFluidStation } from "./CreateFluidStation"
@@ -7,10 +7,10 @@ import { createStacker } from "./CreateStacker"
 const zlib = require("zlib")
 
 export const createBlueprint = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
-    if (["Loading Station", "Unloading Station"].includes(bpSettings.stationType)) {
+    if (normalStation.includes(bpSettings.stationType)) {
         return createNormalStation(bpSettings)
     }
-    if (["Fluid Loading Station", "Fluid Unloading Station"].includes(bpSettings.stationType)) {
+    if (fluidStation.includes(bpSettings.stationType)) {
         return createFluidStation(bpSettings)
     } else if (bpSettings.stationType === "Stacker") {
         return createStacker(bpSettings)

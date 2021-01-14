@@ -1,15 +1,22 @@
 import {
+    iArithmeticCondition,
     iBlueprintItem,
     iBlueprintItemWithoutNumber,
-    iEntityId,
+    iCircuitConnection,
+    iOptions,
+    iTrainStopControlBehavior,
     iWireColor,
 } from "../constants/interfaces"
 import {
+    allowedCharacters,
     botChestTypes,
     defaultSettings,
     DIRECTION,
     filterInserters,
+    fluidStation,
     mirrorXOffset,
+    normalStation,
+    requestChestTypes,
     splitterTypes,
 } from "../constants/constants"
 
@@ -17,55 +24,17 @@ import {
 const cloneDeep = require("clone-deep")
 
 export let entityNumber = 1
+export let circuitNumber = 1
 export const resetEntityNumber = (): void => {
     entityNumber = 1
+    circuitNumber = 1
 }
 
 export const newItem = (
     itemName: string,
     x: number,
     y: number,
-    options: {
-        direction?: number
-        orientation?: number
-        bar?: number
-        filters?: Array<{
-            index: number
-            name: string
-        }>
-        request_filters?: Array<{
-            index: number
-            name: string
-            count: number
-        }>
-        request_from_buffers?: boolean
-        station?: string
-        manual_trains_limit?: number
-        control_behavior?: {
-            decider_conditions?: {
-                first_signal: {
-                    type: string
-                    name: string
-                }
-                constant: number
-                comparator: string
-                output_signal: {
-                    type: string
-                    name: string
-                }
-                copy_count_from_input: boolean
-            }
-            circuit_condition?: {
-                first_signal: {
-                    type: string
-                    name: string
-                }
-                constant: number
-                comparator: string
-            }
-            circuit_enable_disable?: boolean
-        }
-    } = {}
+    options: iOptions = {}
 ): iBlueprintItem => {
     const item: iBlueprintItem = {
         entity_number: entityNumber,
@@ -101,6 +70,9 @@ export const newItem = (
     }
     if (options.manual_trains_limit) {
         item.manual_trains_limit = options.manual_trains_limit
+    }
+    if (options.trains_limit_signal) {
+        item.trains_limit_signal = options.trains_limit_signal
     }
     entityNumber += 1
     return item
@@ -195,10 +167,7 @@ export const placeTrainTracks = (bpSettings: typeof defaultSettings): iBlueprint
     return returnArray
 }
 
-export const placeSignals = (
-    bpSettings: typeof defaultSettings,
-    stationNumber: number
-): iBlueprintItem[] => {
+export const placeSignals = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
     const returnArray: iBlueprintItem[] = []
     const start = 0
@@ -214,20 +183,6 @@ export const placeSignals = (
             newItem("rail-chain-signal", 0, start - 3.5, { direction: DIRECTION.DOWN })
         )
         returnArray.push(newItem("rail-signal", 0, end - 2.5, { direction: DIRECTION.DOWN }))
-    }
-    // If sequential station: place chain signal at front, rail signal between, rail signal at the back
-    else if (bpSettings.sequentialStation) {
-        if (stationNumber === 0) {
-            returnArray.push(
-                newItem("rail-chain-signal", 0, start - 3.5, { direction: DIRECTION.DOWN })
-            )
-        }
-        if (stationNumber === parseInt(bpSettings.sequentialStationsAmount) - 1) {
-            returnArray.push(newItem("rail-signal", 0, end - 2.5, { direction: DIRECTION.DOWN }))
-        }
-        if (stationNumber > 0) {
-            returnArray.push(newItem("rail-signal", 0, start - 3.5, { direction: DIRECTION.DOWN }))
-        }
     }
     // Normal station
     else {
@@ -252,27 +207,35 @@ export const placeSignals = (
 export const placeTrainStop = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 2x2, so coordinate ends in .0
     const returnArray: iBlueprintItem[] = []
-    const controlBehavior = bpSettings.trainStopUsesEnabledCondition
-        ? {
-              circuit_condition: {
-                  first_signal: {
-                      type: "virtual",
-                      name: "signal-red",
-                  },
-                  constant: 0,
-                  comparator: ">",
-              },
-              circuit_enable_disable: true,
-          }
-        : undefined
-    const options = {
+    const options: iOptions = {
         station: bpSettings.stationName !== "" ? bpSettings.stationName : undefined,
-        manual_trains_limit:
-            bpSettings.trainLimit !== "" && parseInt(bpSettings.trainLimit) >= 0
-                ? parseInt(bpSettings.trainLimit)
-                : undefined,
-        control_behavior: controlBehavior,
     }
+    const controlBehavior: iTrainStopControlBehavior = {}
+    if (bpSettings.trainStopUsesEnabledCondition) {
+        controlBehavior.circuit_enable_disable = true
+        controlBehavior.circuit_condition = {
+            first_signal: {
+                type: "virtual",
+                name: "signal-red",
+            },
+            constant: 0,
+            comparator: ">",
+        }
+    }
+    if (bpSettings.trainLimit === "Dynamic" && normalStation.includes(bpSettings.stationType)) {
+        controlBehavior.set_trains_limit = bpSettings.trainLimit === "Dynamic"
+        controlBehavior.trains_limit_signal = {
+            type: "virtual",
+            name: "signal-L",
+        }
+    } else {
+        if (bpSettings.trainLimit === "Dynamic" && fluidStation.includes(bpSettings.stationType)) {
+            options.manual_trains_limit = 2
+        } else {
+            options.manual_trains_limit = parseInt(bpSettings.trainLimit)
+        }
+    }
+    options.control_behavior = controlBehavior
     returnArray.push(newItem("train-stop", 0.5, -2, options))
     return returnArray
 }
@@ -289,9 +252,7 @@ export const placeTrain = (bpSettings: typeof defaultSettings): iBlueprintItem[]
         if (count < locoCount) {
             returnArray.push(newItem("locomotive", -1.5, y + 1))
         } else if (count < locoCount + cargoCount) {
-            if (
-                ["Loading Station", "Unloading Station", "Stacker"].includes(bpSettings.stationType)
-            )
+            if (!fluidStation.includes(bpSettings.stationType))
                 returnArray.push(newItem("cargo-wagon", -1.5, y + 1))
             else returnArray.push(newItem("fluid-wagon", -1.5, y + 1))
         } else if (count < locoCount * doubleHeaded + cargoCount) {
@@ -352,9 +313,7 @@ export const placeChests = (bpSettings: typeof defaultSettings): iBlueprintItem[
     const returnArray: iBlueprintItem[] = []
 
     // For requester and buffer chests, add the requests
-    const isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
-        bpSettings.chestType
-    )
+    const isRequesterChest = requestChestTypes.includes(bpSettings.chestType)
     const requests: Array<{
         index: number
         name: string
@@ -603,30 +562,168 @@ export const placeLamps = (bpSettings: typeof defaultSettings): iBlueprintItem[]
         if (i % 7 !== 0) return
         returnArray.push(newItem("small-lamp", 1, y + 0.5))
     })
+    if (
+        bpSettings.refillEnabled ||
+        bpSettings.trainStopUsesEnabledCondition ||
+        (bpSettings.trainLimit === "Dynamic" && normalStation.includes(bpSettings.stationType))
+    ) {
+        getFrontLocomotivesArray(bpSettings).forEach((y, i, array) => {
+            if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
+            returnArray.push(newItem("small-lamp", 1, y + 0.5))
+        })
+    }
+    if (bpSettings.refillEnabled) {
+        getBackLocomotivesArray(bpSettings).forEach((y, i, array) => {
+            if (i % 7 !== 0 || array.length === i - 1 || i === 0) return
+            returnArray.push(newItem("small-lamp", 1, y + 0.5))
+        })
+    }
     return returnArray
 }
-export const placeDecider = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
-    const returnArray: iBlueprintItem[] = []
-    returnArray.push(
-        newItem("decider-combinator", 0, 1, {
-            control_behavior: {
-                decider_conditions: {
-                    first_signal: {
-                        type: "virtual",
-                        name: "signal-anything",
-                    },
-                    constant: parseInt(bpSettings.enabledConditionAmount),
-                    comparator: bpSettings.enabledConditionOperator,
-                    output_signal: {
-                        type: "virtual",
-                        name: "signal-red",
-                    },
-                    copy_count_from_input: false,
+// Decider for enabled-condition
+export const placeEnabledConditionDecider = (
+    bpSettings: typeof defaultSettings,
+    topPole: iBlueprintItem,
+    trainStop: iBlueprintItem
+): iBlueprintItem[] => {
+    const decider = newItem("decider-combinator", 0, 1, {
+        control_behavior: {
+            decider_conditions: {
+                first_signal: {
+                    type: "virtual",
+                    name: "signal-anything",
                 },
+                constant: parseInt(bpSettings.enabledConditionAmount),
+                comparator: bpSettings.enabledConditionOperator,
+                output_signal: {
+                    type: "virtual",
+                    name: "signal-red",
+                },
+                copy_count_from_input: false,
             },
-        })
+        },
+    })
+    // Combine decider output with trainstop with green wire
+    connectTwoEntitiesWithWire(decider, trainStop, "green", "2", "1")
+    // Combine decider input with pole with green wire
+    connectTwoEntitiesWithWire(decider, topPole, "green")
+    return [decider]
+}
+// Combinators for set train limit dynamically
+export const placeDynamicTrainLimitCombinators = (
+    bpSettings: typeof defaultSettings,
+    topPole: iBlueprintItem,
+    trainStop: iBlueprintItem
+): iBlueprintItem[] => {
+    const deciderXOffset = bpSettings.trainStopUsesEnabledCondition ? 1 : 0
+    const arithmeticXOffset = bpSettings.placeLampsNearPoles ? 1 : 0
+    const decider = newItem("decider-combinator", deciderXOffset, 1, {
+        control_behavior: {
+            decider_conditions: {
+                first_signal: {
+                    type: "virtual",
+                    name: "signal-each",
+                },
+                constant: 0,
+                comparator: ">",
+                output_signal: {
+                    type: "virtual",
+                    name: "signal-L",
+                },
+                copy_count_from_input: true,
+            },
+        },
+    })
+    // Set settings of the first arithmetic combinator
+    const arithmetic1Condition: iArithmeticCondition = {
+        operation: bpSettings.trainLimitArithmetic1Operator,
+        output_signal: {
+            type: "virtual",
+            name: "signal-A",
+        },
+    }
+    if (
+        bpSettings.trainLimitArithmetic1Constant1 === "each" ||
+        allowedCharacters.includes(bpSettings.trainLimitArithmetic1Constant1)
     )
-    return returnArray
+        arithmetic1Condition["first_signal"] = {
+            type: "virtual",
+            name:
+                bpSettings.trainLimitArithmetic1Constant1 === "each"
+                    ? "signal-each"
+                    : `signal-${bpSettings.trainLimitArithmetic1Constant1}`,
+        }
+    else
+        arithmetic1Condition["first_constant"] = parseInt(bpSettings.trainLimitArithmetic1Constant1)
+    if (
+        bpSettings.trainLimitArithmetic1Constant2 === "each" ||
+        allowedCharacters.includes(bpSettings.trainLimitArithmetic1Constant2)
+    )
+        arithmetic1Condition["second_signal"] = {
+            type: "virtual",
+            name:
+                bpSettings.trainLimitArithmetic1Constant2 === "each"
+                    ? "signal-each"
+                    : `signal-${bpSettings.trainLimitArithmetic1Constant2}`,
+        }
+    else
+        arithmetic1Condition["second_constant"] = parseInt(
+            bpSettings.trainLimitArithmetic1Constant2
+        )
+    const arithmetic1 = newItem("arithmetic-combinator", 1 + arithmeticXOffset, 4, {
+        control_behavior: {
+            arithmetic_conditions: arithmetic1Condition,
+        },
+    })
+    // Set settings of the second arithmetic combinator
+    const arithmetic2Condition: iArithmeticCondition = {
+        operation: bpSettings.trainLimitArithmetic2Operator,
+        output_signal: {
+            type: "virtual",
+            name: "signal-A",
+        },
+    }
+    if (
+        bpSettings.trainLimitArithmetic2Constant1 === "each" ||
+        allowedCharacters.includes(bpSettings.trainLimitArithmetic2Constant1)
+    )
+        arithmetic2Condition["first_signal"] = {
+            type: "virtual",
+            name:
+                bpSettings.trainLimitArithmetic2Constant1 === "each"
+                    ? "signal-each"
+                    : `signal-${bpSettings.trainLimitArithmetic2Constant1}`,
+        }
+    else
+        arithmetic2Condition["first_constant"] = parseInt(bpSettings.trainLimitArithmetic2Constant1)
+    if (
+        bpSettings.trainLimitArithmetic2Constant2 === "each" ||
+        allowedCharacters.includes(bpSettings.trainLimitArithmetic2Constant2)
+    )
+        arithmetic2Condition["second_signal"] = {
+            type: "virtual",
+            name:
+                bpSettings.trainLimitArithmetic2Constant2 === "each"
+                    ? "signal-each"
+                    : `signal-${bpSettings.trainLimitArithmetic2Constant2}`,
+        }
+    else
+        arithmetic2Condition["second_constant"] = parseInt(
+            bpSettings.trainLimitArithmetic2Constant2
+        )
+    const arithmetic2 = newItem("arithmetic-combinator", 2 + arithmeticXOffset, 4, {
+        control_behavior: {
+            arithmetic_conditions: arithmetic2Condition,
+        },
+    })
+    // Combine decider output with trainstop with green wire
+    connectTwoEntitiesWithWire(decider, trainStop, "green", "2", "1")
+    // arithmentic gets: "2"(output) green connection with circuit number 1 to decider which gets "1"(input) green connection with circuit number 2
+    connectTwoEntitiesWithWire(arithmetic2, decider, "green", "2", "1", 1, 2)
+    connectTwoEntitiesWithWire(arithmetic1, arithmetic2, "green", "2", "1", 1, 2)
+    // Combine decider input with pole with green wire
+    connectTwoEntitiesWithWire(arithmetic1, topPole, "green")
+    return [decider, arithmetic1, arithmetic2]
 }
 // Refuel
 export const placeTopRefuelPoles = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
@@ -651,7 +748,7 @@ export const placeRefuelChestsAndInserters = (
     // Size is 1x1, so coordinate ends in 0.5
     const returnArray: iBlueprintItem[] = []
     getFrontLocomotivesArray(bpSettings).forEach((y, i) => {
-        if (i % 7 !== 6) return
+        if (i % 7 !== 5) return
         returnArray.push(newItem("inserter", 0, y + 0.5, { direction: DIRECTION.RIGHT }))
         returnArray.push(
             newItem("logistic-chest-requester", 1, y + 0.5, {
@@ -666,7 +763,7 @@ export const placeRefuelChestsAndInserters = (
         )
     })
     getBackLocomotivesArray(bpSettings).forEach((y, i) => {
-        if (i % 7 !== 1) return
+        if (i % 7 !== 2) return
         returnArray.push(newItem("inserter", 0, y + 0.5, { direction: DIRECTION.RIGHT }))
         returnArray.push(
             newItem("logistic-chest-requester", 1, y + 0.5, {
@@ -688,7 +785,9 @@ export const connectTwoEntitiesWithWire = (
     entity2: iBlueprintItem,
     color: iWireColor,
     entity1ConNumber: "1" | "2" = "1",
-    entity2ConNumber: "1" | "2" = "1"
+    entity2ConNumber: "1" | "2" = "1",
+    circuit1Number: 1 | 2 | undefined = undefined,
+    circuit2Number: 1 | 2 | undefined = undefined
 ): void => {
     const entity1Number = entity1.entity_number
     const entity2Number = entity2.entity_number
@@ -701,8 +800,8 @@ export const connectTwoEntitiesWithWire = (
             entity.connections[conNumber] = {}
         }
         const entityColor = entity.connections[conNumber] as {
-            red?: iEntityId[]
-            green?: iEntityId[]
+            red?: iCircuitConnection[]
+            green?: iCircuitConnection[]
         }
         if (!entityColor[color]) {
             entityColor[color] = []
@@ -716,13 +815,26 @@ export const connectTwoEntitiesWithWire = (
     createWirePath(entity1, entity1ConNumber)
     createWirePath(entity2, entity2ConNumber)
 
+    const conn1: iCircuitConnection = {
+        entity_id: entity2Number,
+    }
+    const conn2: iCircuitConnection = {
+        entity_id: entity1Number,
+    }
+    // Add circuit_id if both items are of type combinator (decider, arithmetic etc)
+    if (circuit1Number) {
+        conn1.circuit_id = circuit1Number
+    }
+    if (circuit2Number) {
+        conn2.circuit_id = circuit2Number
+    }
     // Let me know if you come up with a readable solution for this:
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    entity1.connections[entity1ConNumber][color].push({ entity_id: entity2Number })
+    entity1.connections[entity1ConNumber][color].push(conn1)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    entity2.connections[entity2ConNumber][color].push({ entity_id: entity1Number })
+    entity2.connections[entity2ConNumber][color].push(conn2)
 }
 export const connectItemsWithWire = (items: iBlueprintItem[], color: iWireColor): void => {
     items.forEach((item1, index) => {

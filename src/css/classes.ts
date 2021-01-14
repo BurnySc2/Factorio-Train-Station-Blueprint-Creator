@@ -9,6 +9,8 @@ export const CLASSES = {
     // Sections
     section: "border-black p-1 my-1 w-full bg-blue-700",
     gridSection: "grid grid-cols-2 gap-2",
+    gridSection3cols: "grid grid-cols-3 gap-2",
+    gridSection12cols: "grid grid-cols-12 gap-2 my-1",
 
     // HTML Elements
     checkboxElement: "h-full place-self-center",

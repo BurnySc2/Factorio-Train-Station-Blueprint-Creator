@@ -17,7 +17,6 @@ This website makes it easier to create large train stations for the game [Factor
 - [Chest limiting](https://wiki.factorio.com/Stack#Stack_limitation)
 - Automatic locomotive refuel (with requester chests for fuel near locomotives)
 - Automatic lamps, poles, and signal placement
-- [Sequential stations](https://www.reddit.com/r/factorio/comments/67xuyq/apologies_if_im_late_the_new_train_stop_interface/): multiple stations in a row (disable station if next station is free)
 - [Stackers](https://www.youtube.com/watch?v=x6-P74xYvYg) (vertical and diagonal): let trains wait in queue before using the station
 - [Train limit per station](https://factorio.com/blog/post/fff-361)
 - [Include train in the blueprint](https://www.factorio.com/blog/post/fff-263)
@@ -26,7 +25,6 @@ This website makes it easier to create large train stations for the game [Factor
 
 ![A normal train station](screenshots/station2-8-2.png "A normal train station")
 ![A fluid station](screenshots/station-fluid.png "A fluid station")
-![Sequential with lights](screenshots/sequential-with-lights.png "Sequential with lights")
 ![Left-left vertical stacker](screenshots/stacker-left-left-1-4-1.png "Left-left vertical stacker")
 ![Diagonal stacker](screenshots/stacker-diagonal.png "Diagonal stacker")
 ![A huge station](screenshots/station2-100-2.png "A huge station")

@@ -1,9 +1,7 @@
 const TOOLTIPS = {
-    trainLimit: "Limits the amount of trains that will be at going to this station.",
-    sequentialStation:
-        "Puts multiple stations with these settings in a row.<br>Stations will be disabled if the next station is free.<br>This makes it so trains go to the first station first, then to the second station and so on.",
-    sequantialStationBeltsGoAllTheWay:
-        "If enabled, belts from 'enable belts' setting will go all the way to the top/bottom. Otherwise belts will only go to the top/bottom of each station.",
+    trainLimit:
+        "Limits the amount of trains that will be at going to this station.<br>If set to dynamic, will automatically set the max amount based on used (loading station) / free (unloading station) space in your chests.",
+    trainLimitNumberInput: "Valid: numbers, 'each', alphabetical characters (A, B, ...)",
     doubleHeaded: "Does your train have locomotives at each end (facing both ways)?",
     includeTrainInBlueprint:
         "If enabled, adds the train with the expected layout to the blueprint.",

@@ -1,7 +1,7 @@
 import React from "react"
 import { iChestTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
-import { chestTypes, chestTypesHuman } from "../../constants/constants"
+import { chestTypes, chestTypesHuman, requestChestTypes } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
 
 export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
@@ -28,9 +28,7 @@ export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
         </select>
     )
 
-    const isRequesterChest = ["logistic-chest-requester", "logistic-chest-buffer"].includes(
-        props.userSettings.chestType
-    )
+    const isRequesterChest = requestChestTypes.includes(props.userSettings.chestType)
     const canRequestFromBufferChests = props.userSettings.chestType === "logistic-chest-requester"
 
     let previousIsEmpty = -1

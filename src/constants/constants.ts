@@ -10,13 +10,22 @@ import {
 
 export const mirrorXOffset = -3
 
-export const stationTypes = [
+export type iStationType =
+    | "Loading Station"
+    | "Unloading Station"
+    | "Fluid Loading Station"
+    | "Fluid Unloading Station"
+    | "Stacker"
+export const stationTypes: iStationType[] = [
     "Loading Station",
     "Unloading Station",
     "Fluid Loading Station",
     "Fluid Unloading Station",
     "Stacker",
 ]
+export const normalStation: iStationType[] = ["Loading Station", "Unloading Station"]
+export const fluidStation: iStationType[] = ["Fluid Loading Station", "Fluid Unloading Station"]
+export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
 export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "stack-inserter"]
 export const filterInserters = {
@@ -33,6 +42,10 @@ export const botChestTypes: iChestTypes[] = [
     "logistic-chest-storage",
 ]
 export const chestTypes: iChestTypes[] = [...basicChestTypes, ...botChestTypes]
+export const requestChestTypes: iChestTypes[] = [
+    "logistic-chest-requester",
+    "logistic-chest-buffer",
+]
 export const chestTypesHuman = {
     "wooden-chest": "Wooden Chest",
     "iron-chest": "Iron Chest",
@@ -89,6 +102,51 @@ export enum DIRECTION {
 export const enabledConditionOperators: iEnabledConditionOperators[] = [">", "<"]
 export const enabledConditionOperatorsHuman = { ">": "> (more than)", "<": "< (less than)" }
 
+export type iCombinator = "arithmetic-combinator" | "decider-combinator"
+export const combinatorTypes: iCombinator[] = ["arithmetic-combinator", "decider-combinator"]
+export type iOperator = "+" | "-" | "*" | "/" | "^" | "%" | "<<" | ">>" | "AND" | "OR" | "XOR"
+export const operatorTypes: iOperator[] = [
+    "+",
+    "-",
+    "*",
+    "/",
+    "^",
+    "%",
+    "<<",
+    ">>",
+    "AND",
+    "OR",
+    "XOR",
+]
+export const allowedCharacters = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+]
+
 export const defaultSettings = {
     // Global tooltip text
     tooltipText: "",
@@ -96,12 +154,16 @@ export const defaultSettings = {
     // Station type
     stationType: [...stationTypes][0],
     stationName: "",
-    trainLimit: "",
 
-    // Sequential Station
-    sequentialStation: false,
-    sequentialStationsAmount: "3",
-    sequantialStationBeltsGoAllTheWay: true,
+    trainLimit: trainLimit[0],
+
+    trainLimitArithmetic1Constant1: "each",
+    trainLimitArithmetic1Constant2: "333",
+    trainLimitArithmetic1Operator: "/",
+
+    trainLimitArithmetic2Constant1: "each",
+    trainLimitArithmetic2Constant2: "0",
+    trainLimitArithmetic2Operator: "+",
 
     // Train type
     doubleHeaded: true,

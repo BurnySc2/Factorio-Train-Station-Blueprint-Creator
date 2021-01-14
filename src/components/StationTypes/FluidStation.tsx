@@ -7,6 +7,7 @@ import EnabledConditionSettings from "../Sections/EnabledConditionSettings"
 import LampsSettings from "../Sections/LampsSettings"
 import StationNameSettings from "../Sections/StationNameSettings"
 import FluidSettings from "../Sections/FluidSettings"
+import StationSettings from "../Sections/StationSettings"
 
 export default function FluidStation(props: iSectionsProps): JSX.Element {
     return (
@@ -17,16 +18,20 @@ export default function FluidStation(props: iSectionsProps): JSX.Element {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                    <TrainTypeSettings
+                    <StationSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                    <FluidSettings
+                    <TrainTypeSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
                 </div>
                 <div>
+                    <FluidSettings
+                        userSettings={props.userSettings}
+                        setUserSettings={props.setUserSettings}
+                    />
                     <RefillSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
