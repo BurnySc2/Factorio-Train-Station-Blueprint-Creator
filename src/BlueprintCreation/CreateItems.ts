@@ -920,7 +920,7 @@ export const sortStorageTanks = (items: iBlueprintItem[], rowCount = 0): iBluepr
     let returnArray: iBlueprintItem[] = []
     let y = items[0].position.y
     let rowItems: iBlueprintItem[] = []
-    items.forEach((item, i) => {
+    items.forEach((item) => {
         if (item.position.y !== y) {
             y = item.position.y
             if (rowCount % 2 == 0) {

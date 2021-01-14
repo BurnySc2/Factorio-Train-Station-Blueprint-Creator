@@ -26,12 +26,12 @@ export default function FluidStation(props: iSectionsProps): JSX.Element {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                </div>
-                <div>
                     <FluidSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
+                </div>
+                <div>
                     <RefillSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
