@@ -2,10 +2,12 @@ import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
+import { fluidStation } from "../../constants/constants"
 
 export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
     const hideIfDiagonalStacker =
         props.userSettings.stationType === "Stacker" && props.userSettings.diagonalStacker
+    const cargoWagonName = fluidStation.includes(props.userSettings.stationType) ? "fluid" : "cargo"
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>
@@ -53,7 +55,7 @@ export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
                     }}
                 />
                 <label className={CLASSES.labelElement} htmlFor={"cargoWagon"}>
-                    # cargo wagons
+                    {`# ${cargoWagonName} wagons`}
                 </label>
                 <input
                     className={CLASSES.checkboxElement}

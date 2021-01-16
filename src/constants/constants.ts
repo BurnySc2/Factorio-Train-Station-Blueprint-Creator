@@ -183,7 +183,7 @@ export const defaultSettings = {
     pumpStorageTankColumns: "1",
 
     // Inserter types
-    inserterType: [...inserterTypes][0],
+    inserterType: [...inserterTypes][1],
     enableFilterInserters: false,
     // Items that need to be filtered, max array length: 5
     filterFields: Array(5).fill(""),
@@ -208,8 +208,8 @@ export const defaultSettings = {
     refillFuelAmount: "20",
 
     // Wire settings
-    connectChestsWithGreenWire: false,
-    connectBothSideWithGreenWire: false,
+    connectChestsWithGreenWire: true,
+    connectBothSideWithGreenWire: true,
     connectChestsWithRedWire: false,
     connectBothSideWithRedWire: false,
 

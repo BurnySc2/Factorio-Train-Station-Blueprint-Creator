@@ -15,6 +15,7 @@ import {
     filterInserters,
     fluidStation,
     mirrorXOffset,
+    normalStation,
     requestChestTypes,
     splitterTypes,
 } from "../constants/constants"
@@ -631,7 +632,18 @@ export const placeDynamicTrainLimitCombinators = (
     topPole: iBlueprintItem,
     trainStop: iBlueprintItem
 ): iBlueprintItem[] => {
-    const arithmeticXOffset = bpSettings.placeLampsNearPoles ? 1 : 0
+    let arithmetic1Xvalue = 2
+    let arithmetic2Xvalue = 1
+    let arithmeticXOffset = bpSettings.placeLampsNearPoles ? 1 : 0
+    if (
+        (normalStation.includes(bpSettings.stationType) && bpSettings.beltSidesUsed === "Left") ||
+        (fluidStation.includes(bpSettings.stationType) && bpSettings.pumpSidesToBeUsed === "Left")
+    ) {
+        arithmetic1Xvalue *= -1
+        arithmetic2Xvalue *= -1
+        const mirrorOffset = -3
+        arithmeticXOffset = -1 * arithmeticXOffset + mirrorOffset
+    }
     // Set settings of the first arithmetic combinator
     const arithmetic1Condition: iArithmeticCondition = {
         operation: bpSettings.trainLimitArithmetic1Operator,
@@ -668,7 +680,7 @@ export const placeDynamicTrainLimitCombinators = (
         arithmetic1Condition["second_constant"] = parseInt(
             bpSettings.trainLimitArithmetic1Constant2
         )
-    const arithmetic1 = newItem("arithmetic-combinator", 1 + arithmeticXOffset, 4, {
+    const arithmetic1 = newItem("arithmetic-combinator", arithmetic1Xvalue + arithmeticXOffset, 4, {
         control_behavior: {
             arithmetic_conditions: arithmetic1Condition,
         },
@@ -710,7 +722,7 @@ export const placeDynamicTrainLimitCombinators = (
         arithmetic2Condition["second_constant"] = parseInt(
             bpSettings.trainLimitArithmetic2Constant2
         )
-    const arithmetic2 = newItem("arithmetic-combinator", 2 + arithmeticXOffset, 4, {
+    const arithmetic2 = newItem("arithmetic-combinator", arithmetic2Xvalue + arithmeticXOffset, 4, {
         control_behavior: {
             arithmetic_conditions: arithmetic2Condition,
         },

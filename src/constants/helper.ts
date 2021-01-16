@@ -20,6 +20,11 @@ export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSetting
             return "Your amount of parallel stacker lanes is extremely high and may crash your browser!"
         }
     }
+    if (fluidStation.includes(bpSettings.stationType)) {
+        if (parseInt(bpSettings.pumpStorageTankColumns) > 500) {
+            return "Your amount of storage tanks is extremely high and might crash your browser!"
+        }
+    }
     if (bpSettings.stationType !== "Stacker") {
         if (bpSettings.trainStopUsesEnabledCondition && !bpSettings.connectChestsWithGreenWire) {
             return "If 'train stop uses-enabled condition' is enabled, you should also enable 'connect chests/storage tanks with green wire'."
