@@ -224,5 +224,5 @@ export const defaultSettings = {
     // Stacker settings
     stackerNumberParallelLanes: "3",
     diagonalStacker: true,
-    stackerType: [...stackerTypes][0],
+    stackerType: [...stackerDiagonalTypes][0],
 }

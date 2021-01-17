@@ -81,22 +81,21 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     let frontCurve: iBlueprintItem[]
     let backCurve: iBlueprintItem[]
-    if (bpSettings.stackerType === "Right-Left") {
-        frontCurve = assignEntityNumberToItems(diagonalFrontLeftCurve, 8)
-        backCurve = assignEntityNumberToItems(
-            diagonalBackRightCurve,
-            8 - diagonalLength * 2,
-            diagonalLength * 2
-        )
-    } else {
+    if (bpSettings.stackerType === "Left-Right") {
         frontCurve = assignEntityNumberToItems(diagonalFrontRightCurve, 8)
         backCurve = assignEntityNumberToItems(
             diagonalBackLeftCurve,
             8 - diagonalLength * 2,
             diagonalLength * 2
         )
+    } else {
+        frontCurve = assignEntityNumberToItems(diagonalFrontLeftCurve, 8)
+        backCurve = assignEntityNumberToItems(
+            diagonalBackRightCurve,
+            8 - diagonalLength * 2,
+            diagonalLength * 2
+        )
     }
-    // TODO Support 'include train in blueprint' for diagonal stackers?
 
     const diagonals: iBlueprintItemWithoutNumber[] = [
         {
