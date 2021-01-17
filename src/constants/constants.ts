@@ -191,7 +191,7 @@ export const defaultSettings = {
     // Chest types and settings
     chestType: [...chestTypes][1],
     // How many slots in the chest are enabled
-    chestLimit: "7",
+    chestLimit: "",
     // For requester and buffer chests
     chestRequestFromBuffers: true,
     chestRequestItemsType: Array(12).fill(""),
