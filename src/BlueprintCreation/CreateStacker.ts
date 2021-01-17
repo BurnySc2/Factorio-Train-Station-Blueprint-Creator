@@ -9,6 +9,7 @@ import {
     resetEntityNumber,
     assignEntityNumberToItems,
     copyPasteItems,
+    newItem,
 } from "./CreateItems"
 import {
     backLeftCurve,
@@ -34,9 +35,11 @@ export const createStacker = (bpSettings: typeof defaultSettings): iBlueprintIte
 
 export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     const trainLength = Math.floor(getTrainArray(bpSettings).length / 2) * 2
+    const parallelTracks = parseInt(bpSettings.stackerNumberParallelLanes)
 
     let frontCurve: iBlueprintItem[]
     let backCurve: iBlueprintItem[]
+    let entranceChainSignal: iBlueprintItem
     if (bpSettings.stackerType === "Left-Left" || bpSettings.stackerType === "Right-Left") {
         frontCurve = assignEntityNumberToItems(frontLeftCurve, -2, -8)
     } else {
@@ -45,8 +48,17 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     if (bpSettings.stackerType === "Left-Left" || bpSettings.stackerType === "Left-Right") {
         backCurve = assignEntityNumberToItems(backLeftCurve, -2, trainLength - 2)
+        entranceChainSignal = newItem("rail-chain-signal", 15.5 - 28, 11.5 + trainLength, {
+            direction: 6,
+        })
     } else {
         backCurve = assignEntityNumberToItems(backRightCurve, -2, trainLength - 2)
+        entranceChainSignal = newItem(
+            "rail-chain-signal",
+            13.5 - 9 + 4 * parallelTracks,
+            8.5 + trainLength,
+            { direction: 2 }
+        )
     }
 
     let copyPasteBlueprint = [
@@ -60,9 +72,10 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
     changeItemsCoordinates(copyPasteBlueprint, -0.5)
 
     let allItems: iBlueprintItem[] = []
-    for (let i = 0; i < parseInt(bpSettings.stackerNumberParallelLanes); i++) {
+    for (let i = 0; i < parallelTracks; i++) {
         allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, i * 4)]
     }
+    allItems = [...allItems, entranceChainSignal]
 
     return allItems
 }
@@ -78,15 +91,28 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
         ) *
             2 +
         1
+    const parallelTracks = parseInt(bpSettings.stackerNumberParallelLanes)
+
+    const validTypes = ["Left-Right", "Right-Left"]
+    const stackerType = validTypes.includes(bpSettings.stackerType)
+        ? bpSettings.stackerType
+        : validTypes[0]
 
     let frontCurve: iBlueprintItem[]
     let backCurve: iBlueprintItem[]
-    if (bpSettings.stackerType === "Left-Right") {
+    let entranceChainSignal: iBlueprintItem
+    if (stackerType === "Left-Right") {
         frontCurve = assignEntityNumberToItems(diagonalFrontRightCurve, 8)
         backCurve = assignEntityNumberToItems(
             diagonalBackLeftCurve,
             8 - diagonalLength * 2,
             diagonalLength * 2
+        )
+        entranceChainSignal = newItem(
+            "rail-chain-signal",
+            -2.5 - diagonalLength * 2,
+            7.5 + diagonalLength * 2,
+            { direction: 6 }
         )
     } else {
         frontCurve = assignEntityNumberToItems(diagonalFrontLeftCurve, 8)
@@ -94,6 +120,12 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
             diagonalBackRightCurve,
             8 - diagonalLength * 2,
             diagonalLength * 2
+        )
+        entranceChainSignal = newItem(
+            "rail-chain-signal",
+            3.5 - diagonalLength * 2,
+            4.5 + diagonalLength * 2 + 4 * parallelTracks,
+            { direction: 4 }
         )
     }
 
@@ -119,12 +151,14 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 
     let allItems: iBlueprintItem[] = []
 
-    for (let i = 0; i < parseInt(bpSettings.stackerNumberParallelLanes); i++) {
+    for (let i = 0; i < parallelTracks; i++) {
         if (bpSettings.stackerType === "Left-Right") {
             allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, i * 4, 0)]
         } else {
             allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, 0, i * 4)]
         }
     }
+    allItems = [...allItems, entranceChainSignal]
+
     return allItems
 }
