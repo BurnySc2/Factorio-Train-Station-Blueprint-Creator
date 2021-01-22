@@ -149,10 +149,10 @@ export const calcCombinatorSettings = (
     if (bpSettings.connectChestsWithGreenWire) {
         if (normalStation.includes(bpSettings.stationType)) {
             // For normal stations, there is 6 chests per cargo wagon per side
-            connectedChestCount *= 6 * cargoCount
+            connectedChestCount = 6 * cargoCount
         } else {
             // For fluid stations, there is 2 storage tanks per cargo wagon
-            connectedChestCount *= 2 * cargoCount
+            connectedChestCount = 2 * cargoCount
         }
     }
     if (
@@ -193,14 +193,12 @@ export const calcCombinatorSettings = (
         bpSettings.stationType === "Unloading Station" ||
         bpSettings.stationType === "Fluid Unloading Station"
     ) {
-        return [
-            "each",
-            "/",
-            Math.round(trainTotalItemCount).toString(),
-            Math.floor(chestTotalItemCount / trainTotalItemCount).toString(),
-            "-",
-            "L",
-        ]
+        // Limiting station to at most 1 train even if there is space in chests or storage tanks is good, in case there are multiple unloading stations - trains will pick the closest station available instead of the least busy one
+        let minuend = "1"
+        if (!bpSettings.trainLimitToAtMostOneTrain) {
+            minuend = Math.floor(chestTotalItemCount / trainTotalItemCount).toString()
+        }
+        return ["each", "/", Math.round(trainTotalItemCount).toString(), minuend, "-", "L"]
     }
 
     return ["0", "+", "0", "0", "+", "0"]

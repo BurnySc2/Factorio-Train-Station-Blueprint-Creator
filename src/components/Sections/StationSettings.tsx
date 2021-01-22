@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
@@ -15,6 +15,23 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
     const hideWhenTrainLimitIsNotDynamic = props.userSettings.trainLimit !== "Dynamic"
     const hideWhenNormalStation = normalStation.includes(props.userSettings.stationType)
     const hideWhenFluidStation = fluidStation.includes(props.userSettings.stationType)
+    const hideWhenNotUnloadingStation = props.userSettings.stationType !== "Unloading Station"
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    useEffect(() => {
+        if (props.userSettings.trainLimitAutoUpdate) {
+            // TODO change stacksize based on radio button settings
+            applyArray(calcCombinatorSettings(props.userSettings, 50))
+        }
+    }, [
+        props.userSettings.stationType,
+        props.userSettings.trainLimitStackSize,
+        props.userSettings.cargoWagon,
+        props.userSettings.chestLimit,
+        props.userSettings.beltSidesUsed,
+        props.userSettings.connectChestsWithGreenWire,
+        props.userSettings.connectBothSideWithGreenWire,
+    ])
 
     const myInput = (
         key:
@@ -108,6 +125,46 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                 <div className={CLASSES.gridSection12cols}>
                     {trainLimitHtml}
                     <label className={`${CLASSES.labelElement} col-span-7`}>Train Limit</label>
+                    <input
+                        className={`${CLASSES.checkboxElement} col-span-5`}
+                        hidden={hideWhenNotUnloadingStation || hideWhenTrainLimitIsNotDynamic}
+                        type={"checkbox"}
+                        id={"trainLimitToAtMostOneTrain"}
+                        checked={props.userSettings.trainLimitToAtMostOneTrain}
+                        onChange={(e) => {
+                            props.setUserSettings({
+                                ...props.userSettings,
+                                trainLimitToAtMostOneTrain: e.target.checked,
+                            })
+                        }}
+                    />
+                    <label
+                        className={`${CLASSES.labelElement} col-span-7`}
+                        hidden={hideWhenNotUnloadingStation || hideWhenTrainLimitIsNotDynamic}
+                        htmlFor={"trainLimitToAtMostOneTrain"}
+                    >
+                        Limit station to 1 train max
+                    </label>
+                    <input
+                        className={`${CLASSES.checkboxElement} col-span-5`}
+                        hidden={hideWhenTrainLimitIsNotDynamic}
+                        type={"checkbox"}
+                        id={"trainLimitAutoRecalculate"}
+                        checked={props.userSettings.trainLimitAutoUpdate}
+                        onChange={(e) => {
+                            props.setUserSettings({
+                                ...props.userSettings,
+                                trainLimitAutoUpdate: e.target.checked,
+                            })
+                        }}
+                    />
+                    <label
+                        className={`${CLASSES.labelElement} col-span-7`}
+                        hidden={hideWhenTrainLimitIsNotDynamic}
+                        htmlFor={"trainLimitAutoRecalculate"}
+                    >
+                        Automatically recalculate arithmetic combinator settings
+                    </label>
                     {myInput("trainLimitArithmetic1Constant1")}
                     {mySelectOperator("trainLimitArithmetic1Operator")}
                     {myInput("trainLimitArithmetic1Constant2")}
@@ -117,6 +174,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     >
                         First arithmetic combinator settings
                     </label>
+
                     {myInput("trainLimitArithmetic2Constant1")}
                     {mySelectOperator("trainLimitArithmetic2Operator")}
                     {myInput("trainLimitArithmetic2Constant2")}

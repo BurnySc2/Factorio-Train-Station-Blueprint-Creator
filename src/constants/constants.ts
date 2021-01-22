@@ -161,7 +161,7 @@ export const defaultSettings = {
     stationName: "",
 
     // Train limit and combinator settings
-    trainLimit: trainLimit[0],
+    trainLimit: trainLimit[1],
 
     trainLimitArithmetic1Constant1: "each",
     trainLimitArithmetic1Constant2: "333",
@@ -170,6 +170,10 @@ export const defaultSettings = {
     trainLimitArithmetic2Constant1: "L",
     trainLimitArithmetic2Constant2: "0",
     trainLimitArithmetic2Operator: "+",
+
+    trainLimitToAtMostOneTrain: true,
+    trainLimitAutoUpdate: true,
+    trainLimitStackSize: 50,
 
     // Train type
     doubleHeaded: true,
