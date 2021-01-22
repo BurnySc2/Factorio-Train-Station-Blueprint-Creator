@@ -13,8 +13,9 @@ export const CLASSES = {
     gridSection12cols: "grid grid-cols-12 gap-2 my-1",
 
     // HTML Elements
-    checkboxElement: "h-full place-self-center",
-    labelElement: "w-full text-white",
+    checkboxElement: "h-full w-6 place-self-center bg-red-500",
+    radioButtonElement: "h-full w-6 h-6 place-self-center",
+    labelElement: "w-full text-white my-auto",
     inputTextElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
     selectElement: "border-2 border-gray-600 w-full bg-blue-900 text-white",
     buttonElement: "border-2 border-gray-600 m-auto px-4 py-1 text-white rounded hover:bg-blue-300",

@@ -128,8 +128,7 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): s
 }
 
 export const calcCombinatorSettings = (
-    bpSettings: typeof defaultSettings,
-    stackSize = 50
+    bpSettings: typeof defaultSettings
 ): [string, iOperator, string, string, iOperator, string] => {
     const cargoCount = parseInt(bpSettings.cargoWagon)
 
@@ -144,7 +143,6 @@ export const calcCombinatorSettings = (
     }
 
     // Calculate how many items the green-wire connected chests can contain
-    const chestLimit = bpSettings.chestLimit === "" ? 999999 : parseInt(bpSettings.chestLimit)
     let connectedChestCount = 1
     if (bpSettings.connectChestsWithGreenWire) {
         if (normalStation.includes(bpSettings.stationType)) {
@@ -165,11 +163,13 @@ export const calcCombinatorSettings = (
     }
     const chestType = bpSettings.chestType
     let chestSlotsCount = chestType === "wooden-chest" ? 16 : chestType === "iron-chest" ? 32 : 48
+    const chestLimit = bpSettings.chestLimit === "" ? 999999 : parseInt(bpSettings.chestLimit)
     chestSlotsCount = Math.min(chestLimit, chestSlotsCount)
     let chestTotalItemCount = 0
     // Calculate how many items the cargo wagons can contain
     const trainSlotsCount = 40
     let trainTotalItemCount = 0
+    let stackSize = bpSettings.trainLimitStackSize
     if (normalStation.includes(bpSettings.stationType)) {
         chestTotalItemCount = stackSize * chestSlotsCount * connectedChestCount
         trainTotalItemCount =

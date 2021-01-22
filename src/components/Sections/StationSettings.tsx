@@ -13,21 +13,20 @@ import { calcCombinatorSettings } from "../../constants/helper"
 
 export default function StationSettings(props: iSectionsProps): JSX.Element {
     const hideWhenTrainLimitIsNotDynamic = props.userSettings.trainLimit !== "Dynamic"
-    const hideWhenNormalStation = normalStation.includes(props.userSettings.stationType)
     const hideWhenFluidStation = fluidStation.includes(props.userSettings.stationType)
-    const hideWhenNotUnloadingStation = props.userSettings.stationType !== "Unloading Station"
+    const hideWhenNotUnloadingStation =
+        props.userSettings.stationType !== "Unloading Station" &&
+        props.userSettings.stationType !== "Fluid Unloading Station"
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     useEffect(() => {
-        if (props.userSettings.trainLimitAutoUpdate) {
-            // TODO change stacksize based on radio button settings
-            applyArray(calcCombinatorSettings(props.userSettings, 50))
-        }
+        applyArray(calcCombinatorSettings(props.userSettings))
     }, [
         props.userSettings.stationType,
+        props.userSettings.trainLimitToAtMostOneTrain,
         props.userSettings.trainLimitStackSize,
         props.userSettings.cargoWagon,
         props.userSettings.chestLimit,
+        props.userSettings.chestType,
         props.userSettings.beltSidesUsed,
         props.userSettings.connectChestsWithGreenWire,
         props.userSettings.connectBothSideWithGreenWire,
@@ -143,27 +142,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                         hidden={hideWhenNotUnloadingStation || hideWhenTrainLimitIsNotDynamic}
                         htmlFor={"trainLimitToAtMostOneTrain"}
                     >
-                        Limit station to 1 train max
-                    </label>
-                    <input
-                        className={`${CLASSES.checkboxElement} col-span-5`}
-                        hidden={hideWhenTrainLimitIsNotDynamic}
-                        type={"checkbox"}
-                        id={"trainLimitAutoRecalculate"}
-                        checked={props.userSettings.trainLimitAutoUpdate}
-                        onChange={(e) => {
-                            props.setUserSettings({
-                                ...props.userSettings,
-                                trainLimitAutoUpdate: e.target.checked,
-                            })
-                        }}
-                    />
-                    <label
-                        className={`${CLASSES.labelElement} col-span-7`}
-                        hidden={hideWhenTrainLimitIsNotDynamic}
-                        htmlFor={"trainLimitAutoRecalculate"}
-                    >
-                        Automatically recalculate arithmetic combinator settings
+                        Limit station to at most 1 train
                     </label>
                     {myInput("trainLimitArithmetic1Constant1")}
                     {mySelectOperator("trainLimitArithmetic1Operator")}
@@ -184,42 +163,66 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     >
                         Second arithmetic combinator settings
                     </label>
-                    <button
-                        className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
+                    <input
+                        id={"trainLimitStackSize50"}
+                        className={`${CLASSES.radioButtonElement} col-span-1`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
-                        onClick={() => {
-                            applyArray(calcCombinatorSettings(props.userSettings, 50))
+                        type={"radio"}
+                        value={50}
+                        checked={props.userSettings.trainLimitStackSize === 50}
+                        onChange={() => {
+                            props.setUserSettings({
+                                ...props.userSettings,
+                                trainLimitStackSize: 50,
+                            })
                         }}
-                    >
-                        Calculate for item stack size 50
-                    </button>
-                    <button
-                        className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
+                    />
+                    <label
+                        className={`${CLASSES.labelElement} col-span-3`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
-                        onClick={() => {
-                            applyArray(calcCombinatorSettings(props.userSettings, 100))
-                        }}
                     >
-                        Calculate for item stack size 100
-                    </button>
-                    <button
-                        className={`${CLASSES.buttonElement} w-full my-1 col-span-4`}
+                        Item stack size 50
+                    </label>
+                    <input
+                        id={"trainLimitStackSize100"}
+                        className={`${CLASSES.radioButtonElement} col-span-1`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
-                        onClick={() => {
-                            applyArray(calcCombinatorSettings(props.userSettings, 200))
+                        type={"radio"}
+                        value={100}
+                        checked={props.userSettings.trainLimitStackSize === 100}
+                        onChange={() => {
+                            props.setUserSettings({
+                                ...props.userSettings,
+                                trainLimitStackSize: 100,
+                            })
                         }}
+                    />
+                    <label
+                        className={`${CLASSES.labelElement} col-span-3`}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                     >
-                        Calculate for item stack size 200
-                    </button>
-                    <button
-                        className={`${CLASSES.buttonElement} w-full my-1 col-span-12`}
-                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenNormalStation}
-                        onClick={() => {
-                            applyArray(calcCombinatorSettings(props.userSettings, 200))
+                        Item stack size 100
+                    </label>
+                    <input
+                        id={"trainLimitStackSize200"}
+                        className={`${CLASSES.radioButtonElement} col-span-1`}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
+                        type={"radio"}
+                        value={200}
+                        checked={props.userSettings.trainLimitStackSize === 200}
+                        onChange={() => {
+                            props.setUserSettings({
+                                ...props.userSettings,
+                                trainLimitStackSize: 200,
+                            })
                         }}
+                    />
+                    <label
+                        className={`${CLASSES.labelElement} col-span-3`}
+                        hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                     >
-                        Calculate combinator settings
-                    </button>
+                        Item stack size 200
+                    </label>
                 </div>
             </div>
         </div>

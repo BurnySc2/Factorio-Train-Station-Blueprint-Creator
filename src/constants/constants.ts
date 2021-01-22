@@ -172,7 +172,6 @@ export const defaultSettings = {
     trainLimitArithmetic2Operator: "+",
 
     trainLimitToAtMostOneTrain: true,
-    trainLimitAutoUpdate: true,
     trainLimitStackSize: 50,
 
     // Train type
