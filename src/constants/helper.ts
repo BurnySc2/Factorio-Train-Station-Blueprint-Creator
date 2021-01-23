@@ -5,6 +5,8 @@ import {
     iOperator,
     normalStation,
 } from "./constants"
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const zlib = require("zlib")
 
 const verifyNumberInput = (myInput: string) => {
     // Return true if it is a parseable number
@@ -202,4 +204,14 @@ export const calcCombinatorSettings = (
     }
 
     return ["0", "+", "0", "0", "+", "0"]
+}
+
+export const encodeSettings = (settings: typeof defaultSettings): string => {
+    return "0" + zlib.deflateSync(JSON.stringify(settings), { level: 9 }).toString("base64")
+}
+
+export const decodeSettings = (blueprintString: string): typeof defaultSettings => {
+    return JSON.parse(
+        zlib.inflateSync(Buffer.from(blueprintString.slice(1), "base64")).toString("utf8")
+    )
 }

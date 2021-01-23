@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react"
 import NormalStation from "./StationTypes/NormalStation"
 import FluidStation from "./StationTypes/FluidStation"
 import Title from "./Title"
-import { defaultSettings, normalStation, stationTypes, fluidStation } from "../constants/constants"
+import {
+    defaultSettings,
+    normalStation,
+    stationTypes,
+    fluidStation,
+    websiteUrl,
+} from "../constants/constants"
 import { CLASSES } from "../css/classes"
 import Footer from "./Footer"
 import Stacker from "./StationTypes/Stacker"
@@ -10,11 +16,21 @@ import copy from "copy-to-clipboard"
 import { createBlueprint, createBlueprintString } from "../BlueprintCreation/CreateBlueprint"
 import WarningMessage from "./WarningMessage"
 import ErrorMessage from "./ErrorMessage"
-import { checkForHintsBlueprintSettings, validateBlueprintSettings } from "../constants/helper"
+import {
+    checkForHintsBlueprintSettings,
+    decodeSettings,
+    encodeSettings,
+    validateBlueprintSettings,
+} from "../constants/helper"
 import ReactTooltip from "react-tooltip"
 import itemlist from "../constants/itemlist.json"
+import { useLocation, useHistory } from "react-router-dom"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloneDeep = require("clone-deep")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const isEqual = require("lodash.isequal")
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pick = require("lodash.pick")
 
 export default function Website(): JSX.Element {
     const [userSettings, setUserSettings] = useState(cloneDeep(defaultSettings))
@@ -22,12 +38,55 @@ export default function Website(): JSX.Element {
     const [warningMessage, setWarningMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
+    const history = useHistory()
+    const params = new URLSearchParams(useLocation().search)
+
+    // Only run once on site load: parse params and set settings from url params, if given
+    useEffect(() => {
+        // Use params.get("key") to get the value
+        const settingsFromUrl = params.get("settings")
+        // Read url params and set settings
+        if (settingsFromUrl) {
+            let decodedSettings
+            try {
+                decodedSettings = decodeSettings(settingsFromUrl)
+            } catch {
+                console.log("Could not decode settings from url")
+                return
+            }
+            const currentSettings = cloneDeep(userSettings)
+
+            // Current settings differ from the ones in the url
+            if (!isEqual(decodedSettings, currentSettings)) {
+                setUserSettings({
+                    ...defaultSettings,
+                    ...decodedSettings,
+                })
+            }
+        }
+    }, [])
+
     useEffect(() => {
         const newWarningMessage = checkForHintsBlueprintSettings(userSettings)
         setWarningMessage(newWarningMessage)
         const newErrorMessage = validateBlueprintSettings(userSettings)
         setErrorMessage(newErrorMessage)
     }, [userSettings])
+
+    const getUrlParams = (bpSettings: typeof defaultSettings) => {
+        const keysToKeep = Object.keys(defaultSettings)
+        const bpSettingsPick = pick(bpSettings, keysToKeep)
+        const urlString = encodeSettings(bpSettingsPick)
+        const params = new URLSearchParams({ settings: urlString })
+        return "?" + params.toString()
+    }
+    const assignSettingsToUrlParams = (bpSettings: typeof defaultSettings) => {
+        const newUrl = getUrlParams(bpSettings)
+        // Add history entry
+        history.push(newUrl)
+        // Change current url
+        history.replace(newUrl)
+    }
 
     const stationTypeSelect = (
         <select
@@ -89,25 +148,27 @@ export default function Website(): JSX.Element {
                                 setBlueprintString(
                                     createBlueprintString(createBlueprint(userSettings))
                                 )
+                                assignSettingsToUrlParams(userSettings)
                             }
                         }}
                     >
                         Generate Blueprint
                     </button>
                     <input
-                        className={`${CLASSES.inputTextElement} my-1`}
-                        hidden={blueprintString.length === 0}
+                        className={`${CLASSES.blueprintStringTextElement}`}
+                        hidden={blueprintString === ""}
                         value={`Blueprint length: ${blueprintString.length}`}
                         readOnly
                     />
                     <input
-                        className={`${CLASSES.inputTextElement} my-1`}
+                        className={`${CLASSES.blueprintStringTextElement}`}
                         placeholder={"Blueprint string will be generated here."}
                         value={blueprintString}
                         readOnly
                     />
                     <button
                         className={CLASSES.buttonElement}
+                        hidden={blueprintString === ""}
                         onClick={() => {
                             // Copy to clipboard
                             copy(blueprintString, {
@@ -117,6 +178,19 @@ export default function Website(): JSX.Element {
                         }}
                     >
                         Copy to Clipboard
+                    </button>
+                    <button
+                        className={CLASSES.buttonElement}
+                        hidden={blueprintString === ""}
+                        onClick={() => {
+                            // Copy to website url to clipboard
+                            copy(websiteUrl + getUrlParams(userSettings), {
+                                debug: true,
+                                message: "asd",
+                            })
+                        }}
+                    >
+                        Copy shareable link
                     </button>
                     <Footer />
                     <ReactTooltip place={"bottom"} multiline />

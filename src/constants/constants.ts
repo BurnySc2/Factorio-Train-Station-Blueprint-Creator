@@ -10,6 +10,8 @@ import {
 
 export const mirrorXOffset = -3
 
+export const websiteUrl = "https://burnysc2.github.io/Factorio-Train-Station-Blueprint-Creator"
+
 export type iStationType =
     | "Loading Station"
     | "Unloading Station"

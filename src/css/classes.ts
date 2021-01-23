@@ -17,8 +17,11 @@ export const CLASSES = {
     radioButtonElement: "h-full w-6 h-6 place-self-center",
     labelElement: "w-full text-white my-auto",
     inputTextElement: "border-2 border-gray-600 w-full bg-blue-900 text-white text-center",
+    blueprintStringTextElement:
+        "border-2 border-gray-600 w-full my-1 bg-blue-900 text-white text-center",
     selectElement: "border-2 border-gray-600 w-full bg-blue-900 text-white",
-    buttonElement: "border-2 border-gray-600 m-auto px-4 py-1 text-white rounded hover:bg-blue-300",
+    buttonElement:
+        "border-2 border-gray-600 m-auto px-4 py-1 my-1 text-white rounded hover:bg-blue-300",
     // Styling doesnt apply for firefox, but works in chrome
     optionElement: "",
     footerElements: "text-center text-gray-500 hover:bg-gray-300 rounded m-auto px-2 my-1",
