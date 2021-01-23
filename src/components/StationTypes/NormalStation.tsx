@@ -28,17 +28,17 @@ export default function NormalStation(props: iSectionsProps): JSX.Element {
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
-                    <InserterSettings
-                        userSettings={props.userSettings}
-                        setUserSettings={props.setUserSettings}
-                    />
-                    <ChestTypeSettings
+                    <BeltTypeSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />
                 </div>
                 <div>
-                    <BeltTypeSettings
+                    <InserterSettings
+                        userSettings={props.userSettings}
+                        setUserSettings={props.setUserSettings}
+                    />
+                    <ChestTypeSettings
                         userSettings={props.userSettings}
                         setUserSettings={props.setUserSettings}
                     />

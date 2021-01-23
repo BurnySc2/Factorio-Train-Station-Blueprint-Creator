@@ -2,13 +2,7 @@ import React, { useEffect } from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
-import {
-    fluidStation,
-    iOperator,
-    normalStation,
-    operatorTypes,
-    trainLimit,
-} from "../../constants/constants"
+import { fluidStation, iOperator, operatorTypes, trainLimit } from "../../constants/constants"
 import { calcCombinatorSettings } from "../../constants/helper"
 
 export default function StationSettings(props: iSectionsProps): JSX.Element {
@@ -163,9 +157,10 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                     >
                         Second arithmetic combinator settings
                     </label>
+                    {/*<div className={""}></div>*/}
                     <input
                         id={"trainLimitStackSize50"}
-                        className={`${CLASSES.radioButtonElement} col-span-1`}
+                        className={`${CLASSES.radioButtonElement} col-span-5`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         type={"radio"}
                         value={50}
@@ -178,14 +173,14 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                         }}
                     />
                     <label
-                        className={`${CLASSES.labelElement} col-span-3`}
+                        className={`${CLASSES.labelElement} col-span-7`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                     >
                         Item stack size 50
                     </label>
                     <input
                         id={"trainLimitStackSize100"}
-                        className={`${CLASSES.radioButtonElement} col-span-1`}
+                        className={`${CLASSES.radioButtonElement} col-span-5`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         type={"radio"}
                         value={100}
@@ -198,14 +193,14 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                         }}
                     />
                     <label
-                        className={`${CLASSES.labelElement} col-span-3`}
+                        className={`${CLASSES.labelElement} col-span-7`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                     >
                         Item stack size 100
                     </label>
                     <input
                         id={"trainLimitStackSize200"}
-                        className={`${CLASSES.radioButtonElement} col-span-1`}
+                        className={`${CLASSES.radioButtonElement} col-span-5`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                         type={"radio"}
                         value={200}
@@ -218,7 +213,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
                         }}
                     />
                     <label
-                        className={`${CLASSES.labelElement} col-span-3`}
+                        className={`${CLASSES.labelElement} col-span-7`}
                         hidden={hideWhenTrainLimitIsNotDynamic || hideWhenFluidStation}
                     >
                         Item stack size 200

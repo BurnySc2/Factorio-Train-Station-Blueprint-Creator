@@ -160,9 +160,13 @@ export const getCargoArray = (bpSettings: typeof defaultSettings, startOffset = 
 
 export const placeTrainTracks = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     const returnArray: iBlueprintItem[] = []
-    getTrainArray(bpSettings, -4).forEach((i) => {
-        if (i % 2 === 1) return
-        returnArray.push(newItem("straight-rail", -1.5, i))
+    getTrainArray(bpSettings, -4).forEach((i, index) => {
+        // Dont place first track when double headed train
+        if (index === 0 && bpSettings.doubleHeaded) return
+        // Train tracks are 2x2, so only place it every 2nd time
+        if (i % 2 === 0) {
+            returnArray.push(newItem("straight-rail", -1.5, i))
+        }
     })
     return returnArray
 }
