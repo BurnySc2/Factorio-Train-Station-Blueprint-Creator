@@ -14,6 +14,7 @@ import {
     DIRECTION,
     filterInserters,
     fluidStation,
+    inserterStackSize,
     mirrorXOffset,
     normalStation,
     requestChestTypes,
@@ -162,7 +163,7 @@ export const placeTrainTracks = (bpSettings: typeof defaultSettings): iBlueprint
     const returnArray: iBlueprintItem[] = []
     getTrainArray(bpSettings, -4).forEach((i, index) => {
         // Dont place first track when double headed train
-        if (index === 0 && bpSettings.doubleHeaded) {
+        if (index === 0 && bpSettings.doubleHeaded && bpSettings.stationType !== "Stacker") {
             return
         }
         // Train tracks are 2x2, so only place it every 2nd time
@@ -265,10 +266,13 @@ export const placeTrain = (bpSettings: typeof defaultSettings): iBlueprintItem[]
     return returnArray
 }
 
-export const placeInserters = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
+export const placeInserters = (
+    bpSettings: typeof defaultSettings
+): [iBlueprintItem[], iBlueprintItem[]] => {
     // Size is 1x1, so coordinate ends in 0.5
     // Inserter direction = direction it grabs from
-    const returnArray: iBlueprintItem[] = []
+    const innerInserters: iBlueprintItem[] = []
+    const outerInserters: iBlueprintItem[] = []
     const inserterType = bpSettings.enableFilterInserters
         ? filterInserters[bpSettings.inserterType]
         : bpSettings.inserterType
@@ -292,7 +296,7 @@ export const placeInserters = (bpSettings: typeof defaultSettings): iBlueprintIt
     }
     getCargoArray(bpSettings).forEach((y, i) => {
         if (i % 7 === 0) return
-        returnArray.push(
+        innerInserters.push(
             newItem(inserterType, 0, y + 0.5, {
                 direction: inserterDirection,
                 filters: filterArray,
@@ -300,15 +304,38 @@ export const placeInserters = (bpSettings: typeof defaultSettings): iBlueprintIt
         )
 
         if (!botChestTypes.includes(bpSettings.chestType)) {
-            returnArray.push(
-                newItem(inserterType, 2, y + 0.5, {
+            let newInserter
+            if (
+                normalStation.includes(bpSettings.stationType) &&
+                bpSettings.madzuriEvenLoadUnload
+            ) {
+                newInserter = newItem(inserterType, 2, y + 0.5, {
+                    direction: inserterDirection,
+                    filters: filterArray,
+                    control_behavior: {
+                        circuit_condition: {
+                            first_signal: {
+                                type: "virtual",
+                                name: "signal-everything",
+                            },
+                            constant:
+                                bpSettings.stationType === "Loading Station"
+                                    ? inserterStackSize[bpSettings.inserterType]
+                                    : 0,
+                            comparator: bpSettings.stationType === "Loading Station" ? "<" : ">",
+                        },
+                    },
+                })
+            } else {
+                newInserter = newItem(inserterType, 2, y + 0.5, {
                     direction: inserterDirection,
                     filters: filterArray,
                 })
-            )
+            }
+            outerInserters.push(newInserter)
         }
     })
-    return returnArray
+    return [innerInserters, outerInserters]
 }
 export const placeChests = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     // Size is 1x1, so coordinate ends in 0.5
@@ -602,6 +629,48 @@ export const placeLamps = (bpSettings: typeof defaultSettings): iBlueprintItem[]
     //     })
     // }
     return returnArray
+}
+// Arithmetic combinator for madzuri-loading
+export const placeMadzuriArithmeticCombinator = (
+    bpSettings: typeof defaultSettings,
+    side: "Left" | "Right",
+    chests: iBlueprintItem[],
+    inserters: iBlueprintItem[]
+): iBlueprintItem[] => {
+    // Places a decider on right side
+    const direction = side === "Right" ? DIRECTION.RIGHT : DIRECTION.LEFT
+    const lampOffset = bpSettings.placeLampsNearPoles ? 1 : 0
+    const xOffset = side === "Right" ? 1 + lampOffset : -5 - lampOffset
+    const connectBothSidesFactor =
+        bpSettings.beltSidesUsed === "Both" && bpSettings.connectBothSideWithGreenWire ? 2 : 1
+    const arithmetic = newItem("arithmetic-combinator", xOffset, 11, {
+        direction: direction,
+        control_behavior: {
+            arithmetic_conditions: {
+                first_signal: {
+                    type: "virtual",
+                    name: "signal-each",
+                },
+                second_constant: -6 * parseInt(bpSettings.cargoWagon) * connectBothSidesFactor,
+                operation: "/",
+                output_signal: {
+                    type: "virtual",
+                    name: "signal-each",
+                },
+            },
+        },
+    })
+    chests.forEach((chest, index) => {
+        const inserter = inserters[index]
+        if (index === 5) {
+            // Connect chest with arithmetic input
+            connectTwoEntitiesWithWire(chest, arithmetic, "green")
+            // Connect arithmetic output with inserter
+            connectTwoEntitiesWithWire(arithmetic, inserter, "green", "2")
+        }
+        connectTwoEntitiesWithWire(chest, inserter, "red")
+    })
+    return [arithmetic]
 }
 // Decider for enabled-condition
 export const placeEnabledConditionDecider = (

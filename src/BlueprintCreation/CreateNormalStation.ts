@@ -25,6 +25,7 @@ import {
     placeVerticalBelts,
     resetEntityNumber,
     placeDynamicTrainLimitCombinators,
+    placeMadzuriArithmeticCombinator,
 } from "./CreateItems"
 
 export const createNormalStation = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
@@ -55,6 +56,32 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
     if (bpSettings.connectBothSideWithRedWire && bpSettings.beltSidesUsed === "Both") {
         connectTwoEntitiesWithWire(rightChests[0], leftChests[0], "red")
     }
+    const [rightInnerInserters, rightOuterInserters] = placeInserters(bpSettings)
+    const leftOuterInserters = mirrorItemsHorizontal(rightOuterInserters)
+    let madzuriRightArithmetic: iBlueprintItem[] = []
+    let madzuriLeftArithmetic: iBlueprintItem[] = []
+    if (bpSettings.madzuriEvenLoadUnload) {
+        sortByYPosition(leftOuterInserters)
+        sortByYPosition(rightOuterInserters)
+        sortByYPosition(leftChests)
+        sortByYPosition(rightChests)
+        // Place arithmetic combinator and connect input with chests, output with inserters
+        madzuriRightArithmetic = placeMadzuriArithmeticCombinator(
+            bpSettings,
+            "Right",
+            rightChests,
+            rightOuterInserters
+        )
+        madzuriLeftArithmetic = placeMadzuriArithmeticCombinator(
+            bpSettings,
+            "Left",
+            leftChests,
+            leftOuterInserters
+        )
+        // Connect all outer inserters with green
+        connectItemsWithWire(rightOuterInserters, "green")
+        connectItemsWithWire(leftOuterInserters, "green")
+    }
 
     // Mirrorable items
     let rightSideItems: iBlueprintItem[] = []
@@ -69,7 +96,8 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
             rightSideItems = [...rightSideItems, ...placeUnloadingBelts(bpSettings)]
         }
     }
-    rightSideItems = [...rightSideItems, ...placeInserters(bpSettings)]
+
+    rightSideItems = [...rightSideItems, ...rightInnerInserters]
 
     const rightPoles = placePoles(bpSettings)
     const leftPoles = mirrorItemsHorizontal(rightPoles)
@@ -77,8 +105,20 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
     let leftSideItems: iBlueprintItem[] = mirrorItemsHorizontal(rightSideItems)
 
     // Combine remaining items which were already mirrored and offset-ed
-    rightSideItems = [...rightSideItems, ...rightPoles, ...rightChests]
-    leftSideItems = [...leftSideItems, ...leftPoles, ...leftChests]
+    rightSideItems = [
+        ...rightSideItems,
+        ...rightPoles,
+        ...rightChests,
+        ...rightOuterInserters,
+        ...madzuriRightArithmetic,
+    ]
+    leftSideItems = [
+        ...leftSideItems,
+        ...leftPoles,
+        ...leftChests,
+        ...leftOuterInserters,
+        ...madzuriLeftArithmetic,
+    ]
     if (bpSettings.placeLampsNearPoles) {
         const rightLamps = placeLamps(bpSettings)
         const leftLamps = mirrorItemsHorizontal(rightLamps)

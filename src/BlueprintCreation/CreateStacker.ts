@@ -35,6 +35,11 @@ export const createStacker = (bpSettings: typeof defaultSettings): iBlueprintIte
 
 export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     const trainLength = Math.floor(getTrainArray(bpSettings).length / 2) * 2
+    const doubleHeadedFactor = bpSettings.doubleHeaded ? 2 : 1
+    const trainAmount =
+        doubleHeadedFactor * parseInt(bpSettings.locomotivesPerEnd) +
+        parseInt(bpSettings.cargoWagon)
+    const backEndYOffset = trainAmount % 2 === 1 ? 2 : 0
     const parallelTracks = parseInt(bpSettings.stackerNumberParallelLanes)
 
     let frontCurve: iBlueprintItem[]
@@ -47,16 +52,21 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
     }
 
     if (bpSettings.stackerType === "Left-Left" || bpSettings.stackerType === "Left-Right") {
-        backCurve = assignEntityNumberToItems(backLeftCurve, -2, trainLength - 2)
-        entranceChainSignal = newItem("rail-chain-signal", 15.5 - 28, 11.5 + trainLength, {
-            direction: 6,
-        })
+        backCurve = assignEntityNumberToItems(backLeftCurve, -2, trainLength - 2 + backEndYOffset)
+        entranceChainSignal = newItem(
+            "rail-chain-signal",
+            15.5 - 28,
+            11.5 + trainLength + backEndYOffset,
+            {
+                direction: 6,
+            }
+        )
     } else {
-        backCurve = assignEntityNumberToItems(backRightCurve, -2, trainLength - 2)
+        backCurve = assignEntityNumberToItems(backRightCurve, -2, trainLength - 2 + backEndYOffset)
         entranceChainSignal = newItem(
             "rail-chain-signal",
             13.5 - 9 + 4 * parallelTracks,
-            8.5 + trainLength,
+            8.5 + trainLength + backEndYOffset,
             { direction: 2 }
         )
     }
@@ -82,6 +92,8 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 
 export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlueprintItem[] => {
     const doubleHeadedFactor = bpSettings.doubleHeaded ? 2 : 1
+    // const trainAmount = doubleHeadedFactor * parseInt(bpSettings.locomotivesPerEnd) + parseInt(bpSettings.cargoWagon)
+    // const backEndYOffset = (trainAmount % 2 === 0)? -2 : 0
     const diagonalLength =
         Math.round(
             (2.5 *
@@ -152,7 +164,7 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
     let allItems: iBlueprintItem[] = []
 
     for (let i = 0; i < parallelTracks; i++) {
-        if (bpSettings.stackerType === "Left-Right") {
+        if (stackerType === "Left-Right") {
             allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, i * 4, 0)]
         } else {
             allItems = [...allItems, ...copyPasteItems(copyPasteBlueprint, 0, i * 4)]

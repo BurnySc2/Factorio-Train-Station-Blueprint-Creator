@@ -15,7 +15,8 @@ export default function WireSettings(props: iSectionsProps): JSX.Element {
             | "connectChestsWithGreenWire"
             | "connectBothSideWithGreenWire"
             | "connectChestsWithRedWire"
-            | "connectBothSideWithRedWire",
+            | "connectBothSideWithRedWire"
+            | "madzuriEvenLoadUnload",
         hidden = false
     ) => {
         return (
@@ -40,6 +41,14 @@ export default function WireSettings(props: iSectionsProps): JSX.Element {
     return (
         <div className={CLASSES.section}>
             <div className={CLASSES.gridSection}>
+                {myCheckbox("madzuriEvenLoadUnload", hiddenWhenFluidStation)}
+                <label
+                    className={CLASSES.labelElement}
+                    hidden={hiddenWhenFluidStation}
+                    htmlFor={"madzuriEvenLoadUnload"}
+                >
+                    Evenly loading / unloading?
+                </label>
                 {myCheckbox("connectChestsWithGreenWire")}
                 <label
                     className={CLASSES.labelElement}

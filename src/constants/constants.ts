@@ -40,6 +40,11 @@ export const filterInserters = {
     "fast-inserter": "filter-inserter",
     "stack-inserter": "filter-inserter",
 }
+export const inserterStackSize = {
+    inserter: 3,
+    "fast-inserter": 3,
+    "stack-inserter": 12,
+}
 export const basicChestTypes: iChestTypes[] = ["wooden-chest", "iron-chest", "steel-chest"]
 export const botChestTypes: iChestTypes[] = [
     "logistic-chest-requester",
@@ -217,6 +222,7 @@ export const defaultSettings = {
     connectBothSideWithGreenWire: true,
     connectChestsWithRedWire: false,
     connectBothSideWithRedWire: false,
+    madzuriEvenLoadUnload: true,
 
     // Enabled condition:
     trainStopUsesEnabledCondition: false,

@@ -22,6 +22,7 @@ const TOOLTIPS = {
         "If enabled, connects all chests on the left and all chests / storage tanks on the right together with green wire.",
     connectBothSideWithRedWire:
         "If enabled, connects the top left and top right chest / storage tank with red wire.",
+    madzuriEvenLoadUnload: "",
     trainStopUsesEnabledCondition:
         "If enabled, adds a decider combinator.<br>Then it creates a green wire connection with trainStop-deciderCombinator-poles-topChest.<br>The train stop will be enabled if the condition (e.g. sum of items in chests > 4000) is met.",
 }

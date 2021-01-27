@@ -22,6 +22,11 @@ export const checkForHintsBlueprintSettings = (bpSettings: typeof defaultSetting
             return "Your amount of parallel stacker lanes is extremely high and may crash your browser!"
         }
     }
+    if (normalStation.includes(bpSettings.stationType)) {
+        if (bpSettings.madzuriEvenLoadUnload && !bpSettings.connectChestsWithGreenWire) {
+            return `Evenly loading/unloading only works properly when all chests are connected with green wire.`
+        }
+    }
     if (fluidStation.includes(bpSettings.stationType)) {
         if (parseInt(bpSettings.pumpStorageTankColumns) > 500) {
             return "Your amount of storage tanks is extremely high and might crash your browser!"
@@ -43,10 +48,7 @@ export const validateBlueprintSettings = (bpSettings: typeof defaultSettings): s
     if (!verifyNumberInput(bpSettings.cargoWagon)) {
         return "The given cargo count is not a number."
     }
-    if (
-        bpSettings.stationType === "Loading Station" ||
-        bpSettings.stationType === "Unloading Station"
-    ) {
+    if (normalStation.includes(bpSettings.stationType)) {
         for (let i = 0; i < 12; i++) {
             const itemType = bpSettings.chestRequestItemsType[i]
             const numberAsString = bpSettings.chestRequestItemsAmount[i]
