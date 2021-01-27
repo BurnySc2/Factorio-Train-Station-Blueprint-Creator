@@ -16,6 +16,7 @@ Steps to reproduce the behavior:
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
+Or just submit a link with the blueprint settings.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
-assignees: ''
+labels: enhancement
+assignees: BurnySc2
 
 ---
 
@@ -12,9 +12,10 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 
 **Describe the solution you'd like**
 A clear and concise description of what you want to happen.
+Remember that your solutions needs to be scaleable, as this tool is designed to help with building stations for large trains.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Screenshots**
+Submit screenshots of how your idea should look like. E.g. if you want different belt flow for your station, submit a picture of how the belts should flow.
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
