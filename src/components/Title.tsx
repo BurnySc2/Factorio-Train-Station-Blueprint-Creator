@@ -2,5 +2,14 @@ import React from "react"
 import { CLASSES } from "../css/classes"
 
 export default function Title(): JSX.Element {
-    return <div className={CLASSES.title}>{"Burny's Train Station Blueprint Creator"}</div>
+    return (
+        <a
+            className={CLASSES.title}
+            target="_blank"
+            rel="noreferrer"
+            href="https://burnysc2.github.io/Factorio-Train-Station-Blueprint-Creator/"
+        >
+            {"Burny's Train Station Blueprint Creator"}
+        </a>
+    )
 }

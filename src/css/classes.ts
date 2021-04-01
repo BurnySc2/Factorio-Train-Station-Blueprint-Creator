@@ -1,6 +1,6 @@
 export const CLASSES = {
     // Title
-    title: "self-center underline font-bold text-3xl text-gray-300",
+    title: "self-center underline font-bold text-3xl text-gray-300 hover:text-blue-300",
 
     // Background
     background: "bg-gray-800 h-screen",

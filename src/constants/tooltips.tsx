@@ -1,6 +1,6 @@
 const TOOLTIPS = {
     trainLimit:
-        "Limits the amount of trains that will be at going to this station.<br>If set to dynamic, will automatically set the max amount based on used (loading station) / free (unloading station) space in your chests.",
+        "Limits the amount of trains that will be at going to this station.<br>If set to dynamic, will automatically set the max amount based on used (loading station) / free (unloading station) space in your chests.<br>For unloading stations I recommend still setting train limit to 1, if you use multiple unloading stations of the same name. Trains will go to the closest station with enough free slots instead of stations that are most empty!",
     trainLimitNumberInput: "Valid: numbers, 'each', alphabetical characters (A, B, ...)",
     doubleHeaded: "Does your train have locomotives at each end (facing both ways)?",
     includeTrainInBlueprint:
@@ -25,5 +25,6 @@ const TOOLTIPS = {
     madzuriEvenLoadUnload: "",
     trainStopUsesEnabledCondition:
         "If enabled, adds a decider combinator.<br>Then it creates a green wire connection with trainStop-deciderCombinator-poles-topChest.<br>The train stop will be enabled if the condition (e.g. sum of items in chests > 4000) is met.",
+    diagonalStacker: "Diagonal stackers are more compact.",
 }
 export default TOOLTIPS

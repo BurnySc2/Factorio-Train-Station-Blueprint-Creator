@@ -637,7 +637,10 @@ export const placeMadzuriArithmeticCombinator = (
     chests: iBlueprintItem[],
     inserters: iBlueprintItem[]
 ): iBlueprintItem[] => {
-    // Places a decider on right side
+    // Places an arithmetic combinator
+    if (parseInt(bpSettings.cargoWagon) <= 0) {
+        return []
+    }
     const direction = side === "Right" ? DIRECTION.RIGHT : DIRECTION.LEFT
     const lampOffset = bpSettings.placeLampsNearPoles ? 1 : 0
     const xOffset = side === "Right" ? 1 + lampOffset : -5 - lampOffset
