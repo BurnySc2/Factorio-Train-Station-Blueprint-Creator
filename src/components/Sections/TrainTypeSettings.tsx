@@ -1,10 +1,16 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 import { fluidStation } from "../../constants/constants"
+import ReactTooltip from "react-tooltip"
 
 export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
+    useEffect(() => {
+        // Rebuild tooltips on dynamic changes
+        ReactTooltip.rebuild()
+    })
+
     const hideIfDiagonalStacker =
         props.userSettings.stationType === "Stacker" && props.userSettings.diagonalStacker
     const cargoWagonName = fluidStation.includes(props.userSettings.stationType) ? "fluid" : "cargo"

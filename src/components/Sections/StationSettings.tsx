@@ -4,8 +4,14 @@ import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 import { fluidStation, iOperator, operatorTypes, trainLimit } from "../../constants/constants"
 import { calcCombinatorSettings } from "../../constants/helper"
+import ReactTooltip from "react-tooltip"
 
 export default function StationSettings(props: iSectionsProps): JSX.Element {
+    useEffect(() => {
+        // Rebuild tooltips on dynamic changes
+        ReactTooltip.rebuild()
+    })
+
     const hideWhenTrainLimitIsNotDynamic = props.userSettings.trainLimit !== "Dynamic"
     const hideWhenFluidStation = fluidStation.includes(props.userSettings.stationType)
     const hideWhenNotUnloadingStation =

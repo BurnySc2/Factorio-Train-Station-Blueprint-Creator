@@ -1,10 +1,16 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { stackerDiagonalTypes, stackerTypes } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
+import ReactTooltip from "react-tooltip"
 
 export default function StackerSettings(props: iSectionsProps): JSX.Element {
+    useEffect(() => {
+        // Rebuild tooltips on dynamic changes
+        ReactTooltip.rebuild()
+    })
+
     const myCheckbox = (keyName: "diagonalStacker") => {
         return (
             <input

@@ -1,10 +1,16 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { iRefillFuelTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { refillFuelTypes, refillFuelTypesHuman } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
+import ReactTooltip from "react-tooltip"
 
 export default function RefillSettings(props: iSectionsProps): JSX.Element {
+    useEffect(() => {
+        // Rebuild tooltips on dynamic changes
+        ReactTooltip.rebuild()
+    })
+
     const fuelTypesHtml = (
         <select
             className={CLASSES.selectElement}
