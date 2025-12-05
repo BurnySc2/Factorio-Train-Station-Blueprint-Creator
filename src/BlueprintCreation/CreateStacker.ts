@@ -91,9 +91,9 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 	let backCurve: iBlueprintItem[]
 	let entranceChainSignal: iBlueprintItem
 	if (stackerType === "Left-Right") {
-		frontCurve = assignEntityNumberToItems(diagonalFrontRightCurve, 8)
-		backCurve = assignEntityNumberToItems(diagonalBackLeftCurve, 8 - diagonalLength * 2, diagonalLength * 2)
-		entranceChainSignal = newItem("rail-chain-signal", -2.5 - diagonalLength * 2, 7.5 + diagonalLength * 2, {
+		frontCurve = assignEntityNumberToItems(diagonalFrontRightCurve, 4)
+		backCurve = assignEntityNumberToItems(diagonalBackLeftCurve, 8 - diagonalLength * 2, -4 + diagonalLength * 2)
+		entranceChainSignal = newItem("rail-chain-signal", -3.5 - diagonalLength * 2, 6.5 + diagonalLength * 2, {
 			direction: 6,
 		})
 	} else {
