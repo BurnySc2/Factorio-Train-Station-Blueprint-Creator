@@ -9,40 +9,23 @@ jobs:
             fail-fast: false
             matrix:
                 os: [ubuntu-latest]
-                node: ["12"]
+                node: ["20"]
 
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
               with:
                   node-version: "${{ matrix.node }}.x"
 
-            - uses: actions/cache@v1
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
-
             - name: Install dependencies
-              run: |
-                  npm install
-
-            - name: Run eslint
-              run: |
-                  npx eslint src/.
-
-            #      - name: Test with npm
-            #        run: |
-            #          npm test
+              run: npm ci
 
             - name: Build
-              run: |
-                  npm run build
+              run: npm run build
 
             - name: Publish to Github Pages
               if: github.ref == 'refs/heads/master'
-              uses: JamesIves/github-pages-deploy-action@releases/v3
+              uses: JamesIves/github-pages-deploy-action@releases/v4
               with:
                   ACCESS_TOKEN: ${{ secrets.GITHUB_PAGES_TOKEN }}
                   BASE_BRANCH: master # The branch the action should deploy from.
