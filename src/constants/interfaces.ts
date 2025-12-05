@@ -180,7 +180,7 @@ export interface iBlueprintItem {
 	}
 }
 
-export type iBeltTypes = "transport-belt" | "fast-transport-belt" | "express-transport-belt"
+export type iBeltTypes = "transport-belt" | "fast-transport-belt" | "express-transport-belt" | "turbo-transport-belt"
 export type iInserterTypes = "inserter" | "fast-inserter" | "bulk-inserter" | "stack-inserter"
 export type iRefillFuelTypes = "wood" | "coal" | "solid-fuel" | "rocket-fuel" | "nuclear-fuel"
 export type iChestTypes =

@@ -27,27 +27,27 @@ export const stationTypes: iStationType[] = [
 ]
 export const normalStation: iStationType[] = ["Loading Station", "Unloading Station"]
 export const fluidStation: iStationType[] = ["Fluid Loading Station", "Fluid Unloading Station"]
-export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as const
 
-export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "bulk-inserter","stack-inserter"]
+export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "bulk-inserter", "stack-inserter"]
 export const inserterTypesHuman = {
 	inserter: "Inserter",
 	"fast-inserter": "Fast Inserter",
 	"bulk-inserter": "Bulk Inserter",
 	"stack-inserter": "Stack Inserter",
-}
+} as const
 export const filterInserters = {
 	inserter: "filter-inserter",
 	"fast-inserter": "filter-inserter",
 	"bulk-inserter": "filter-inserter",
 	"stack-inserter": "filter-inserter",
-}
+} as const
 export const inserterStackSize = {
 	inserter: 3,
 	"fast-inserter": 3,
 	"bulk-inserter": 12,
 	"stack-inserter": 16,
-}
+} as const
 export const basicChestTypes: iChestTypes[] = ["wooden-chest", "iron-chest", "steel-chest"]
 export const botChestTypes: iChestTypes[] = [
 	"requester-chest",
@@ -67,32 +67,45 @@ export const chestTypesHuman = {
 	"passive-provider-chest": "Passive Provider Chest",
 	"active-provider-chest": "Active Provider Chest",
 	"storage-chest": "Storage Chest",
-}
-export const beltTypes: iBeltTypes[] = ["transport-belt", "fast-transport-belt", "express-transport-belt"]
+} as const
+export const beltTypes: iBeltTypes[] = [
+	"transport-belt",
+	"fast-transport-belt",
+	"express-transport-belt",
+	"turbo-transport-belt",
+]
 export const beltTypesHuman = {
 	"transport-belt": "Yellow Belt",
 	"fast-transport-belt": "Red Belt",
 	"express-transport-belt": "Blue Belt",
-}
+	"turbo-transport-belt": "Green Belt",
+} as const
 export const splitterTypes = {
 	"transport-belt": "splitter",
 	"fast-transport-belt": "fast-splitter",
 	"express-transport-belt": "express-splitter",
-}
+	"turbo-transport-belt": "turbo-splitter",
+} as const
 export const beltSides: iBeltSides[] = ["Both", "Right", "Left"]
 export const pumpSides: iPumpSides[] = ["Right", "Left"]
-export const beltFlowDirections = ["Front", "Back", "None"]
-export const refillFuelTypes: iRefillFuelTypes[] = ["wood", "coal", "solid-fuel", "rocket-fuel", "nuclear-fuel"]
+export const beltFlowDirections = ["Front", "Back", "None"] as const
+export const refillFuelTypes: iRefillFuelTypes[] = [
+	"wood",
+	"coal",
+	"solid-fuel",
+	"rocket-fuel",
+	"nuclear-fuel",
+] as const
 export const refillFuelTypesHuman = {
 	wood: "Wood",
 	coal: "Coal",
 	"solid-fuel": "Solid Fuel",
 	"rocket-fuel": "Rocket Fuel",
 	"nuclear-fuel": "Nuclear Fuel",
-}
+} as const
 
-export const stackerDiagonalTypes = ["Left-Right", "Right-Left"]
-export const stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes]
+export const stackerDiagonalTypes = ["Left-Right", "Right-Left"] as const
+export const stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes] as const
 
 export enum DIRECTION {
 	UP = 0,
@@ -135,7 +148,7 @@ export const allowedCharacters = [
 	"X",
 	"Y",
 	"Z",
-]
+] as const
 
 export const defaultSettings = {
 	// Global tooltip text
