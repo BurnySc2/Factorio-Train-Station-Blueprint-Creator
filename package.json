@@ -15,6 +15,7 @@
 		"@types/react-router-dom": "^5.3.3",
 		"clone-deep": "^4.0.1",
 		"copy-to-clipboard": "^3.3.3",
+		"http-server": "^14.1.1",
 		"lodash.isequal": "^4.5.0",
 		"lodash.pick": "^4.4.0",
 		"pako": "^2.1.0",
@@ -29,6 +30,7 @@
 	"scripts": {
 		"start": "npm run tailwind:dev && BROWSER=none NODE_OPTIONS='--openssl-legacy-provider' react-scripts start",
 		"build": "npm run tailwind:prod && react-scripts build",
+		"preview": "http-server build -p 3001",
 		"tailwind:dev": "DEVELOPMENT=true tailwind build -i src/tailwind.css -o src/index.css",
 		"tailwind:prod": "tailwind build -i src/tailwind.css -c tailwind.config.js -o src/index.css",
 		"lint-format": "biome check --write",
