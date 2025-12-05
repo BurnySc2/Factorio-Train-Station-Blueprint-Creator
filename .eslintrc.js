@@ -7,6 +7,7 @@ module.exports = {
     extends: [
         "eslint:recommended",
         "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
         "plugin:@typescript-eslint/recommended",
     ],
     parser: "@typescript-eslint/parser",
@@ -14,14 +15,20 @@ module.exports = {
         ecmaFeatures: {
             jsx: true,
         },
-        ecmaVersion: 12,
+        ecmaVersion: "latest",
         sourceType: "module",
     },
-    plugins: ["react", "@typescript-eslint"],
+    plugins: ["react", "react-hooks", "@typescript-eslint"],
     settings: {
         react: {
-            version: "detect",
+            version: "19.0",
         },
     },
-    rules: {},
+    rules: {
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+    },
 }

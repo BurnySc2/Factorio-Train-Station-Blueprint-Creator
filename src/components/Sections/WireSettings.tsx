@@ -1,14 +1,9 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function WireSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     const normalTypes = ["Loading Station", "Unloading Station"]
     const fluidTypes = ["Fluid Loading Station", "Fluid Unloading Station"]
@@ -33,7 +28,8 @@ export default function WireSettings(props: iSectionsProps): JSX.Element {
                 type={"checkbox"}
                 id={keyName}
                 checked={props.userSettings[keyName]}
-                data-tip={TOOLTIPS[keyName]}
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={TOOLTIPS[keyName]}
                 onChange={(e) => {
                     props.setUserSettings({
                         ...props.userSettings,

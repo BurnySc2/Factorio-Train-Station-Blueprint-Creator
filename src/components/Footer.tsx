@@ -7,7 +7,7 @@ export default function Footer(): JSX.Element {
             <a
                 className={CLASSES.footerElements}
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 href="https://github.com/BurnySc2/Factorio-Train-Station-Blueprint-Creator"
             >
                 Contribute
@@ -15,7 +15,7 @@ export default function Footer(): JSX.Element {
             <a
                 className={CLASSES.footerElements}
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 href="https://github.com/BurnySc2/Factorio-Train-Station-Blueprint-Creator/issues/new"
             >
                 Suggestions / Report Bugs
@@ -23,7 +23,7 @@ export default function Footer(): JSX.Element {
             <a
                 className={CLASSES.footerElements}
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 href="https://www.reddit.com/message/compose/?to=BurnySc2"
             >
                 Contact (Reddit)

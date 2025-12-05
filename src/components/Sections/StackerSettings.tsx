@@ -1,15 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { stackerDiagonalTypes, stackerTypes } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function StackerSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     const myCheckbox = (keyName: "diagonalStacker") => {
         return (
@@ -19,7 +14,8 @@ export default function StackerSettings(props: iSectionsProps): JSX.Element {
                 type={"checkbox"}
                 id={keyName}
                 checked={props.userSettings[keyName]}
-                data-tip={TOOLTIPS[keyName]}
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={TOOLTIPS[keyName]}
                 onChange={(e) => {
                     props.setUserSettings({
                         ...props.userSettings,

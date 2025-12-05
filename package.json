@@ -1,34 +1,35 @@
 {
-  "name": "tailwind-react",
+  "name": "factorio-train-station-blueprint-creator",
   "version": "0.1.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.19.12",
-    "@types/react": "^16.14.2",
-    "@types/react-dom": "^16.9.10",
-    "@types/react-router-dom": "^5.1.7",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/react-router-dom": "^5.3.3",
     "clone-deep": "^4.0.1",
-    "copy-to-clipboard": "^3.3.1",
+    "copy-to-clipboard": "^3.3.3",
     "lodash.isequal": "^4.5.0",
     "lodash.pick": "^4.4.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.1",
-    "react-tooltip": "^4.2.11",
-    "tailwindcss": "^1.9.6",
-    "typescript": "^3.9.7"
+    "pako": "^2.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.20.1",
+    "react-scripts": "^5.0.1",
+    "react-tooltip": "^5.23.0",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^4.9.5"
   },
   "scripts": {
-    "start": "npm run tailwind:css:dev && BROWSER=none NODE_OPTIONS='--openssl-legacy-provider' react-scripts start",
-    "build": "npm run tailwind:css && react-scripts build",
-    "tailwind:css": "tailwind build src/tailwind.css -c tailwind.config.js -o src/index.css",
-    "tailwind:css:dev": "tailwind build src/tailwind.css -c tailwind.config.dev.js -o src/index.css",
+    "start": "npm run tailwind:dev && BROWSER=none NODE_OPTIONS='--openssl-legacy-provider' react-scripts start",
+    "build": "npm run tailwind:prod && react-scripts build",
+    "tailwind:dev": "DEVELOPMENT=true tailwind build -i src/tailwind.css -o src/index.css",
+    "tailwind:prod": "tailwind build -i src/tailwind.css -c tailwind.config.js -o src/index.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -56,9 +57,11 @@
     ]
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.13.0",
-    "@typescript-eslint/parser": "^4.13.0",
-    "eslint": "^7.17.0",
-    "eslint-plugin-react": "^7.22.0"
+    "@types/pako": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

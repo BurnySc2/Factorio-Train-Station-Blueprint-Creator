@@ -1,16 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 import { fluidStation } from "../../constants/constants"
-import ReactTooltip from "react-tooltip"
 
 export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
-
     const hideIfDiagonalStacker =
         props.userSettings.stationType === "Stacker" && props.userSettings.diagonalStacker
     const cargoWagonName = fluidStation.includes(props.userSettings.stationType) ? "fluid" : "cargo"
@@ -22,7 +16,8 @@ export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
                     type={"checkbox"}
                     min={"0"}
                     id={"doubleHeaded"}
-                    data-tip={TOOLTIPS.doubleHeaded}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={TOOLTIPS.doubleHeaded}
                     checked={props.userSettings.doubleHeaded}
                     onChange={(e) => {
                         props.setUserSettings({
@@ -68,7 +63,8 @@ export default function TrainTypeSettings(props: iSectionsProps): JSX.Element {
                     hidden={hideIfDiagonalStacker}
                     type={"checkbox"}
                     id={"includeTrainInBlueprint"}
-                    data-tip={TOOLTIPS.includeTrainInBlueprint}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={TOOLTIPS.includeTrainInBlueprint}
                     checked={props.userSettings.includeTrainInBlueprint}
                     onChange={(e) => {
                         props.setUserSettings({

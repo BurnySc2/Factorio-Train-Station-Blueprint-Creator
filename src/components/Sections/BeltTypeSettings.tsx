@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iBeltSides, iBeltTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import {
@@ -9,14 +9,8 @@ import {
     botChestTypes,
 } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function BeltTypeSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
-
     const hideIfBotChests = botChestTypes.includes(props.userSettings.chestType)
 
     const beltTypesHtml = (
@@ -67,7 +61,8 @@ export default function BeltTypeSettings(props: iSectionsProps): JSX.Element {
             id={"beltFlow"}
             className={CLASSES.selectElement}
             value={props.userSettings.beltFlowDirection}
-            data-tip={TOOLTIPS.beltFlow}
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={TOOLTIPS.beltFlow}
             onChange={(e) => {
                 props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value })
             }}

@@ -5,8 +5,7 @@ import {
     iOperator,
     normalStation,
 } from "./constants"
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const zlib = require("zlib")
+import pako from "pako"
 
 const verifyNumberInput = (myInput: string) => {
     // Return true if it is a parseable number
@@ -209,11 +208,16 @@ export const calcCombinatorSettings = (
 }
 
 export const encodeSettings = (settings: typeof defaultSettings): string => {
-    return "0" + zlib.deflateSync(JSON.stringify(settings), { level: 9 }).toString("base64")
+    return "0" + btoa(
+        String.fromCharCode(...pako.deflate(JSON.stringify(settings), { level: 9 }))
+    )
 }
 
 export const decodeSettings = (blueprintString: string): typeof defaultSettings => {
     return JSON.parse(
-        zlib.inflateSync(Buffer.from(blueprintString.slice(1), "base64")).toString("utf8")
+        pako.inflate(
+            Uint8Array.from(atob(blueprintString.slice(1)), (c) => c.charCodeAt(0)),
+            { to: "string" }
+        )
     )
 }

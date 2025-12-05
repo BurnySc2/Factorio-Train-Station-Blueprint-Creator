@@ -1,22 +1,18 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iChestTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import { chestTypes, chestTypesHuman, requestChestTypes } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     const chestTypesHtml = (
         <select
             id={"chestTypes"}
             className={CLASSES.selectElement}
             value={props.userSettings.chestType}
-            data-tip={TOOLTIPS.chestType}
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={TOOLTIPS.chestType}
             onChange={(e) => {
                 props.setUserSettings({
                     ...props.userSettings,
@@ -105,7 +101,8 @@ export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
                     type={"number"}
                     min={"0"}
                     value={props.userSettings.chestLimit}
-                    data-tip={TOOLTIPS.chestLimit}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={TOOLTIPS.chestLimit}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import NormalStation from "./StationTypes/NormalStation"
 import FluidStation from "./StationTypes/FluidStation"
 import Title from "./Title"
@@ -22,9 +22,9 @@ import {
     encodeSettings,
     validateBlueprintSettings,
 } from "../constants/helper"
-import ReactTooltip from "react-tooltip"
+import { Tooltip } from "react-tooltip"
 import itemlist from "../constants/itemlist.json"
-import { useLocation, useHistory } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cloneDeep = require("clone-deep")
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -38,8 +38,16 @@ export default function Website(): JSX.Element {
     const [warningMessage, setWarningMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
-    const history = useHistory()
-    const params = new URLSearchParams(useLocation().search)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const params = useMemo(() => {
+        try {
+            return new URLSearchParams(location.search)
+        } catch (error) {
+            console.error("Error parsing URL search params:", error)
+            return new URLSearchParams()
+        }
+    }, [location.search])
 
     // Only run once on site load: parse params and set settings from url params, if given
     useEffect(() => {
@@ -83,9 +91,9 @@ export default function Website(): JSX.Element {
     const assignSettingsToUrlParams = (bpSettings: typeof defaultSettings) => {
         const newUrl = getUrlParams(bpSettings)
         // Add history entry
-        history.push(newUrl)
+        navigate(newUrl, { replace: false })
         // Change current url
-        history.replace(newUrl)
+        navigate(newUrl, { replace: true })
     }
 
     const stationTypeSelect = (
@@ -193,7 +201,7 @@ export default function Website(): JSX.Element {
                         Copy shareable link
                     </button>
                     <Footer />
-                    <ReactTooltip place={"bottom"} multiline />
+                    <Tooltip id="my-tooltip" place="bottom" />
                     {itemdatalist}
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { iEnabledConditionOperators, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import {
@@ -6,13 +6,8 @@ import {
     enabledConditionOperatorsHuman,
 } from "../../constants/constants"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function EnabledConditionSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     const hideIfCheckboxDisabled = !props.userSettings.trainStopUsesEnabledCondition
 
@@ -46,7 +41,8 @@ export default function EnabledConditionSettings(props: iSectionsProps): JSX.Ele
                     type={"checkbox"}
                     id={"trainStopUsesEnabledCondition"}
                     checked={props.userSettings.trainStopUsesEnabledCondition}
-                    data-tip={TOOLTIPS.trainStopUsesEnabledCondition}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={TOOLTIPS.trainStopUsesEnabledCondition}
                     onChange={(e) => {
                         props.setUserSettings({
                             ...props.userSettings,

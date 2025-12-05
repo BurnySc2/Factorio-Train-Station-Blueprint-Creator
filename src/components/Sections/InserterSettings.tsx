@@ -1,15 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { inserterTypes, inserterTypesHuman } from "../../constants/constants"
 import { iInserterTypes, iSectionsProps } from "../../constants/interfaces"
 import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
-import ReactTooltip from "react-tooltip"
 
 export default function InserterSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     // All inserter types
     const inserterSelect = (
@@ -93,7 +88,8 @@ export default function InserterSettings(props: iSectionsProps): JSX.Element {
                     className={CLASSES.checkboxElement}
                     id={"filterInserterEnabled"}
                     type={"checkbox"}
-                    data-tip={TOOLTIPS.enableFilterInserters}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={TOOLTIPS.enableFilterInserters}
                     checked={props.userSettings.enableFilterInserters}
                     onChange={(e) => {
                         props.setUserSettings({

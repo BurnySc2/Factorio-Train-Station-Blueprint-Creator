@@ -4,13 +4,23 @@ import { CLASSES } from "../../css/classes"
 import TOOLTIPS from "../../constants/tooltips"
 import { fluidStation, iOperator, operatorTypes, trainLimit } from "../../constants/constants"
 import { calcCombinatorSettings } from "../../constants/helper"
-import ReactTooltip from "react-tooltip"
+
+const applyArray = (
+    combinatorArray: [string, iOperator, string, string, iOperator, string],
+    props: iSectionsProps
+) => {
+    props.setUserSettings({
+        ...props.userSettings,
+        trainLimitArithmetic1Constant1: combinatorArray[0],
+        trainLimitArithmetic1Operator: combinatorArray[1],
+        trainLimitArithmetic1Constant2: combinatorArray[2],
+        trainLimitArithmetic2Constant1: combinatorArray[3],
+        trainLimitArithmetic2Operator: combinatorArray[4],
+        trainLimitArithmetic2Constant2: combinatorArray[5],
+    })
+}
 
 export default function StationSettings(props: iSectionsProps): JSX.Element {
-    useEffect(() => {
-        // Rebuild tooltips on dynamic changes
-        ReactTooltip.rebuild()
-    })
 
     const hideWhenTrainLimitIsNotDynamic = props.userSettings.trainLimit !== "Dynamic"
     const hideWhenFluidStation = fluidStation.includes(props.userSettings.stationType)
@@ -19,7 +29,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
         props.userSettings.stationType !== "Fluid Unloading Station"
 
     useEffect(() => {
-        applyArray(calcCombinatorSettings(props.userSettings))
+        applyArray(calcCombinatorSettings(props.userSettings), props)
     }, [
         props.userSettings.stationType,
         props.userSettings.trainLimitToAtMostOneTrain,
@@ -30,6 +40,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
         props.userSettings.beltSidesUsed,
         props.userSettings.connectChestsWithGreenWire,
         props.userSettings.connectBothSideWithGreenWire,
+        props.setUserSettings,
     ])
 
     const myInput = (
@@ -43,7 +54,8 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
             <input
                 type={"text"}
                 className={`${CLASSES.inputTextElement} col-span-2`}
-                data-tip={TOOLTIPS.trainLimitNumberInput}
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={TOOLTIPS.trainLimitNumberInput}
                 hidden={hideWhenTrainLimitIsNotDynamic}
                 value={props.userSettings[key]}
                 onChange={(e) => {
@@ -85,7 +97,8 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
     const trainLimitHtml = (
         <select
             className={`${CLASSES.selectElement} col-span-5`}
-            data-tip={TOOLTIPS.trainLimit}
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content={TOOLTIPS.trainLimit}
             value={props.userSettings.trainLimit}
             onChange={(e) => {
                 props.setUserSettings({
@@ -103,20 +116,6 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
             })}
         </select>
     )
-
-    const applyArray = (
-        combinatorArray: [string, iOperator, string, string, iOperator, string]
-    ) => {
-        props.setUserSettings({
-            ...props.userSettings,
-            trainLimitArithmetic1Constant1: combinatorArray[0],
-            trainLimitArithmetic1Operator: combinatorArray[1],
-            trainLimitArithmetic1Constant2: combinatorArray[2],
-            trainLimitArithmetic2Constant1: combinatorArray[3],
-            trainLimitArithmetic2Operator: combinatorArray[4],
-            trainLimitArithmetic2Constant2: combinatorArray[5],
-        })
-    }
 
     return (
         <div>
