@@ -2,7 +2,7 @@
 	"name": "factorio-train-station-blueprint-creator",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "./",
+	"homepage": "https://burnysc2.github.io/Factorio-Train-Station-Blueprint-Creator",
 	"dependencies": {
 		"@biomejs/biome": "^2.3.8",
 		"@testing-library/jest-dom": "^6.1.4",

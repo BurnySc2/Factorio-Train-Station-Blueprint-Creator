@@ -6,7 +6,7 @@ export default function MyRouter(): JSX.Element {
 		// TODO use path (params) to be able to link a setting to a friend
 		<Router>
 			<Routes>
-				<Route path="/" element={<Website />} />
+				<Route path="*" element={<Website />} />
 			</Routes>
 		</Router>
 	)
