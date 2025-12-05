@@ -170,6 +170,6 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
 	})
 
 	// All items are off by 0.5, fix here
-	changeItemsCoordinates(allItems, -0.5)
+	changeItemsCoordinates(allItems, 0.5)
 	return allItems
 }

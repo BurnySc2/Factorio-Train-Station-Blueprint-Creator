@@ -148,7 +148,7 @@ export const placeTrainTracks = (bpSettings: typeof defaultSettings): iBlueprint
 		}
 		// Train tracks are 2x2, so only place it every 2nd time
 		if (i % 2 === 0) {
-			returnArray.push(newItem("straight-rail", -1.5, i))
+			returnArray.push(newItem("straight-rail", -2.5, i))
 		}
 	})
 	return returnArray
