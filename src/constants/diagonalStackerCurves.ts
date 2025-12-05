@@ -6,8 +6,8 @@ export const diagonalFrontLeftCurve: iBlueprintItemWithoutNumber[] = [
 	{
 		name: "curved-rail",
 		position: {
-			x: 0,
-			y: 0,
+			x: -2,
+			y: -2,
 		},
 		direction: 5,
 	},
@@ -31,7 +31,7 @@ export const diagonalFrontLeftCurve: iBlueprintItemWithoutNumber[] = [
 		name: "rail-chain-signal",
 		position: {
 			x: -3.5,
-			y: 4.5,
+			y: 2.5,
 		},
 		direction: 5,
 	},
@@ -144,16 +144,16 @@ export const diagonalBackRightCurve: iBlueprintItemWithoutNumber[] = [
 	{
 		name: "curved-rail",
 		position: {
-			x: -4,
-			y: 6,
+			x: -6,
+			y: 4,
 		},
 		direction: 1,
 	},
 	{
 		name: "rail-signal",
 		position: {
-			x: -2.5,
-			y: 3.5,
+			x: -3.5,
+			y: 2.5,
 		},
 		direction: 5,
 	},

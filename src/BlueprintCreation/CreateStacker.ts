@@ -101,8 +101,8 @@ export const createDiagonalStacker = (bpSettings: typeof defaultSettings): iBlue
 		backCurve = assignEntityNumberToItems(diagonalBackRightCurve, 8 - diagonalLength * 2, diagonalLength * 2)
 		entranceChainSignal = newItem(
 			"rail-chain-signal",
-			3.5 - diagonalLength * 2,
-			4.5 + diagonalLength * 2 + 4 * parallelTracks,
+			2.5 - diagonalLength * 2,
+			3.5 + diagonalLength * 2 + 4 * parallelTracks,
 			{ direction: 4 },
 		)
 	}
