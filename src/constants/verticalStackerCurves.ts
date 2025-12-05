@@ -99,7 +99,7 @@ export const backLeftCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: -3,
-			y: 7,
+			y: 9,
 		},
 		direction: 3,
 	},
@@ -115,7 +115,7 @@ export const backLeftCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: -11,
-			y: 11,
+			y: 13,
 		},
 		direction: 2,
 	},
@@ -123,7 +123,7 @@ export const backLeftCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: -13,
-			y: 11,
+			y: 13,
 		},
 		direction: 2,
 	},

@@ -46,7 +46,7 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 
 	if (bpSettings.stackerType === "Left-Left" || bpSettings.stackerType === "Left-Right") {
 		backCurve = assignEntityNumberToItems(backLeftCurve, -2, trainLength - 2 + backEndYOffset)
-		entranceChainSignal = newItem("rail-chain-signal", 15.5 - 28, 11.5 + trainLength + backEndYOffset, {
+		entranceChainSignal = newItem("rail-chain-signal", 16.5 - 28, 12.5 + trainLength + backEndYOffset, {
 			direction: 6,
 		})
 	} else {
@@ -61,7 +61,7 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 
 	let copyPasteBlueprint = [...placeTrainTracks(bpSettings), ...placeSignals(bpSettings), ...frontCurve, ...backCurve]
 	if (bpSettings.includeTrainInBlueprint) copyPasteBlueprint = [...copyPasteBlueprint, ...placeTrain(bpSettings)]
-	changeItemsCoordinates(copyPasteBlueprint, -0.5)
+	changeItemsCoordinates(copyPasteBlueprint, 0.5)
 
 	let allItems: iBlueprintItem[] = []
 	for (let i = 0; i < parallelTracks; i++) {
