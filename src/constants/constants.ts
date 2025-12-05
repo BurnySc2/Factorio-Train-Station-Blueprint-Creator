@@ -29,21 +29,24 @@ export const normalStation: iStationType[] = ["Loading Station", "Unloading Stat
 export const fluidStation: iStationType[] = ["Fluid Loading Station", "Fluid Unloading Station"]
 export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
-export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "stack-inserter"]
+export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "bulk-inserter","stack-inserter"]
 export const inserterTypesHuman = {
 	inserter: "Inserter",
 	"fast-inserter": "Fast Inserter",
+	"bulk-inserter": "Bulk Inserter",
 	"stack-inserter": "Stack Inserter",
 }
 export const filterInserters = {
 	inserter: "filter-inserter",
 	"fast-inserter": "filter-inserter",
+	"bulk-inserter": "filter-inserter",
 	"stack-inserter": "filter-inserter",
 }
 export const inserterStackSize = {
 	inserter: 3,
 	"fast-inserter": 3,
-	"stack-inserter": 12,
+	"bulk-inserter": 12,
+	"stack-inserter": 16,
 }
 export const basicChestTypes: iChestTypes[] = ["wooden-chest", "iron-chest", "steel-chest"]
 export const botChestTypes: iChestTypes[] = [
