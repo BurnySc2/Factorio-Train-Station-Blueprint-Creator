@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { fluidStation, type iOperator, operatorTypes, trainLimit } from "../../constants/constants"
 import { calcCombinatorSettings } from "../../constants/helper"
-import type { iSectionsProps } from "../../constants/interfaces"
+import type { iSectionsProps, iTrainLimit } from "../../constants/interfaces"
 import TOOLTIPS from "../../constants/tooltips"
 import { CLASSES } from "../../css/classes"
 
@@ -97,7 +97,7 @@ export default function StationSettings(props: iSectionsProps): JSX.Element {
 			onChange={(e) => {
 				props.setUserSettings({
 					...props.userSettings,
-					trainLimit: e.target.value,
+					trainLimit: e.target.value as iTrainLimit,
 				})
 			}}
 		>

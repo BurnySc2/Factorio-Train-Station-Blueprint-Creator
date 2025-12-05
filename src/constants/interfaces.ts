@@ -195,3 +195,6 @@ export type iChestTypes =
 export type iBeltSides = "Right" | "Left" | "Both"
 export type iPumpSides = "Right" | "Left"
 export type iEnabledConditionOperators = "<" | ">"
+export type iBeltFlowDirections = "Front" | "Back" | "None"
+export type iStackerType = "Left-Left" | "Right-Right" | "Left-Right" | "Right-Left"
+export type iTrainLimit = "Disabled" | "Dynamic" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10"

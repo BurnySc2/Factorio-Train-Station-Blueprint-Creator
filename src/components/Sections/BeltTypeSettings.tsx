@@ -1,5 +1,5 @@
 import { beltFlowDirections, beltSides, beltTypes, beltTypesHuman, botChestTypes } from "../../constants/constants"
-import type { iBeltSides, iBeltTypes, iSectionsProps } from "../../constants/interfaces"
+import type { iBeltFlowDirections, iBeltSides, iBeltTypes, iSectionsProps } from "../../constants/interfaces"
 import TOOLTIPS from "../../constants/tooltips"
 import { CLASSES } from "../../css/classes"
 
@@ -57,7 +57,7 @@ export default function BeltTypeSettings(props: iSectionsProps): JSX.Element {
 			data-tooltip-id="my-tooltip"
 			data-tooltip-content={TOOLTIPS.beltFlow}
 			onChange={(e) => {
-				props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value })
+				props.setUserSettings({ ...props.userSettings, beltFlowDirection: e.target.value as iBeltFlowDirections })
 			}}
 		>
 			{beltFlowDirections.map((beltFlow) => {

@@ -1,5 +1,5 @@
 import { stackerDiagonalTypes, stackerTypes } from "../../constants/constants"
-import type { iSectionsProps } from "../../constants/interfaces"
+import type { iSectionsProps, iStackerType } from "../../constants/interfaces"
 import TOOLTIPS from "../../constants/tooltips"
 import { CLASSES } from "../../css/classes"
 
@@ -31,7 +31,7 @@ export default function StackerSettings(props: iSectionsProps): JSX.Element {
 			onChange={(e) => {
 				props.setUserSettings({
 					...props.userSettings,
-					stackerType: e.target.value,
+					stackerType: e.target.value as iStackerType,
 				})
 			}}
 		>

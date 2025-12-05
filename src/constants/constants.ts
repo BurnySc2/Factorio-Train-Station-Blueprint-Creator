@@ -1,4 +1,5 @@
 import type {
+	iBeltFlowDirections,
 	iBeltSides,
 	iBeltTypes,
 	iChestTypes,
@@ -6,6 +7,8 @@ import type {
 	iInserterTypes,
 	iPumpSides,
 	iRefillFuelTypes,
+	iStackerType,
+	iTrainLimit,
 } from "./interfaces"
 
 export const mirrorXOffset = -3
@@ -27,7 +30,7 @@ export const stationTypes: iStationType[] = [
 ]
 export const normalStation: iStationType[] = ["Loading Station", "Unloading Station"]
 export const fluidStation: iStationType[] = ["Fluid Loading Station", "Fluid Unloading Station"]
-export const trainLimit = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as const
+export const trainLimit: iTrainLimit[] = ["Disabled", "Dynamic", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
 export const inserterTypes: iInserterTypes[] = ["inserter", "fast-inserter", "bulk-inserter", "stack-inserter"]
 export const inserterTypesHuman = {
@@ -88,14 +91,8 @@ export const splitterTypes = {
 } as const
 export const beltSides: iBeltSides[] = ["Both", "Right", "Left"]
 export const pumpSides: iPumpSides[] = ["Right", "Left"]
-export const beltFlowDirections = ["Front", "Back", "None"] as const
-export const refillFuelTypes: iRefillFuelTypes[] = [
-	"wood",
-	"coal",
-	"solid-fuel",
-	"rocket-fuel",
-	"nuclear-fuel",
-] as const
+export const beltFlowDirections: iBeltFlowDirections[] = ["Front", "Back", "None"]
+export const refillFuelTypes: iRefillFuelTypes[] = ["wood", "coal", "solid-fuel", "rocket-fuel", "nuclear-fuel"]
 export const refillFuelTypesHuman = {
 	wood: "Wood",
 	coal: "Coal",
@@ -105,7 +102,7 @@ export const refillFuelTypesHuman = {
 } as const
 
 export const stackerDiagonalTypes = ["Left-Right", "Right-Left"] as const
-export const stackerTypes = ["Left-Left", "Right-Right", ...stackerDiagonalTypes] as const
+export const stackerTypes: iStackerType[] = ["Left-Left", "Right-Right", ...stackerDiagonalTypes]
 
 export enum DIRECTION {
 	UP = 0,
@@ -148,7 +145,7 @@ export const allowedCharacters = [
 	"X",
 	"Y",
 	"Z",
-] as const
+]
 
 export const defaultSettings = {
 	// Global tooltip text
@@ -226,5 +223,5 @@ export const defaultSettings = {
 	// Stacker settings
 	stackerNumberParallelLanes: "3",
 	diagonalStacker: true,
-	stackerType: [...stackerDiagonalTypes][0],
+	stackerType: [...stackerDiagonalTypes][0] as iStackerType,
 }
