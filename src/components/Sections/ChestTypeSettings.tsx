@@ -29,7 +29,7 @@ export default function ChestTypeSettings(props: iSectionsProps): JSX.Element {
 	)
 
 	const isRequesterChest = requestChestTypes.includes(props.userSettings.chestType)
-	const canRequestFromBufferChests = props.userSettings.chestType === "logistic-chest-requester"
+	const canRequestFromBufferChests = props.userSettings.chestType === "requester-chest"
 
 	let previousIsEmpty = -1
 	const chestRequests = new Array(24).fill(0).map((_, i) => {

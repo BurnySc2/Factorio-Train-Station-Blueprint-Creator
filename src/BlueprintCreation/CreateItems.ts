@@ -324,7 +324,7 @@ export const placeChests = (bpSettings: typeof defaultSettings): iBlueprintItem[
 	}
 
 	const requestFromBuffers =
-		bpSettings.chestRequestFromBuffers && bpSettings.chestType === "logistic-chest-requester" ? true : undefined
+		bpSettings.chestRequestFromBuffers && bpSettings.chestType === "requester-chest" ? true : undefined
 	getCargoArray(bpSettings).forEach((y, i) => {
 		if (i % 7 === 0) return
 		returnArray.push(
@@ -596,7 +596,9 @@ export const placeMadzuriArithmeticCombinator = (
 			// Connect arithmetic output with inserter
 			connectTwoEntitiesWithWire(arithmetic, inserter, "green", "2")
 		}
-		connectTwoEntitiesWithWire(chest, inserter, "red")
+		if (inserter !== undefined) {
+			connectTwoEntitiesWithWire(chest, inserter, "red")
+		}
 	})
 	return [arithmetic]
 }
@@ -753,7 +755,7 @@ export const placeRefuelChestsAndInserters = (bpSettings: typeof defaultSettings
 		if (i % 7 !== 5) return
 		returnArray.push(newItem("inserter", 0, y + 0.5, { direction: DIRECTION.RIGHT }))
 		returnArray.push(
-			newItem("logistic-chest-requester", 1, y + 0.5, {
+			newItem("requester-chest", 1, y + 0.5, {
 				request_filters: [
 					{
 						index: 1,
@@ -768,7 +770,7 @@ export const placeRefuelChestsAndInserters = (bpSettings: typeof defaultSettings
 		if (i % 7 !== 2) return
 		returnArray.push(newItem("inserter", 0, y + 0.5, { direction: DIRECTION.RIGHT }))
 		returnArray.push(
-			newItem("logistic-chest-requester", 1, y + 0.5, {
+			newItem("requester-chest", 1, y + 0.5, {
 				request_filters: [
 					{
 						index: 1,

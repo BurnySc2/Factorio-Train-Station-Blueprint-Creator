@@ -47,23 +47,23 @@ export const inserterStackSize = {
 }
 export const basicChestTypes: iChestTypes[] = ["wooden-chest", "iron-chest", "steel-chest"]
 export const botChestTypes: iChestTypes[] = [
-	"logistic-chest-requester",
-	"logistic-chest-buffer",
-	"logistic-chest-passive-provider",
-	"logistic-chest-active-provider",
-	"logistic-chest-storage",
+	"requester-chest",
+	"buffer-chest",
+	"passive-provider-chest",
+	"active-provider-chest",
+	"storage-chest",
 ]
 export const chestTypes: iChestTypes[] = [...basicChestTypes, ...botChestTypes]
-export const requestChestTypes: iChestTypes[] = ["logistic-chest-requester", "logistic-chest-buffer"]
+export const requestChestTypes: iChestTypes[] = ["requester-chest", "buffer-chest"]
 export const chestTypesHuman = {
 	"wooden-chest": "Wooden Chest",
 	"iron-chest": "Iron Chest",
 	"steel-chest": "Steel Chest",
-	"logistic-chest-requester": "Requester Chest",
-	"logistic-chest-buffer": "Buffer Chest",
-	"logistic-chest-passive-provider": "Passive Provider Chest",
-	"logistic-chest-active-provider": "Active Provider Chest",
-	"logistic-chest-storage": "Storage Chest",
+	"requester-chest": "Requester Chest",
+	"buffer-chest": "Buffer Chest",
+	"passive-provider-chest": "Passive Provider Chest",
+	"active-provider-chest": "Active Provider Chest",
+	"storage-chest": "Storage Chest",
 }
 export const beltTypes: iBeltTypes[] = ["transport-belt", "fast-transport-belt", "express-transport-belt"]
 export const beltTypesHuman = {

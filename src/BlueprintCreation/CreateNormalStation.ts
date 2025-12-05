@@ -60,7 +60,8 @@ export const createNormalStation = (bpSettings: typeof defaultSettings): iBluepr
 	const leftOuterInserters = mirrorItemsHorizontal(rightOuterInserters)
 	let madzuriRightArithmetic: iBlueprintItem[] = []
 	let madzuriLeftArithmetic: iBlueprintItem[] = []
-	if (bpSettings.madzuriEvenLoadUnload) {
+	// Only works with non-logistic chests
+	if (bpSettings.madzuriEvenLoadUnload && !botChestTypes.includes(bpSettings.chestType)) {
 		sortByYPosition(leftOuterInserters)
 		sortByYPosition(rightOuterInserters)
 		sortByYPosition(leftChests)

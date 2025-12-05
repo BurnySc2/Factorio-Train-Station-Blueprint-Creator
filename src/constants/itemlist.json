@@ -21,7 +21,7 @@
 		}
 	},
 	{
-		"id": "logistic-chest-active-provider",
+		"id": "active-provider-chest",
 		"name": "Active provider chest",
 		"type": "Machinery",
 		"wiki_link": "https://wiki.factorio.com/Active_provider_chest",
@@ -462,7 +462,7 @@
 		}
 	},
 	{
-		"id": "logistic-chest-buffer",
+		"id": "buffer-chest",
 		"name": "Buffer chest",
 		"type": "Machinery",
 		"wiki_link": "https://wiki.factorio.com/Buffer_chest",
@@ -2618,7 +2618,7 @@
 		}
 	},
 	{
-		"id": "logistic-chest-passive-provider",
+		"id": "passive-provider-chest",
 		"name": "Passive provider chest",
 		"type": "Machinery",
 		"wiki_link": "https://wiki.factorio.com/Passive_provider_chest",
@@ -3418,7 +3418,7 @@
 		}
 	},
 	{
-		"id": "logistic-chest-requester",
+		"id": "requester-chest",
 		"name": "Requester chest",
 		"type": "Machinery",
 		"wiki_link": "https://wiki.factorio.com/Requester_chest",
@@ -4219,7 +4219,7 @@
 		}
 	},
 	{
-		"id": "logistic-chest-storage",
+		"id": "storage-chest",
 		"name": "Storage chest",
 		"type": "Machinery",
 		"wiki_link": "https://wiki.factorio.com/Storage_chest",
