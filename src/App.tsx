@@ -1,8 +1,8 @@
-import React from "react"
 import MyRouter from "./components/MyRouter"
+import "./index.css"
 
 function App(): JSX.Element {
-    return <MyRouter />
+	return <MyRouter />
 }
 
 export default App
