@@ -56,7 +56,7 @@ export const frontRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 5,
-			y: -5,
+			y: -3,
 		},
 		direction: 7,
 	},
@@ -72,7 +72,7 @@ export const frontRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 13,
-			y: -9,
+			y: -7,
 		},
 		direction: 2,
 	},
@@ -80,7 +80,7 @@ export const frontRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 15,
-			y: -9,
+			y: -7,
 		},
 		direction: 2,
 	},
@@ -142,7 +142,7 @@ export const backRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 5,
-			y: 7,
+			y: 9,
 		},
 		direction: 5,
 	},
@@ -158,7 +158,7 @@ export const backRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 13,
-			y: 11,
+			y: 13,
 		},
 		direction: 2,
 	},
@@ -166,7 +166,7 @@ export const backRightCurve: iBlueprintItemWithoutNumber[] = [
 		name: "straight-rail",
 		position: {
 			x: 15,
-			y: 11,
+			y: 13,
 		},
 		direction: 2,
 	},

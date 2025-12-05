@@ -53,8 +53,8 @@ export const createVerticalStacker = (bpSettings: typeof defaultSettings): iBlue
 		backCurve = assignEntityNumberToItems(backRightCurve, -2, trainLength - 2 + backEndYOffset)
 		entranceChainSignal = newItem(
 			"rail-chain-signal",
-			13.5 - 9 + 4 * parallelTracks,
-			8.5 + trainLength + backEndYOffset,
+			14.5 - 9 + 4 * parallelTracks,
+			9.5 + trainLength + backEndYOffset,
 			{ direction: 2 },
 		)
 	}
