@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Factorio-Train-Station-Blueprint-Creator/static/css/main.e99caab7.css",
+    "main.js": "/Factorio-Train-Station-Blueprint-Creator/static/js/main.6554d49c.js",
+    "index.html": "/Factorio-Train-Station-Blueprint-Creator/index.html",
+    "main.e99caab7.css.map": "/Factorio-Train-Station-Blueprint-Creator/static/css/main.e99caab7.css.map",
+    "main.6554d49c.js.map": "/Factorio-Train-Station-Blueprint-Creator/static/js/main.6554d49c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e99caab7.css",
+    "static/js/main.6554d49c.js"
+  ]
+}
