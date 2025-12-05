@@ -23,11 +23,12 @@ jobs:
             - name: Build
               run: npm run build
 
-            - name: Publish to Github Pages
+            - name: Deploy to GitHub Pages
               if: github.ref == 'refs/heads/master'
-              uses: JamesIves/github-pages-deploy-action@releases/v4
+              uses: crazy-max/ghaction-github-pages@v4
               with:
-                  ACCESS_TOKEN: ${{ secrets.GITHUB_PAGES_TOKEN }}
-                  BASE_BRANCH: master # The branch the action should deploy from.
-                  BRANCH: gh-pages # The branch the action should deploy to.
-                  FOLDER: build # The folder the action should deploy.
+                allow_empty_commit: false
+                target_branch: gh-pages
+                build_dir: build
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
